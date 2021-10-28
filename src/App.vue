@@ -2,13 +2,13 @@
   <div id="app" class="demo-wrapper">
     <h1>Demo</h1>
     <section class="demo-group">
-      <DeButton>按钮</DeButton>
+      <DeButton type="text">按钮</DeButton>
     </section>
   </div>
 </template>
 
 <script lang="ts">
-import DeButton from '@/packages/button/index.vue';
+import {DeButton} from '@/packages';
 
 export default {
   components: {DeButton},
