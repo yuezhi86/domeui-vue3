@@ -3,7 +3,6 @@
     v-bind="otherProps"
     :is="tagName"
     :class="classList"
-    :disabled="disabled"
     @click="onClick"
   >
     <slot></slot>
@@ -12,7 +11,7 @@
 
 <script lang="ts">
 import './index.less';
-import {defineComponent, ref, computed} from 'vue';
+import {defineComponent, computed} from 'vue';
 
 const name = 'de-button';
 export default defineComponent({
@@ -34,25 +33,34 @@ export default defineComponent({
       default: 'button',
       validator: (v: string) => ['button', 'submit', 'reset'].includes(v),
     },
-    to: {
-      type: [String, Object],
-      default: '',
-    },
-    target: {
+    href: {
       type: String,
-      default: '_self',
-      validator: (v: string) => ['_self', '_blank'].includes(v) || !!v,
+      default: '',
     },
     long: Boolean,
     plain: Boolean,
+    round: Boolean,
     disabled: Boolean,
     replace: Boolean,
   },
   emits: ['onClick'],
   setup(props, {emit}) {
-    const tagName = ref(props.to ? 'a' : 'button');
-    const otherProps = ref({});
+    const tagName = computed(() => (props.href ? 'a' : 'button'));
+    const otherProps = computed(() => {
+      const attrs: {disabled?: string; href?: string; type?: string} = {};
 
+      if (props.href) {
+        attrs.href = props.href;
+      } else {
+        attrs.type = props.htmlType;
+      }
+
+      if (props.disabled) {
+        attrs.disabled = 'disabled';
+      }
+
+      return attrs;
+    });
     const classList = computed(() => {
       return [
         name,
@@ -61,6 +69,7 @@ export default defineComponent({
         {
           [`${name}__long`]: props.long,
           [`${name}__${props.type}-plain`]: props.plain,
+          [`${name}__${props.size}-round`]: props.round,
         },
       ];
     });

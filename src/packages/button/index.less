@@ -7,6 +7,19 @@
     @button-transition-time
   );
 
+  &[href] {
+    text-decoration: none;
+  }
+
+  &__long {
+    display: block;
+    width: 100%;
+  }
+
+  &[disabled] {
+    cursor: @button-disabled-cursor !important;
+  }
+
   &__default {
     .button-theme(
       @button-default-bg-color, @button-default-border-color, @button-default-font-color,
@@ -57,26 +70,37 @@
 
   &__xsmall {
     .button-size(@button-xsmall-size, @button-border-width, @button-xsmall-font-size);
+
+    &-round {
+      .button-round(@button-xsmall-size);
+    }
   }
   &__small {
     .button-size(@button-small-size, @button-border-width, @button-small-font-size);
+
+    &-round {
+      .button-round(@button-small-size);
+    }
   }
   &__middle {
     .button-size(@button-middle-size, @button-border-width, @button-middle-font-size);
+
+    &-round {
+      .button-round(@button-middle-size);
+    }
   }
   &__large {
     .button-size(@button-large-size, @button-border-width, @button-large-font-size);
+
+    &-round {
+      .button-round(@button-large-size);
+    }
   }
   &__xlarge {
     .button-size(@button-xlarge-size, @button-border-width, @button-xlarge-font-size);
-  }
 
-  &__long {
-    display: block;
-    width: 100%;
-  }
-
-  &[disabled] {
-    cursor: @button-disabled-cursor !important;
+    &-round {
+      .button-round(@button-xlarge-size);
+    }
   }
 }
