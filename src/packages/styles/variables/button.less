@@ -1,18 +1,65 @@
 // Button
-@button-primary-color: @color-primary;
-@button-second-color: @color-second;
-@button-bright-color: @color-bright;
+@button-padding-h: 10px;
+@button-border-width: 1px;
+@button-border-style: solid;
+@button-radius: 3px;
+@button-transition-time: @transition-time;
+@button-disabled-bg-color: @color-gray;
+@button-disabled-border-color: #e5e5e5;
+@button-disabled-font-color: #c5c8ce;
+@button-disabled-cursor: not-allowed;
 
 @button-xsmall-size: 24px;
-@button-small-size: 28px;
-@button-middle-size: 32px;
-@button-large-size: 38px;
-@button-xlarge-size: 44px;
-
 @button-xsmall-font-size: 12px;
-@button-small-font-size: 14px;
-@button-middle-font-size: 16px;
-@button-large-font-size: 18px;
+@button-small-size: 28px;
+@button-small-font-size: 13px;
+@button-middle-size: 32px;
+@button-middle-font-size: 14px;
+@button-large-size: 34px;
+@button-large-font-size: 16px;
+@button-xlarge-size: 40px;
 @button-xlarge-font-size: 20px;
 
-@button-radius: 4px;
+@button-default-bg-color: #fff;
+@button-default-border-color: @border-color;
+@button-default-font-color: #515a6e;
+@button-default-hover-bg-color: @button-default-bg-color;
+@button-default-hover-border-color: @color-primary;
+@button-default-hover-font-color: @color-primary;
+@button-default-disabled-bg-color: @button-disabled-bg-color;
+@button-default-disabled-border-color: @button-disabled-border-color;
+@button-default-disabled-font-color: @button-disabled-font-color;
+
+@button-primary-bg-color: @color-primary;
+@button-primary-border-color: @color-primary;
+@button-primary-font-color: #fff;
+@button-primary-hover-bg-color: lighten(@color-primary, 5%);
+@button-primary-hover-border-color: @button-primary-hover-bg-color;
+@button-primary-hover-font-color: @button-primary-font-color;
+@button-primary-disabled-bg-color: @button-disabled-bg-color;
+@button-primary-disabled-border-color: @button-disabled-border-color;
+@button-primary-disabled-font-color: @button-disabled-font-color;
+
+@button-bright-bg-color: @color-bright;
+@button-bright-border-color: @color-bright;
+@button-bright-font-color: #fff;
+@button-bright-hover-bg-color: lighten(@color-bright, 5%);
+@button-bright-hover-border-color: @button-bright-hover-bg-color;
+@button-bright-hover-font-color: @button-bright-font-color;
+@button-bright-disabled-bg-color: @button-disabled-bg-color;
+@button-bright-disabled-border-color: @button-disabled-border-color;
+@button-bright-disabled-font-color: @button-disabled-font-color;
+
+@button-second-bg-color: @color-second;
+@button-second-border-color: @color-second;
+@button-second-font-color: #fff;
+@button-second-hover-bg-color: lighten(@color-second, 5%);
+@button-second-hover-border-color: @button-second-hover-bg-color;
+@button-second-hover-font-color: @button-second-font-color;
+@button-second-disabled-bg-color: @button-disabled-bg-color;
+@button-second-disabled-border-color: @button-disabled-border-color;
+@button-second-disabled-font-color: @button-disabled-font-color;
+
+@button-text-font-color: @text-color;
+@button-text-hover-font-color: @color-primary;
+@button-text-disabled-font-color: @button-disabled-font-color;

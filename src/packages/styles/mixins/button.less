@@ -1,0 +1,59 @@
+.button-base(@padding-h, @border-style, @border-width, @radius, @transition-time) {
+  display: inline-block;
+  padding: 0 @padding-h;
+  border-style: @border-style;
+  border-width: @border-width;
+  border-radius: @radius;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color @transition-time linear,
+    border @transition-time linear, box-shadow @transition-time linear,
+    color @transition-time linear;
+}
+
+.button-theme(
+  @bg-color, @border-color, @font-color,
+  @bg-hover-color, @border-hover-color, @font-hover-color,
+  @bg-disabled-color, @border-disabled-color, @font-disabled-color
+) {
+  background-color: @bg-color;
+  border-color: @border-color;
+  color: @font-color;
+
+  &:hover,
+  &:active {
+    background-color: @bg-hover-color;
+    border-color: @border-hover-color;
+    box-shadow: 0 0 3px @border-color;
+    color: @font-hover-color;
+  }
+
+  &[disabled] {
+    background-color: @bg-disabled-color !important;
+    border-color: @border-disabled-color !important;
+    box-shadow: none !important;
+    color: @font-disabled-color !important;
+  }
+}
+
+.button-plain(@font-color) {
+  background-color: transparent;
+  color: @font-color;
+
+  &:hover,
+  &:active {
+    background-color: rgba(@font-color, 10%);
+    color: @font-color;
+  }
+}
+
+.button-size(@size, @border-width, @font-size) {
+  height: @size;
+  font-size: @font-size;
+  line-height: @size - @border-width * 2;
+}

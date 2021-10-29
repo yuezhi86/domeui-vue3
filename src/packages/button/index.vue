@@ -13,45 +13,54 @@
 <script lang="ts">
 import './index.less';
 import {defineComponent, ref, computed} from 'vue';
+
 const name = 'de-button';
 export default defineComponent({
   name,
   props: {
     type: {
       default: 'primary',
-      validator: (value: string) =>
-        ['primary', 'bright', 'second', 'text', 'default'].includes(value),
+      validator: (v: string) =>
+        ['primary', 'bright', 'second', 'text', 'default'].includes(v) || !!v,
     },
     size: {
       default: 'middle',
-      validator: (value: string) =>
+      validator: (v: string) =>
         ['xsmall', 'small', 'middle', 'large', 'xlarge', 'default'].includes(
-          value
-        ),
+          v
+        ) || !!v,
     },
-    long: Boolean,
-    plain: Boolean,
-    disabled: Boolean,
     htmlType: {
       default: 'button',
-      validator: (value: string) =>
-        ['button', 'submit', 'reset'].includes(value),
+      validator: (v: string) => ['button', 'submit', 'reset'].includes(v),
     },
     to: {
       type: [String, Object],
       default: '',
     },
+    target: {
+      type: String,
+      default: '_self',
+      validator: (v: string) => ['_self', '_blank'].includes(v) || !!v,
+    },
+    long: Boolean,
+    plain: Boolean,
+    disabled: Boolean,
+    replace: Boolean,
   },
   emits: ['onClick'],
   setup(props, {emit}) {
     const tagName = ref(props.to ? 'a' : 'button');
     const otherProps = ref({});
+
     const classList = computed(() => {
       return [
         name,
+        `${name}__${props.type}`,
+        `${name}__${props.size}`,
         {
           [`${name}__long`]: props.long,
-          [`${name}__${props.type}`]: props.type !== 'default',
+          [`${name}__${props.type}-plain`]: props.plain,
         },
       ];
     });

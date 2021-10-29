@@ -1,4 +1,82 @@
 @import '../styles/variables';
+@import '../styles/mixins';
 
 .de-button {
+  .button-base(
+    @button-padding-h, @button-border-style, @button-border-width, @button-radius,
+    @button-transition-time
+  );
+
+  &__default {
+    .button-theme(
+      @button-default-bg-color, @button-default-border-color, @button-default-font-color,
+      @button-default-hover-bg-color, @button-default-hover-border-color, @button-default-hover-font-color,
+      @button-default-disabled-bg-color, @button-default-disabled-border-color, @button-default-disabled-font-color
+    );
+  }
+  &__primary {
+    .button-theme(
+      @button-primary-bg-color, @button-primary-border-color, @button-primary-font-color,
+      @button-primary-hover-bg-color, @button-primary-hover-border-color, @button-primary-hover-font-color,
+      @button-primary-disabled-bg-color, @button-primary-disabled-border-color, @button-primary-disabled-font-color
+    );
+
+    &-plain {
+      .button-plain(@button-primary-bg-color);
+    }
+  }
+  &__bright {
+    .button-theme(
+      @button-bright-bg-color, @button-bright-border-color, @button-bright-font-color,
+      @button-bright-hover-bg-color, @button-bright-hover-border-color, @button-bright-hover-font-color,
+      @button-bright-disabled-bg-color, @button-bright-disabled-border-color, @button-bright-disabled-font-color
+    );
+
+    &-plain {
+      .button-plain(@button-bright-bg-color);
+    }
+  }
+  &__second {
+    .button-theme(
+      @button-second-bg-color, @button-second-border-color, @button-second-font-color,
+      @button-second-hover-bg-color, @button-second-hover-border-color, @button-second-hover-font-color,
+      @button-second-disabled-bg-color, @button-second-disabled-border-color, @button-second-disabled-font-color
+    );
+
+    &-plain {
+      .button-plain(@button-second-bg-color);
+    }
+  }
+  &__text {
+    .button-theme(
+      transparent, transparent, @button-text-font-color,
+      transparent, transparent, @button-text-hover-font-color,
+      transparent, transparent, @button-text-disabled-font-color
+    );
+  }
+
+  &__xsmall {
+    .button-size(@button-xsmall-size, @button-border-width, @button-xsmall-font-size);
+  }
+  &__small {
+    .button-size(@button-small-size, @button-border-width, @button-small-font-size);
+  }
+  &__middle {
+    .button-size(@button-middle-size, @button-border-width, @button-middle-font-size);
+  }
+  &__large {
+    .button-size(@button-large-size, @button-border-width, @button-large-font-size);
+  }
+  &__xlarge {
+    .button-size(@button-xlarge-size, @button-border-width, @button-xlarge-font-size);
+  }
+
+  &__long {
+    display: block;
+    width: 100%;
+  }
+
+  &[disabled] {
+    cursor: @button-disabled-cursor !important;
+  }
 }
