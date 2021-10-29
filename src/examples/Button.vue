@@ -56,7 +56,9 @@
       <DeButton href="https://www.baidu.com" size="small" plain target="_blank">
         链接
       </DeButton>
-      <DeButton size="small" plain @onClick="onClick">点击</DeButton>
+      <DeButton size="small" type="bright" plain @onClick="onClick">
+        点击
+      </DeButton>
     </div>
   </section>
   <section class="demo-group">

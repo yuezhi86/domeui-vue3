@@ -2,15 +2,18 @@
   <div id="app" class="demo-wrapper">
     <h1>ButtonDemo</h1>
     <ButtonDemo />
+    <InputDemo />
   </div>
 </template>
 
 <script lang="ts">
 import ButtonDemo from './examples/Button.vue';
+import InputDemo from './examples/Input.vue';
 
 export default {
   components: {
     ButtonDemo,
+    InputDemo,
   },
 };
 </script>
