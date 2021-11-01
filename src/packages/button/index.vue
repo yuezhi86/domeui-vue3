@@ -25,9 +25,7 @@ export default defineComponent({
     size: {
       default: 'middle',
       validator: (v: string) =>
-        ['xsmall', 'small', 'middle', 'large', 'xlarge', 'default'].includes(
-          v
-        ) || !!v,
+        ['xsmall', 'small', 'middle', 'large', 'xlarge'].includes(v) || !!v,
     },
     htmlType: {
       default: 'button',

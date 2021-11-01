@@ -1,7 +1,7 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
-      <h2>type: default</h2>
+      <h3>type: default</h3>
       <DeButton size="xsmall" type="default">xsmall</DeButton>
       <DeButton size="small" type="default">small</DeButton>
       <DeButton type="default">middle</DeButton>
@@ -10,7 +10,7 @@
       <DeButton disabled size="xlarge" type="default">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h2>type: primary</h2>
+      <h3>type: primary</h3>
       <DeButton size="xsmall">xsmall</DeButton>
       <DeButton size="small">small</DeButton>
       <DeButton>middle</DeButton>
@@ -19,7 +19,7 @@
       <DeButton disabled size="xlarge">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h2>type: second</h2>
+      <h3>type: second</h3>
       <DeButton size="xsmall" type="second">xsmall</DeButton>
       <DeButton size="small" type="second">small</DeButton>
       <DeButton type="second">middle</DeButton>
@@ -28,7 +28,7 @@
       <DeButton disabled size="xlarge" type="second">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h2>type: bright</h2>
+      <h3>type: bright</h3>
       <DeButton size="xsmall" type="bright">xsmall</DeButton>
       <DeButton size="small" type="bright">small</DeButton>
       <DeButton type="bright">middle</DeButton>
@@ -37,7 +37,7 @@
       <DeButton disabled size="xlarge" type="bright">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h2>type: text</h2>
+      <h3>type: text</h3>
       <DeButton size="xsmall" type="text">xsmall</DeButton>
       <DeButton size="small" type="text">small</DeButton>
       <DeButton type="text">middle</DeButton>
@@ -46,13 +46,13 @@
       <DeButton disabled size="xlarge" type="text">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h2>plain</h2>
+      <h3>plain</h3>
       <DeButton plain>primary</DeButton>
       <DeButton type="bright" plain>bright</DeButton>
       <DeButton type="second" plain>second</DeButton>
     </div>
     <div class="item-group">
-      <h2>href</h2>
+      <h3>href</h3>
       <DeButton href="https://www.baidu.com" size="small" plain target="_blank">
         链接
       </DeButton>
@@ -60,10 +60,10 @@
         点击
       </DeButton>
     </div>
-  </section>
-  <section class="demo-group">
-    <h2>long and round</h2>
-    <DeButton size="xlarge" long round>登录</DeButton>
+    <section class="item-group">
+      <h3>long and round</h3>
+      <DeButton size="xlarge" long round>登录</DeButton>
+    </section>
   </section>
 </template>
 

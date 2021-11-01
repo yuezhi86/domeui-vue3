@@ -1,0 +1,106 @@
+.input-wrap() {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.input-base(
+  @border-width, @border-style, @border-color, @focus-border-color, @radius, @disabled-bg-color,
+  @font-color, @input-placeholder-color, @transition-time
+) {
+  width: 100%;
+  border: @border-width @border-style @border-color;
+  border-radius: @radius;
+  box-sizing: border-box;
+  color: @font-color;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  outline: none;
+  transition: border @transition-time linear, box-shadow @transition-time linear;
+
+  &:focus,
+  &:hover {
+    border-color: @focus-border-color;
+    box-shadow: 0 0 3px @focus-border-color;
+  }
+
+  &::placeholder {
+    color: @input-placeholder-color;
+  }
+
+  &[disabled],
+  &[readonly] {
+    background-color: @disabled-bg-color !important;
+    border-color: @border-color !important;
+    box-shadow: none !important;
+    cursor: default !important;
+  }
+}
+
+.input-kit(@border-width) {
+  position: absolute;
+  top: @border-width;
+  right: @border-width;
+  bottom: @border-width;
+  display: flex;
+  align-items: center;
+}
+
+.input-counter(@color) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px;
+  background-color: #fff;
+  color: @color;
+  font-size: inherit;
+  font-weight: 400;
+  user-select: none;
+
+  > em {
+    color: inherit;
+    font-style: normal;
+  }
+}
+
+.input-clear(@bg-color, @color) {
+  display: none;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  background-color: @bg-color;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 1px;
+    background-color: @color;
+    transform-origin: 50% 50%;
+    content: '';
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+.input-size(@height, @border-width, @padding-h, @line-height) {
+  height: @height;
+  padding: ((@height - @line-height) / 2 - @border-width) @padding-h;
+}
+
+.input-font-size(@font-size, @line-height) {
+  font-size: @font-size;
+  line-height: @line-height;
+}

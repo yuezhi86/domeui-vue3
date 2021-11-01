@@ -2,4 +2,68 @@
 @import '../styles/mixins';
 
 .de-input {
+  .input-wrap();
+
+  &:hover &__clear {
+    display: block;
+  }
+
+  &__ipt {
+    .input-base(
+      @input-border-width, @input-border-style, @input-border-color, @input-focus-border-color, @input-radius, @input-disabled-bg-color,
+      @input-font-color, @input-placeholder-color, @input-transition-time
+    );
+  }
+
+  &__kit {
+    .input-kit(@input-border-width);
+  }
+
+  &__counter {
+    .input-counter(@input-counter-color);
+  }
+
+  &__clear {
+    .input-clear(@input-clear-bg-color, @input-clear-color);
+  }
+
+  &__long,
+  &__long &__ipt {
+    .long();
+  }
+
+  &__xsmall {
+    .input-font-size(@input-xsmall-font-size, @input-line-height);
+  }
+  &__xsmall &__ipt {
+    .input-size(@input-xsmall-size, @input-border-width, @input-xsmall-padding-h, @input-line-height);
+  }
+
+  &__small {
+    .input-font-size(@input-small-font-size, @input-line-height);
+  }
+  &__small &__ipt {
+    .input-size(@input-small-size, @input-border-width, @input-small-padding-h, @input-line-height);
+  }
+
+  &__middle {
+    .input-font-size(@input-middle-font-size, @input-line-height);
+  }
+  &__middle &__ipt {
+    .input-size(@input-middle-size, @input-border-width, @input-middle-padding-h, @input-line-height);
+  }
+
+  &__large {
+    .input-font-size(@input-large-font-size, @input-line-height);
+  }
+  &__large &__ipt {
+    .input-size(@input-large-size, @input-border-width, @input-large-padding-h, @input-line-height);
+  }
+
+  &__xlarge {
+    .input-font-size(@input-xlarge-font-size, @input-line-height);
+  }
+  &__xlarge &__ipt {
+    .input-size(@input-xlarge-size, @input-border-width, @input-xlarge-padding-h, @input-line-height);
+  }
 }

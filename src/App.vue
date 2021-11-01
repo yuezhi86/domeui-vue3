@@ -1,8 +1,9 @@
 <template>
   <div id="app" class="demo-wrapper">
-    <h1>ButtonDemo</h1>
-    <ButtonDemo />
+    <h2>InputDemo</h2>
     <InputDemo />
+    <h2>ButtonDemo</h2>
+    <ButtonDemo />
   </div>
 </template>
 
