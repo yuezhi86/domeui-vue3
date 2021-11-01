@@ -159,8 +159,9 @@ export default defineComponent({
     const wrapClassList = computed(() => {
       return [
         name,
-        `${name}__${props.size}`,
         {
+          [`${name}__${props.size}`]: isInput.value,
+          [`${name}__textarea`]: !isInput.value,
           [`${name}__long`]: props.long,
           [`${name}__focus`]: isFocus.value,
           [`${name}__readonly`]: props.readonly,
