@@ -7,7 +7,7 @@
       <DeInput v-model="a" placeholder="请输入..." readonly />
       <DeInput v-model="b" placeholder="请输入..." disabled />
       <DeInput v-model="c" placeholder="请输入..." size="large" />
-      <DeInput placeholder="请输入..." size="xlarge" style="width: 300px" />
+      <DeInput placeholder="请输入..." size="xxlarge" style="width: 300px" />
     </div>
   </section>
 </template>

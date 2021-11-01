@@ -20,14 +20,22 @@
       :tabindex="tabindex"
       :placeholder="placeholder"
       @input="onInput"
+      @change="onChange"
+      @focus="onFocus"
+      @blur="onBlur"
+      @keydown="onKeydown"
+      @keyup="onKeyup"
+      @keyup.enter="onEnter"
+      @keypress="onKeypress"
+      @select="onSelect"
+      @compositionstart="onComposition"
+      @compositionend="onComposition"
     />
     <div v-if="hasKit" class="de-input__kit">
       <i v-if="hasClear" class="de-input__clear" @click.stop="onClear"></i>
-      <div v-if="hasCounter" class="de-input__counter">
-        <em>{{ currentLength }}</em>
-        /
-        <span>{{ maxlength }}</span>
-      </div>
+      <span v-if="hasCounter" class="de-input__counter">
+        <em>{{ currentLength }}</em> /{{ maxlength }}
+      </span>
     </div>
   </div>
 </template>
@@ -115,10 +123,24 @@ export default defineComponent({
     disabled: Boolean,
     readonly: Boolean,
   },
-  emits: ['update:modelValue', 'onInput', 'onClear'],
+  emits: [
+    'update:modelValue',
+    'onInput',
+    'onChange',
+    'onFocus',
+    'onBlur',
+    'onSelect',
+    'onKeyup',
+    'onKeydown',
+    'onKeypress',
+    'onEnter',
+    'onClear',
+    'onComposition',
+  ],
   setup(props, {emit}) {
     const value = ref<string | number>('');
     const input = ref(null);
+    const isOnComposition = ref(false);
     const isInput = computed(() => props.type === 'input');
     const isFocus = ref(false);
     const tagName = computed(() => (isInput.value ? 'input' : 'textarea'));
@@ -141,6 +163,8 @@ export default defineComponent({
         {
           [`${name}__long`]: props.long,
           [`${name}__focus`]: isFocus.value,
+          [`${name}__readonly`]: props.readonly,
+          [`${name}__disabled`]: props.disabled,
         },
       ];
     });
@@ -165,9 +189,16 @@ export default defineComponent({
     });
 
     watchEffect(() => {
-      value.value = props.modelValue;
-      currentLength.value = `${props.modelValue}`.length;
+      const _val = `${props.modelValue}`;
+      value.value = _val;
+      currentLength.value = _val.length;
     });
+
+    const onInput = (e: InputEvent) => {
+      if (isOnComposition.value) return;
+      emit('onInput', e);
+      emit('update:modelValue', (e.target as HTMLInputElement).value);
+    };
 
     return {
       tagName,
@@ -183,13 +214,48 @@ export default defineComponent({
       hasKit,
       hasClear,
       hasCounter,
-      onInput(e: InputEvent) {
-        emit('onInput', e);
-        emit('update:modelValue', (e.target as HTMLInputElement).value);
+      onInput,
+      onComposition(e: InputEvent) {
+        emit('onComposition', e);
+
+        if (e.type === 'compositionstart') {
+          isOnComposition.value = true;
+        }
+
+        if (e.type === 'compositionend') {
+          isOnComposition.value = false;
+          onInput(e);
+        }
       },
       onClear() {
         emit('update:modelValue', '');
         emit('onClear');
+      },
+      onBlur(e: InputEvent) {
+        isFocus.value = false;
+        emit('onBlur', e);
+      },
+      onFocus(e: InputEvent) {
+        isFocus.value = true;
+        emit('onFocus', e);
+      },
+      onChange(e: InputEvent) {
+        emit('onChange', e);
+      },
+      onSelect(e: InputEvent) {
+        emit('onSelect', e);
+      },
+      onKeyup(e: InputEvent) {
+        emit('onKeyup', e);
+      },
+      onEnter(e: InputEvent) {
+        emit('onEnter', e);
+      },
+      onKeypress(e: InputEvent) {
+        emit('onKeypress', e);
+      },
+      onKeydown(e: InputEvent) {
+        emit('onKeydown', e);
       },
     };
   },
