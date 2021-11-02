@@ -1,0 +1,100 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.de-checkbox {
+  display: inline-flex;
+  color: @checkbox-color;
+  font-size: @checkbox-font-size;
+  line-height: @checkbox-line-height;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+
+  &__icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: @checkbox-icon-bg-color;
+    border: @checkbox-icon-border-width @checkbox-icon-border-style
+      @checkbox-icon-border-color;
+    width: @checkbox-icon-size;
+    height: @checkbox-icon-size;
+    margin-right: @checkbox-icon-margin;
+    box-sizing: border-box;
+    vertical-align: middle;
+    transition: background-color @transition-time linear,
+      border @transition-time linear, box-shadow @transition-time linear;
+
+    &-checkbox {
+      border-radius: @checkbox-icon-radius;
+    }
+
+    &-radio {
+      border-radius: 50%;
+    }
+
+    &-inner {
+      display: block;
+      opacity: 0;
+      transform: scale(0);
+      transition: @transition-time ease-in-out;
+    }
+  }
+
+  &:hover &__icon {
+    box-shadow: 0 0 3px @checkbox-icon-border-color;
+  }
+
+  &__icon-checkbox &__icon-inner {
+    display: block;
+    width: @checkbox-icon-size - 10;
+    height: @checkbox-icon-size - 14;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent transparent #fff #fff;
+  }
+
+  &__icon-radio &__icon-inner {
+    width: @checkbox-icon-size - 6;
+    height: @checkbox-icon-size - 6;
+    background-color: @checkbox-icon-color;
+    border-radius: 50%;
+  }
+
+  &__indeterminate &__icon-checkbox {
+  }
+
+  &__checked &__icon {
+    border-color: @checkbox-icon-color;
+  }
+  &__checked:hover &__icon {
+    box-shadow: 0 0 3px @checkbox-icon-color;
+  }
+  &__checked &__icon-checkbox {
+    background-color: @checkbox-icon-color;
+  }
+  &__checked &__icon-checkbox &__icon-inner {
+    opacity: 1;
+    transform: scale(1) rotate(-45deg) translate(1px, -1px);
+  }
+  &__checked &__icon-radio &__icon-inner {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &__disabled {
+    color: @checkbox-disabled-color !important;
+    cursor: @checkbox-icon-disabled-cursor !important;
+  }
+  &__disabled &__icon {
+    background-color: @checkbox-icon-disabled-bg-color !important;
+    border-color: @checkbox-icon-border-color !important;
+    box-shadow: none !important;
+  }
+  &__disabled &__icon-checkbox {
+  }
+  &__disabled &__icon-radio &__icon-inner {
+    background-color: @checkbox-icon-border-color !important;
+  }
+}
