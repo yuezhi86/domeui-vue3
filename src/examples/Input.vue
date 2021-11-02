@@ -1,14 +1,35 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
-      <DeInput v-model="c" placeholder="请输入..." size="xsmall" />
-      <DeInput placeholder="请输入..." size="small" />
-      <DeInput placeholder="请输入..." />
+      <DeInput
+        v-model="c"
+        placeholder="请输入..."
+        size="xsmall"
+        :counter="false"
+      />
+      <DeInput
+        v-model="c"
+        placeholder="请输入..."
+        size="small"
+        :clearable="false"
+      />
+      <DeInput
+        v-model="c"
+        placeholder="请输入..."
+        :clearable="false"
+        :counter="false"
+      />
       <DeInput v-model="a" placeholder="请输入..." readonly />
       <DeInput v-model="b" placeholder="请输入..." disabled />
       <DeInput v-model="c" placeholder="请输入..." size="large" />
       <DeInput placeholder="请输入..." size="xlarge" style="width: 300px" />
-      <DeInput placeholder="请输入..." type="textarea" />
+      <DeInput
+        v-model="c"
+        placeholder="请输入..."
+        type="textarea"
+        maxlength="300"
+        resize="horizontal"
+      />
     </div>
   </section>
 </template>
@@ -23,7 +44,7 @@ export default {
   setup() {
     const a = ref(12345);
     const b = ref('zhanghaibin');
-    const c = ref('');
+    const c = ref('abc');
     return {
       a,
       b,

@@ -3,7 +3,7 @@
     <component
       v-bind="textareaProps"
       :is="tagName"
-      :id="inputId"
+      :id="elementId"
       ref="input"
       :name="name"
       :type="htmlType"
@@ -29,6 +29,7 @@
       @keypress="onKeypress"
       @select="onSelect"
       @compositionstart="onComposition"
+      @compositionupdate="onComposition"
       @compositionend="onComposition"
     />
     <div v-if="hasKit" class="de-input__kit">
@@ -70,7 +71,7 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    inputId: {
+    elementId: {
       type: String,
       default: undefined,
     },
@@ -142,7 +143,6 @@ export default defineComponent({
     const input = ref(null);
     const isOnComposition = ref(false);
     const isInput = computed(() => props.type === 'input');
-    const isFocus = ref(false);
     const tagName = computed(() => (isInput.value ? 'input' : 'textarea'));
     const currentLength = ref(0);
     const hasClear = computed(
@@ -162,8 +162,8 @@ export default defineComponent({
         {
           [`${name}__${props.size}`]: isInput.value,
           [`${name}__textarea`]: !isInput.value,
+          [`${name}__has-kit`]: !isInput.value && hasKit.value,
           [`${name}__long`]: props.long,
-          [`${name}__focus`]: isFocus.value,
           [`${name}__readonly`]: props.readonly,
           [`${name}__disabled`]: props.disabled,
         },
@@ -204,7 +204,6 @@ export default defineComponent({
     return {
       tagName,
       isInput,
-      isFocus,
       input,
       value,
       wrapClassList,
@@ -233,11 +232,9 @@ export default defineComponent({
         emit('onClear');
       },
       onBlur(e: InputEvent) {
-        isFocus.value = false;
         emit('onBlur', e);
       },
       onFocus(e: InputEvent) {
-        isFocus.value = true;
         emit('onFocus', e);
       },
       onChange(e: InputEvent) {

@@ -6,10 +6,11 @@
 }
 
 .input-base(
-  @border-width, @border-style, @border-color, @focus-border-color, @radius, @disabled-bg-color,
-  @font-color, @input-placeholder-color, @transition-time
+  @border-width, @border-style, @border-color, @focus-border-color, @radius,
+  @bg-color, @disabled-bg-color, @font-color, @input-placeholder-color, @transition-time
 ) {
   width: 100%;
+  background-color: @bg-color;
   border: @border-width @border-style @border-color;
   border-radius: @radius;
   box-sizing: border-box;
@@ -17,6 +18,7 @@
   font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
+  vertical-align: middle;
   outline: none;
   transition: border @transition-time linear, box-shadow @transition-time linear;
 
@@ -48,12 +50,12 @@
   align-items: center;
 }
 
-.input-counter(@color) {
+.input-counter(@bg-color, @color) {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 10px;
-  background-color: #fff;
+  padding: 0 6px;
+  background-color: @bg-color;
   color: @color;
   font-size: inherit;
   font-weight: 400;
@@ -70,6 +72,7 @@
   position: relative;
   width: 14px;
   height: 14px;
+  .margin-x(4px);
   background-color: @bg-color;
   border-radius: 50%;
   cursor: pointer;
@@ -95,9 +98,9 @@
   }
 }
 
-.input-size(@height, @border-width, @padding-h, @line-height) {
+.input-size(@height, @border-width, @padding-x, @line-height) {
   height: @height;
-  padding: ((@height - @line-height) / 2 - @border-width) @padding-h;
+  padding: ((@height - @line-height) / 2 - @border-width) @padding-x;
 }
 
 .input-font-size(@font-size, @line-height) {

@@ -10,8 +10,8 @@
 
   &__ipt {
     .input-base(
-      @input-border-width, @input-border-style, @input-border-color, @input-focus-border-color, @input-radius, @input-disabled-bg-color,
-      @input-font-color, @input-placeholder-color, @input-transition-time
+      @input-border-width, @input-border-style, @input-border-color, @input-focus-border-color, @input-radius,
+      @input-bg-color, @input-disabled-bg-color, @input-font-color, @input-placeholder-color, @input-transition-time
     );
   }
 
@@ -20,7 +20,7 @@
   }
 
   &__counter {
-    .input-counter(@input-counter-color);
+    .input-counter(@input-bg-color, @input-counter-color);
   }
 
   &__clear {
@@ -36,34 +36,54 @@
     .input-font-size(@input-xsmall-font-size, @input-line-height);
   }
   &__xsmall &__ipt {
-    .input-size(@input-xsmall-size, @input-border-width, @input-xsmall-padding-h, @input-line-height);
+    .input-size(@input-xsmall-size, @input-border-width, @input-xsmall-padding-x, @input-line-height);
   }
 
   &__small {
     .input-font-size(@input-small-font-size, @input-line-height);
   }
   &__small &__ipt {
-    .input-size(@input-small-size, @input-border-width, @input-small-padding-h, @input-line-height);
+    .input-size(@input-small-size, @input-border-width, @input-small-padding-x, @input-line-height);
   }
 
   &__middle {
     .input-font-size(@input-middle-font-size, @input-line-height);
   }
   &__middle &__ipt {
-    .input-size(@input-middle-size, @input-border-width, @input-middle-padding-h, @input-line-height);
+    .input-size(@input-middle-size, @input-border-width, @input-middle-padding-x, @input-line-height);
   }
 
   &__large {
     .input-font-size(@input-large-font-size, @input-line-height);
   }
   &__large &__ipt {
-    .input-size(@input-large-size, @input-border-width, @input-large-padding-h, @input-line-height);
+    .input-size(@input-large-size, @input-border-width, @input-large-padding-x, @input-line-height);
   }
 
   &__xlarge {
     .input-font-size(@input-xlarge-font-size, @input-line-height);
   }
   &__xlarge &__ipt {
-    .input-size(@input-xlarge-size, @input-border-width, @input-xlarge-padding-h, @input-line-height);
+    .input-size(@input-xlarge-size, @input-border-width, @input-xlarge-padding-x, @input-line-height);
+  }
+
+  &__textarea &__ipt {
+    padding: @textarea-padding-y @textarea-padding-x;
+    font-size: @textarea-font-size;
+  }
+
+  &__has-kit &__ipt {
+    padding-bottom: @textarea-counter-height;
+  }
+
+  &__textarea &__kit {
+    flex-direction: row-reverse;
+    justify-content: start;
+    top: auto;
+    right: auto;
+    left: @input-border-width;
+    height: @textarea-counter-height;
+    font-size: @textarea-counter-font-size;
+    line-height: @textarea-counter-height;
   }
 }
