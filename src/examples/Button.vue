@@ -19,15 +19,6 @@
       <DeButton disabled size="xlarge">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h3>type: second</h3>
-      <DeButton size="xsmall" type="second">xsmall</DeButton>
-      <DeButton size="small" type="second">small</DeButton>
-      <DeButton type="second">middle</DeButton>
-      <DeButton size="large" type="second">large</DeButton>
-      <DeButton size="xlarge" type="second">xlarge</DeButton>
-      <DeButton disabled size="xlarge" type="second">xlarge</DeButton>
-    </div>
-    <div class="item-group">
       <h3>type: bright</h3>
       <DeButton size="xsmall" type="bright">xsmall</DeButton>
       <DeButton size="small" type="bright">small</DeButton>
@@ -35,6 +26,15 @@
       <DeButton size="large" type="bright">large</DeButton>
       <DeButton size="xlarge" type="bright">xlarge</DeButton>
       <DeButton disabled size="xlarge" type="bright">xlarge</DeButton>
+    </div>
+    <div class="item-group">
+      <h3>type: second</h3>
+      <DeButton size="xsmall" type="second">xsmall</DeButton>
+      <DeButton size="small" type="second">small</DeButton>
+      <DeButton type="second">middle</DeButton>
+      <DeButton size="large" type="second">large</DeButton>
+      <DeButton size="xlarge" type="second">xlarge</DeButton>
+      <DeButton disabled size="xlarge" type="second">xlarge</DeButton>
     </div>
     <div class="item-group">
       <h3>type: text</h3>

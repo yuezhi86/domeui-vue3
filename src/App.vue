@@ -1,5 +1,7 @@
 <template>
   <div id="app" class="demo-wrapper">
+    <h2>CheckboxDemo</h2>
+    <CheckboxDemo />
     <h2>InputDemo</h2>
     <InputDemo />
     <h2>ButtonDemo</h2>
@@ -10,11 +12,13 @@
 <script lang="ts">
 import ButtonDemo from './examples/Button.vue';
 import InputDemo from './examples/Input.vue';
+import CheckboxDemo from './examples/Checkbox.vue';
 
 export default {
   components: {
     ButtonDemo,
     InputDemo,
+    CheckboxDemo,
   },
 };
 </script>

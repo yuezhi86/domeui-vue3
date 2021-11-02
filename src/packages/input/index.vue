@@ -8,7 +8,7 @@
       :name="name"
       :type="htmlType"
       :value="value"
-      :class="inputClassList"
+      class="de-input__ipt"
       :style="inputStyleList"
       :minlength="minlength"
       :maxlength="maxlength"
@@ -32,7 +32,7 @@
       @compositionupdate="onComposition"
       @compositionend="onComposition"
     />
-    <div v-if="hasKit" class="de-input__kit">
+    <div v-if="isAlive" class="de-input__kit">
       <i v-if="hasClear" class="de-input__clear" @click.stop="onClear"></i>
       <span v-if="hasCounter" class="de-input__counter">
         <em>{{ currentLength }}</em> /{{ maxlength }}
@@ -140,29 +140,20 @@ export default defineComponent({
   ],
   setup(props, {emit}) {
     const value = ref<string | number>('');
-    const input = ref(null);
-    const isOnComposition = ref(false);
-    const isInput = computed(() => props.type === 'input');
-    const tagName = computed(() => (isInput.value ? 'input' : 'textarea'));
     const currentLength = ref(0);
-    const hasClear = computed(
-      () =>
-        props.clearable &&
-        !props.disabled &&
-        !props.readonly &&
-        !!currentLength.value
-    );
-    const hasCounter = computed(
-      () => props.counter && !props.disabled && !props.readonly
-    );
-    const hasKit = computed(() => !props.disabled && !props.readonly);
+    const isOnComposition = ref(false);
+    const isFocus = ref(false);
+    const isInput = computed(() => props.type === 'input');
+    const isAlive = computed(() => !props.disabled && !props.readonly);
+
     const wrapClassList = computed(() => {
       return [
         name,
         {
           [`${name}__${props.size}`]: isInput.value,
           [`${name}__textarea`]: !isInput.value,
-          [`${name}__has-kit`]: !isInput.value && hasKit.value,
+          [`${name}__has-kit`]: !isInput.value && isAlive.value,
+          [`${name}__focus`]: isAlive.value && isFocus.value,
           [`${name}__long`]: props.long,
           [`${name}__readonly`]: props.readonly,
           [`${name}__disabled`]: props.disabled,
@@ -174,18 +165,6 @@ export default defineComponent({
         ? {}
         : {
             resize: props.resize,
-          };
-    });
-    const inputClassList = computed(() => {
-      const _name = `${name}__ipt`;
-      return [_name];
-    });
-    const textareaProps = computed(() => {
-      return isInput.value
-        ? {}
-        : {
-            rows: props.cols,
-            wrap: props.wrap,
           };
     });
 
@@ -202,18 +181,33 @@ export default defineComponent({
     };
 
     return {
-      tagName,
-      isInput,
-      input,
+      input: ref(null),
+      tagName: computed(() => (isInput.value ? 'input' : 'textarea')),
+      textareaProps: computed(() => {
+        return isInput.value
+          ? {}
+          : {
+              rows: props.cols,
+              wrap: props.wrap,
+            };
+      }),
       value,
+      currentLength,
+      isInput,
+      isFocus,
       wrapClassList,
       inputStyleList,
-      inputClassList,
-      textareaProps,
-      currentLength,
-      hasKit,
-      hasClear,
-      hasCounter,
+      isAlive,
+      hasClear: computed(
+        () =>
+          props.clearable &&
+          !props.disabled &&
+          !props.readonly &&
+          !!currentLength.value
+      ),
+      hasCounter: computed(
+        () => props.counter && !props.disabled && !props.readonly
+      ),
       onInput,
       onComposition(e: InputEvent) {
         emit('onComposition', e);
@@ -232,9 +226,11 @@ export default defineComponent({
         emit('onClear');
       },
       onBlur(e: InputEvent) {
+        isFocus.value = false;
         emit('onBlur', e);
       },
       onFocus(e: InputEvent) {
+        isFocus.value = true;
         emit('onFocus', e);
       },
       onChange(e: InputEvent) {

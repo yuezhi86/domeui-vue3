@@ -1,26 +1,22 @@
 # domeui-vue3
 
 ## TodoList
-- Button
-- Input
+
+- ~~Button~~
+- ~~Input~~
+- Checkbox & Radio
+- CheckboxGroup
+- Switch
 - Select
-- Tree
-- TreeSelect
-- Radio
-- Checkbox
-- AutoComplete
-- Slider
 - DatePicker
 - TimePicker
-- Cascader
 - Form
+- Cascader
+- Tree
+- TreeSelect
+- AutoComplete
+- Slider
 - Upload
-- Switch
-- Message
-- Modal
-- Alert
-- Tooltip
-- Poptip
 - Progress
 - Loading
 - Table
@@ -31,3 +27,8 @@
 - Region
 - Avatar
 - Tag
+- Message
+- Modal
+- Alert
+- Tooltip
+- Poptip

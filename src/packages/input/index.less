@@ -2,17 +2,31 @@
 @import '../styles/mixins';
 
 .de-input {
-  .input-wrap();
+  .input-wrap(
+    @input-border-width, @input-border-style, @input-border-color, @input-focus-border-color, @input-radius,
+    @input-bg-color, @input-font-color, @input-transition-time
+  );
+
+  &__focus,
+  &:hover {
+    .input-hover(@input-focus-border-color);
+  }
+
+  &__readonly,
+  &__disabled {
+    .input-disabled(@input-disabled-bg-color, @input-border-color);
+  }
+
+  &__readonly &__ipt {
+    cursor: default !important;
+  }
 
   &:hover &__clear {
     display: block;
   }
 
   &__ipt {
-    .input-base(
-      @input-border-width, @input-border-style, @input-border-color, @input-focus-border-color, @input-radius,
-      @input-bg-color, @input-disabled-bg-color, @input-font-color, @input-placeholder-color, @input-transition-time
-    );
+    .input-base(@input-placeholder-color);
   }
 
   &__kit {
@@ -29,7 +43,7 @@
 
   &__long,
   &__long &__ipt {
-    .long();
+    .long(flex);
   }
 
   &__xsmall {
@@ -73,14 +87,21 @@
   }
 
   &__has-kit &__ipt {
-    padding-bottom: @textarea-counter-height;
+    padding-bottom: @textarea-counter-height !important;
+  }
+
+  &__textarea &__clear {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
   }
 
   &__textarea &__kit {
     flex-direction: row-reverse;
     justify-content: start;
-    top: auto;
-    right: auto;
+    position: absolute;
+    bottom: @input-border-width;
     left: @input-border-width;
     height: @textarea-counter-height;
     font-size: @textarea-counter-font-size;

@@ -1,52 +1,51 @@
-.input-wrap() {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  box-sizing: border-box;
-}
-
-.input-base(
+.input-wrap(
   @border-width, @border-style, @border-color, @focus-border-color, @radius,
-  @bg-color, @disabled-bg-color, @font-color, @input-placeholder-color, @transition-time
+  @bg-color, @font-color, @transition-time
 ) {
-  width: 100%;
+  position: relative;
+  display: inline-flex;
   background-color: @bg-color;
   border: @border-width @border-style @border-color;
   border-radius: @radius;
   box-sizing: border-box;
   color: @font-color;
+  vertical-align: middle;
+  transition: border @transition-time linear, box-shadow @transition-time linear;
+}
+
+.input-base(@placeholder-color) {
+  flex: auto;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
   font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
   vertical-align: middle;
   outline: none;
-  transition: border @transition-time linear, box-shadow @transition-time linear;
-
-  &:focus,
-  &:hover {
-    border-color: @focus-border-color;
-    box-shadow: 0 0 3px @focus-border-color;
-  }
 
   &::placeholder {
-    color: @input-placeholder-color;
-  }
-
-  &[disabled],
-  &[readonly] {
-    background-color: @disabled-bg-color !important;
-    border-color: @border-color !important;
-    box-shadow: none !important;
-    cursor: default !important;
+    color: @placeholder-color;
   }
 }
 
+.input-hover(@focus-border-color) {
+  border-color: @focus-border-color;
+  box-shadow: 0 0 3px @focus-border-color;
+}
+
+.input-disabled(@disabled-bg-color, @border-color) {
+  background-color: @disabled-bg-color !important;
+  border-color: @border-color !important;
+  box-shadow: none !important;
+  cursor: default !important;
+}
+
 .input-kit(@border-width) {
-  position: absolute;
-  top: @border-width;
-  right: @border-width;
-  bottom: @border-width;
+  position: relative;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
 }
 
@@ -69,12 +68,15 @@
 
 .input-clear(@bg-color, @color) {
   display: none;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  right: 100%;
   width: 14px;
   height: 14px;
   .margin-x(4px);
   background-color: @bg-color;
   border-radius: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
 
   &::before,
