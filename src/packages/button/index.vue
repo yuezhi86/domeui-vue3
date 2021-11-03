@@ -1,10 +1,5 @@
 <template>
-  <component
-    v-bind="otherProps"
-    :is="tagName"
-    :class="classList"
-    @click="onClick"
-  >
+  <component v-bind="otherProps" :is="tagName" :class="classList">
     <slot></slot>
   </component>
 </template>
@@ -41,8 +36,7 @@ export default defineComponent({
     disabled: Boolean,
     replace: Boolean,
   },
-  emits: ['onClick'],
-  setup(props, {emit}) {
+  setup(props) {
     const tagName = computed(() => (props.href ? 'a' : 'button'));
     const otherProps = computed(() => {
       const attrs: {disabled?: string; href?: string; type?: string} = {};
@@ -76,9 +70,6 @@ export default defineComponent({
       tagName,
       classList,
       otherProps,
-      onClick(e: Event) {
-        emit('onClick', e);
-      },
     };
   },
 });

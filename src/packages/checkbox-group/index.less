@@ -1,0 +1,20 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.de-checkbox-group {
+  display: inline-flex;
+  vertical-align: middle;
+
+  .de-checkbox {
+    margin-right: @checkbox-group-item-margin;
+  }
+
+  &__vertical {
+    flex-direction: column;
+
+    .de-checkbox {
+      margin-right: 0;
+      .padding-y((@checkbox-group-item-margin / 2));
+    }
+  }
+}

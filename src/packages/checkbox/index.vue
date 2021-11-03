@@ -3,10 +3,10 @@
     <span :class="iconClassList">
       <i class="de-checkbox__icon-inner"></i>
       <input
-        :type="htmlType"
-        :name="name"
+        :type="pHtmlType || htmlType"
+        :name="pName || name"
         :checked="isChecked"
-        :disabled="disabled"
+        :disabled="isDisabled"
         class="de-checkbox__ipt"
         @focus="onFocus"
         @blur="onBlur"
@@ -19,8 +19,10 @@
 
 <script lang="ts">
 import './index.less';
-import {defineComponent, ref, computed, watchEffect} from 'vue';
+import {defineComponent, ref, computed, watchEffect, inject} from 'vue';
 
+type PModelValue = string | number | boolean;
+const DEFAULT_HTML_TYPE = 'checkbox';
 const name = 'de-checkbox';
 export default defineComponent({
   name,
@@ -43,7 +45,7 @@ export default defineComponent({
     },
     htmlType: {
       type: String,
-      default: 'checkbox',
+      default: DEFAULT_HTML_TYPE,
       validator: (v: string) => ['checkbox', 'radio'].includes(v),
     },
     falseValue: {
@@ -61,15 +63,26 @@ export default defineComponent({
     'onBeforeChange',
   ],
   setup(props, {emit}) {
+    const pName = inject('name', {value: ''});
+    const pHtmlType = inject('htmlType', {value: DEFAULT_HTML_TYPE});
+    const pDisabled = inject('disabled', {value: false});
+    const pModelValue = inject<{value: PModelValue | Array<PModelValue>}>(
+      'modelValue',
+      {
+        value: '',
+      }
+    );
+    const pUpdate = inject<Function | null>('update', null);
     const value = ref<boolean | string | number>('');
     const isFocus = ref(false);
     const isChecked = ref(false);
     const isRadio = computed(() => props.htmlType === 'radio');
+    const isDisabled = computed(() => pDisabled.value || props.disabled);
     const wrapClassList = computed(() => {
       return [
         name,
         {
-          [`${name}__disabled`]: props.disabled,
+          [`${name}__disabled`]: isDisabled.value,
           [`${name}__checked`]: isChecked.value,
           [`${name}__focus`]: isFocus.value,
           [`${name}__indeterminate`]: props.indeterminate && !isChecked.value,
@@ -99,18 +112,41 @@ export default defineComponent({
         value: value.value,
       });
     };
+    const updateParent = () => {
+      if (typeof pUpdate !== 'function') return;
+      if (isRadio.value) {
+        pUpdate(value.value);
+        return;
+      }
+
+      const _pModelValue = Array.isArray(pModelValue.value)
+        ? [...pModelValue.value]
+        : [];
+      if (isChecked.value) {
+        pUpdate([...new Set([..._pModelValue, value.value])]);
+      } else {
+        const index = _pModelValue.findIndex((item) => item === props.value);
+        if (index === -1) return;
+        _pModelValue.splice(index, 1);
+        pUpdate([..._pModelValue]);
+      }
+    };
 
     watchEffect(() => {
       isChecked.value = props.modelValue === props.value;
     });
 
     return {
+      pName,
+      pHtmlType,
+      isDisabled,
       isChecked,
       wrapClassList,
       iconClassList,
       onClick() {
-        if (props.disabled) return;
+        if (isDisabled.value) return;
         update();
+        updateParent();
         emit('update:indeterminate', false);
         emit('update:modelValue', value.value);
       },

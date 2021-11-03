@@ -20,27 +20,41 @@
         @onChange="onChange"
       />
     </div>
+    <div class="item-group">
+      <DeCheckboxGroup v-model="a" name="a" :disabled="disabled" vertical>
+        <DeCheckbox value="apple">苹果</DeCheckbox>
+        <DeCheckbox value="banana">香蕉</DeCheckbox>
+      </DeCheckboxGroup>
+    </div>
+    <DeButton @click="onTrigger">{{ disabled ? '启用' : '禁用' }}</DeButton>
   </section>
 </template>
 
 <script>
 import {ref} from 'vue';
-import {DeCheckbox} from '@/packages';
+import {DeCheckbox, DeCheckboxGroup, DeButton} from '@/packages';
 export default {
   components: {
     DeCheckbox,
+    DeCheckboxGroup,
+    DeButton,
   },
   setup() {
+    const disabled = ref(false);
     return {
-      a: ref([]),
+      a: ref(['apple']),
       b: ref(''),
       c: ref(''),
+      disabled,
       indeterminate: ref(false),
       onChange(e) {
         console.log(2, e);
       },
       onBeforeChange(e) {
         console.log(1, e);
+      },
+      onTrigger() {
+        disabled.value = !disabled.value;
       },
     };
   },
