@@ -11,6 +11,7 @@
   user-select: none;
 
   &__icon {
+    overflow: hidden;
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -38,10 +39,22 @@
       display: block;
       opacity: 0;
       transform: scale(0);
-      transition: @transition-time ease-in-out;
+      transition: @transition-time ease;
     }
   }
 
+  &__ipt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+  }
+
+  &__focus &__icon,
   &:hover &__icon {
     box-shadow: 0 0 3px @checkbox-icon-border-color;
   }
@@ -50,9 +63,9 @@
     display: block;
     width: @checkbox-icon-size - 10;
     height: @checkbox-icon-size - 14;
-    border-width: 2px;
+    border-width: 0 0 2px 2px;
     border-style: solid;
-    border-color: transparent transparent #fff #fff;
+    border-color: #fff;
   }
 
   &__icon-radio &__icon-inner {
@@ -63,6 +76,14 @@
   }
 
   &__indeterminate &__icon-checkbox {
+    background-color: @checkbox-icon-color;
+    border-color: @checkbox-icon-color;
+  }
+  &__indeterminate &__icon-checkbox &__icon-inner {
+    transform: scale(1);
+    height: 0;
+    background-color: #fff;
+    opacity: 1;
   }
 
   &__checked &__icon {
@@ -84,17 +105,18 @@
   }
 
   &__disabled {
-    color: @checkbox-disabled-color !important;
-    cursor: @checkbox-icon-disabled-cursor !important;
+    color: @checkbox-disabled-color;
+    cursor: @checkbox-icon-disabled-cursor;
   }
   &__disabled &__icon {
-    background-color: @checkbox-icon-disabled-bg-color !important;
-    border-color: @checkbox-icon-border-color !important;
-    box-shadow: none !important;
+    background-color: @checkbox-icon-disabled-bg-color;
+    border-color: @checkbox-icon-border-color;
+    box-shadow: none;
   }
-  &__disabled &__icon-checkbox {
+  &__disabled &__icon-checkbox &__icon-inner {
+    border-color: @checkbox-disabled-color;
   }
   &__disabled &__icon-radio &__icon-inner {
-    background-color: @checkbox-icon-border-color !important;
+    background-color: @checkbox-icon-border-color;
   }
 }

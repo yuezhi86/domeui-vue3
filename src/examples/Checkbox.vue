@@ -7,8 +7,18 @@
         label="苹果"
         value="apple"
         radio-optional
+        @onBeforeChange="onBeforeChange"
+        @onChange="onChange"
       />
-      <DeCheckbox html-type="checkbox" label="香蕉" value="banana" />
+      <DeCheckbox
+        v-model="c"
+        v-model:indeterminate="indeterminate"
+        html-type="checkbox"
+        label="香蕉"
+        value="banana"
+        @onBeforeChange="onBeforeChange"
+        @onChange="onChange"
+      />
     </div>
   </section>
 </template>
@@ -23,8 +33,15 @@ export default {
   setup() {
     return {
       a: ref([]),
-      b: ref('apple'),
+      b: ref(''),
       c: ref(''),
+      indeterminate: ref(false),
+      onChange(e) {
+        console.log(2, e);
+      },
+      onBeforeChange(e) {
+        console.log(1, e);
+      },
     };
   },
 };

@@ -1,10 +1,20 @@
 <template>
-  <div :class="wrapClassList" @click="onChange">
+  <label :class="wrapClassList">
     <span :class="iconClassList">
       <i class="de-checkbox__icon-inner"></i>
+      <input
+        :type="htmlType"
+        :name="name"
+        :checked="isChecked"
+        :disabled="disabled"
+        class="de-checkbox__ipt"
+        @focus="onFocus"
+        @blur="onBlur"
+        @click="onClick"
+      />
     </span>
     <slot>{{ label }}</slot>
-  </div>
+  </label>
 </template>
 
 <script lang="ts">
@@ -44,9 +54,15 @@ export default defineComponent({
     indeterminate: Boolean,
     disabled: Boolean,
   },
-  emits: ['update:modelValue', 'onChange', 'onBeforeChange'],
+  emits: [
+    'update:modelValue',
+    'update:indeterminate',
+    'onChange',
+    'onBeforeChange',
+  ],
   setup(props, {emit}) {
     const value = ref<boolean | string | number>('');
+    const isFocus = ref(false);
     const isChecked = ref(false);
     const isRadio = computed(() => props.htmlType === 'radio');
     const wrapClassList = computed(() => {
@@ -55,6 +71,8 @@ export default defineComponent({
         {
           [`${name}__disabled`]: props.disabled,
           [`${name}__checked`]: isChecked.value,
+          [`${name}__focus`]: isFocus.value,
+          [`${name}__indeterminate`]: props.indeterminate && !isChecked.value,
         },
       ];
     });
@@ -90,10 +108,17 @@ export default defineComponent({
       isChecked,
       wrapClassList,
       iconClassList,
-      onChange() {
+      onClick() {
         if (props.disabled) return;
         update();
+        emit('update:indeterminate', false);
         emit('update:modelValue', value.value);
+      },
+      onFocus() {
+        isFocus.value = true;
+      },
+      onBlur() {
+        isFocus.value = false;
       },
     };
   },
