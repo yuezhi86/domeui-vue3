@@ -20,8 +20,8 @@
 <script lang="ts">
 import './index.less';
 import {defineComponent, ref, computed, watchEffect, inject} from 'vue';
+import {CheckboxValue} from '@/index.d';
 
-type PModelValue = string | number | boolean;
 const DEFAULT_HTML_TYPE = 'checkbox';
 const name = 'de-checkbox';
 export default defineComponent({
@@ -63,21 +63,42 @@ export default defineComponent({
     'onBeforeChange',
   ],
   setup(props, {emit}) {
-    const pName = inject('name', {value: ''});
-    const pHtmlType = inject('htmlType', {value: DEFAULT_HTML_TYPE});
-    const pDisabled = inject('disabled', {value: false});
-    const pModelValue = inject<{value: PModelValue | Array<PModelValue>}>(
+    const inGroup = inject('group', false);
+    const pName = inject('name', '');
+    const pHtmlType = inject<{value: 'radio' | 'checkbox'} | null>(
+      'htmlType',
+      null
+    );
+    const pDisabled = inject<{value: boolean} | null>('disabled', null);
+    const pRadioOptional = inject<{value: boolean} | null>(
+      'radioOptional',
+      null
+    );
+    const pModelValue = inject<{value: CheckboxValue | Array<CheckboxValue>}>(
       'modelValue',
       {
         value: '',
       }
     );
     const pUpdate = inject<Function | null>('update', null);
-    const value = ref<boolean | string | number>('');
+    const value = ref<CheckboxValue>('');
     const isFocus = ref(false);
     const isChecked = ref(false);
-    const isRadio = computed(() => props.htmlType === 'radio');
-    const isDisabled = computed(() => pDisabled.value || props.disabled);
+    const isRadio = computed(
+      () =>
+        (pHtmlType && pHtmlType.value === 'radio') || props.htmlType === 'radio'
+    );
+    const isDisabled = computed(() => {
+      if (pDisabled !== null) return pDisabled.value || props.disabled;
+      return props.disabled;
+    });
+    const isRadioOptional = computed(() => {
+      if (pRadioOptional !== null) {
+        return pRadioOptional.value || props.radioOptional;
+      }
+
+      return props.radioOptional;
+    });
     const wrapClassList = computed(() => {
       return [
         name,
@@ -101,7 +122,7 @@ export default defineComponent({
     });
 
     const update = () => {
-      if (isRadio.value && isChecked.value && !props.radioOptional) return;
+      if (isRadio.value && isChecked.value && !isRadioOptional.value) return;
       isChecked.value = !isChecked.value;
       emit('onBeforeChange', value.value);
       value.value = isChecked.value
@@ -133,7 +154,18 @@ export default defineComponent({
     };
 
     watchEffect(() => {
-      isChecked.value = props.modelValue === props.value;
+      if (inGroup) {
+        if (isRadio.value) {
+          isChecked.value = pModelValue.value === props.value;
+          return;
+        }
+
+        if (Array.isArray(pModelValue.value)) {
+          isChecked.value = pModelValue.value.includes(props.value);
+        }
+      } else {
+        isChecked.value = props.modelValue === props.value;
+      }
     });
 
     return {
@@ -160,7 +192,7 @@ export default defineComponent({
   },
 });
 
-function getDefVal(value: number | string | boolean) {
+function getDefVal(value: CheckboxValue) {
   switch (typeof value) {
     case 'number':
     case 'string':

@@ -1,12 +1,15 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
+      <h3>单个使用</h3>
       <DeCheckbox
         v-model="b"
         html-type="radio"
         label="苹果"
         value="apple"
         radio-optional
+        name="b"
+        :disabled="disabled"
         @onBeforeChange="onBeforeChange"
         @onChange="onChange"
       />
@@ -15,15 +18,39 @@
         v-model:indeterminate="indeterminate"
         html-type="checkbox"
         label="香蕉"
+        name="c"
         value="banana"
+        :disabled="disabled"
         @onBeforeChange="onBeforeChange"
         @onChange="onChange"
       />
     </div>
     <div class="item-group">
-      <DeCheckboxGroup v-model="a" name="a" :disabled="disabled" vertical>
+      <h3>横向组</h3>
+      <DeCheckboxGroup
+        v-model="a"
+        name="a"
+        html-type="radio"
+        :disabled="disabled"
+      >
         <DeCheckbox value="apple">苹果</DeCheckbox>
         <DeCheckbox value="banana">香蕉</DeCheckbox>
+        <DeCheckbox value="pear">梨</DeCheckbox>
+      </DeCheckboxGroup>
+    </div>
+    <div class="item-group">
+      <h3>纵向组</h3>
+      <DeCheckboxGroup
+        v-model="d"
+        name="d"
+        html-type="checkbox"
+        :disabled="disabled"
+        vertical
+        radio-optional
+      >
+        <DeCheckbox value="apple">苹果</DeCheckbox>
+        <DeCheckbox value="banana">香蕉</DeCheckbox>
+        <DeCheckbox value="pear">梨</DeCheckbox>
       </DeCheckboxGroup>
     </div>
     <DeButton @click="onTrigger">{{ disabled ? '启用' : '禁用' }}</DeButton>
@@ -42,9 +69,10 @@ export default {
   setup() {
     const disabled = ref(false);
     return {
-      a: ref(['apple']),
+      a: ref('apple'),
       b: ref(''),
       c: ref(''),
+      d: ref(['apple', 'pear']),
       disabled,
       indeterminate: ref(false),
       onChange(e) {
