@@ -5,8 +5,7 @@
       <DeCheckbox
         v-model="b"
         html-type="radio"
-        label="苹果"
-        value="apple"
+        label="可取消的单选按钮"
         radio-optional
         name="b"
         :disabled="disabled"
@@ -19,7 +18,8 @@
         html-type="checkbox"
         label="香蕉"
         name="c"
-        value="banana"
+        :true-value="1"
+        :false-value="0"
         :disabled="disabled"
         @onBeforeChange="onBeforeChange"
         @onChange="onChange"
@@ -33,9 +33,9 @@
         html-type="radio"
         :disabled="disabled"
       >
-        <DeCheckbox value="apple">苹果</DeCheckbox>
-        <DeCheckbox value="banana">香蕉</DeCheckbox>
-        <DeCheckbox value="pear">梨</DeCheckbox>
+        <DeCheckbox true-value="apple">苹果</DeCheckbox>
+        <DeCheckbox true-value="banana">香蕉</DeCheckbox>
+        <DeCheckbox true-value="pear">梨</DeCheckbox>
       </DeCheckboxGroup>
     </div>
     <div class="item-group">
@@ -48,9 +48,9 @@
         vertical
         radio-optional
       >
-        <DeCheckbox value="apple">苹果</DeCheckbox>
-        <DeCheckbox value="banana">香蕉</DeCheckbox>
-        <DeCheckbox value="pear">梨</DeCheckbox>
+        <DeCheckbox true-value="apple">苹果</DeCheckbox>
+        <DeCheckbox true-value="banana">香蕉</DeCheckbox>
+        <DeCheckbox true-value="pear">梨</DeCheckbox>
       </DeCheckboxGroup>
     </div>
     <DeButton @click="onTrigger">{{ disabled ? '启用' : '禁用' }}</DeButton>

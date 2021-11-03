@@ -4,8 +4,8 @@
 
 - ~~Button~~
 - ~~Input~~
-- Checkbox & Radio
-- CheckboxGroup
+- ~~Checkbox & Radio~~
+- ~~CheckboxGroup~~
 - Switch
 - Select
 - DatePicker

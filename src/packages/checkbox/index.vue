@@ -31,15 +31,19 @@ export default defineComponent({
       type: [String, Number, Boolean],
       default: '',
     },
-    label: {
+    trueValue: {
+      type: [String, Number, Boolean],
+      default: true,
+    },
+    falseValue: {
+      type: [String, Number, Boolean],
+      default: false,
+    },
+    name: {
       type: String,
       default: '',
     },
-    value: {
-      type: [String, Number, Boolean],
-      required: true,
-    },
-    name: {
+    label: {
       type: String,
       default: '',
     },
@@ -47,10 +51,6 @@ export default defineComponent({
       type: String,
       default: DEFAULT_HTML_TYPE,
       validator: (v: string) => ['checkbox', 'radio'].includes(v),
-    },
-    falseValue: {
-      type: [String, Number, Boolean],
-      default: undefined,
     },
     radioOptional: Boolean,
     indeterminate: Boolean,
@@ -126,8 +126,8 @@ export default defineComponent({
       isChecked.value = !isChecked.value;
       emit('onBeforeChange', value.value);
       value.value = isChecked.value
-        ? props.value
-        : props.falseValue || getDefVal(props.value);
+        ? props.trueValue
+        : getDefFalseVal(props.trueValue, props.falseValue);
       emit('onChange', {
         checked: isChecked.value,
         value: value.value,
@@ -146,7 +146,9 @@ export default defineComponent({
       if (isChecked.value) {
         pUpdate([...new Set([..._pModelValue, value.value])]);
       } else {
-        const index = _pModelValue.findIndex((item) => item === props.value);
+        const index = _pModelValue.findIndex(
+          (item) => item === props.trueValue
+        );
         if (index === -1) return;
         _pModelValue.splice(index, 1);
         pUpdate([..._pModelValue]);
@@ -156,15 +158,15 @@ export default defineComponent({
     watchEffect(() => {
       if (inGroup) {
         if (isRadio.value) {
-          isChecked.value = pModelValue.value === props.value;
+          isChecked.value = pModelValue.value === props.trueValue;
           return;
         }
 
         if (Array.isArray(pModelValue.value)) {
-          isChecked.value = pModelValue.value.includes(props.value);
+          isChecked.value = pModelValue.value.includes(props.trueValue);
         }
       } else {
-        isChecked.value = props.modelValue === props.value;
+        isChecked.value = props.modelValue === props.trueValue;
       }
     });
 
@@ -192,11 +194,12 @@ export default defineComponent({
   },
 });
 
-function getDefVal(value: CheckboxValue) {
-  switch (typeof value) {
+function getDefFalseVal(trueValue: CheckboxValue, falseValue: CheckboxValue) {
+  switch (typeof trueValue) {
     case 'number':
+      return typeof falseValue === 'number' ? falseValue : '';
     case 'string':
-      return '';
+      return falseValue || '';
     case 'boolean':
       return false;
   }
