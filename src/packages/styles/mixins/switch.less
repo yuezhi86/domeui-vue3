@@ -1,0 +1,12 @@
+.switch-type(@name, @on-bg-color, @off-bg-color) {
+  &__@{name}&__checked &__inner {
+    background-color: @on-bg-color;
+    border-color: @on-bg-color;
+    justify-content: end;
+  }
+
+  &__@{name}&__checked&:focus,
+  &__@{name}&__checked&:hover {
+    box-shadow: 0 0 3px @on-bg-color;
+  }
+}

@@ -20,7 +20,8 @@
 <script lang="ts">
 import './index.less';
 import {defineComponent, ref, computed, watchEffect, inject} from 'vue';
-import {CheckboxValue} from '@/index.d';
+import {CheckboxValue} from '../types';
+import {getUncheckedDefaultValue} from '../utils/assist';
 
 const DEFAULT_HTML_TYPE = 'checkbox';
 const name = 'de-checkbox';
@@ -127,7 +128,7 @@ export default defineComponent({
       emit('onBeforeChange', value.value);
       value.value = isChecked.value
         ? props.trueValue
-        : getDefFalseVal(props.trueValue, props.falseValue);
+        : getUncheckedDefaultValue(props.trueValue, props.falseValue);
       emit('onChange', {
         checked: isChecked.value,
         value: value.value,
@@ -193,15 +194,4 @@ export default defineComponent({
     };
   },
 });
-
-function getDefFalseVal(trueValue: CheckboxValue, falseValue: CheckboxValue) {
-  switch (typeof trueValue) {
-    case 'number':
-      return typeof falseValue === 'number' ? falseValue : '';
-    case 'string':
-      return falseValue || '';
-    case 'boolean':
-      return false;
-  }
-}
 </script>
