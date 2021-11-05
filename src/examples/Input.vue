@@ -22,7 +22,7 @@
       <DeInput v-model="a" placeholder="请输入..." readonly />
       <DeInput v-model="b" placeholder="请输入..." disabled />
       <DeInput v-model="c" placeholder="请输入..." size="large" />
-      <DeInput placeholder="请输入..." size="xlarge" long />
+      <DeInput v-model="c" placeholder="请输入..." size="xlarge" long />
       <DeInput
         v-model="c"
         placeholder="请输入..."
