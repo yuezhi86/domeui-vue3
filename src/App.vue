@@ -1,5 +1,7 @@
 <template>
   <div id="app" class="demo-wrapper">
+    <h2>MessageDemo</h2>
+    <MessageDemo />
     <h2>SwitchDemo</h2>
     <SwitchDemo />
     <h2>CheckboxDemo</h2>
@@ -16,6 +18,7 @@ import ButtonDemo from './examples/Button.vue';
 import InputDemo from './examples/Input.vue';
 import CheckboxDemo from './examples/Checkbox.vue';
 import SwitchDemo from './examples/Switch.vue';
+import MessageDemo from './examples/Message.vue';
 
 export default {
   components: {
@@ -23,6 +26,7 @@ export default {
     InputDemo,
     CheckboxDemo,
     SwitchDemo,
+    MessageDemo,
   },
 };
 </script>

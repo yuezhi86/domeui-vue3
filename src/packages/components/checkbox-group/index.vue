@@ -7,7 +7,7 @@
 <script lang="ts">
 import './index.less';
 import {defineComponent, computed, provide} from 'vue';
-import {CheckboxValue} from '../types';
+import {CheckboxValue} from '../../types';
 
 const name = 'de-checkbox-group';
 export default defineComponent({

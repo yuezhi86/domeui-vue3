@@ -6,7 +6,9 @@
 - ~~Input~~
 - ~~Checkbox & Radio~~
 - ~~CheckboxGroup~~
-- Switch
+- ~~Switch~~
+- Message
+- Alert
 - Select
 - DatePicker
 - TimePicker
@@ -27,8 +29,6 @@
 - Region
 - Avatar
 - Tag
-- Message
 - Modal
-- Alert
 - Tooltip
 - Poptip

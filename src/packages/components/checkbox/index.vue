@@ -21,8 +21,8 @@
 <script lang="ts">
 import './index.less';
 import {defineComponent, ref, computed, watchEffect, inject} from 'vue';
-import {CheckboxValue} from '../types';
-import {getUncheckedDefaultValue} from '../utils/assist';
+import {CheckboxValue} from '../../types';
+import {getUncheckedDefaultValue} from '../../utils/assist';
 
 const DEFAULT_HTML_TYPE = 'checkbox';
 const name = 'de-checkbox';
