@@ -34,7 +34,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import {ref} from 'vue';
 import {DeSwitch, DeButton} from '@/packages';
 export default {
@@ -49,18 +49,18 @@ export default {
       b: ref(true),
       c: ref(''),
       disabled,
-      beforeChange(checked) {
+      beforeChange(checked: boolean) {
         console.log(checked);
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
           setTimeout(() => {
             resolve();
           }, 3000);
         });
       },
-      onChange(e) {
+      onChange(e: any) {
         console.log(2, e);
       },
-      onBeforeChange(e) {
+      onBeforeChange(e: any) {
         console.log(1, e);
       },
       onTrigger() {

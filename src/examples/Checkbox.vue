@@ -57,7 +57,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import {ref} from 'vue';
 import {DeCheckbox, DeCheckboxGroup, DeButton} from '@/packages';
 export default {
@@ -75,10 +75,10 @@ export default {
       d: ref(['apple', 'pear']),
       disabled,
       indeterminate: ref(false),
-      onChange(e) {
+      onChange(e: any) {
         console.log(2, e);
       },
-      onBeforeChange(e) {
+      onBeforeChange(e: any) {
         console.log(1, e);
       },
       onTrigger() {

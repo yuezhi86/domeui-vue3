@@ -35,7 +35,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import {ref} from 'vue';
 import {DeInput} from '@/packages';
 export default {
