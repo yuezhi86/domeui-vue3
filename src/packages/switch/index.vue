@@ -3,21 +3,27 @@
     tabindex="0"
     :class="classList"
     :style="styleList"
-    @click="onTrigger"
-    @keyup.space="onTrigger"
+    @click="onToggle"
+    @keydown.space="onToggle"
   >
     <input type="hidden" :name="name" :value="value" />
     <div class="de-switch__inner">
+      <span v-if="isChecked" class="de-switch__text">
+        <slot name="on"></slot>
+      </span>
       <i class="de-switch__i" :style="iStyleList"></i>
+      <span v-if="!isChecked" class="de-switch__text">
+        <slot name="off"></slot>
+      </span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import './index.less';
-import {defineComponent, ref, computed} from 'vue';
+import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
 import {CheckboxValue} from '../types';
-// import {getUncheckedDefaultValue} from '../utils/assist';
+import {getUncheckedDefaultValue} from '../utils/assist';
 
 const name = 'de-switch';
 export default defineComponent({
@@ -54,12 +60,12 @@ export default defineComponent({
     },
     disabled: Boolean,
     beforeChange: {
-      type: Promise,
+      type: Function as PropType<(checked?: boolean) => Promise<void>>,
       default: undefined,
     },
   },
   emits: ['update:modelValue', 'onChange'],
-  setup(props) {
+  setup(props, {emit}) {
     const isChecked = ref(false);
     const value = ref<CheckboxValue>('');
     const classList = computed(() => [
@@ -86,14 +92,46 @@ export default defineComponent({
       };
     });
 
+    const setValue = (isChecked: boolean) => {
+      value.value = isChecked
+        ? props.trueValue
+        : getUncheckedDefaultValue(props.trueValue, props.falseValue);
+    };
+    const handle = () => {
+      isChecked.value = !isChecked.value;
+      setValue(isChecked.value);
+      emit('update:modelValue', value.value);
+      emit('onChange', {
+        checked: isChecked.value,
+        value: value.value,
+      });
+    };
+
+    watchEffect(() => {
+      isChecked.value = props.modelValue === props.trueValue;
+      setValue(isChecked.value);
+    });
+
     return {
       classList,
       styleList,
       iStyleList,
+      isChecked,
       value,
-      onTrigger() {
+      onToggle(e: Event) {
+        e.preventDefault();
         if (props.disabled) return;
-        isChecked.value = !isChecked.value;
+        if (!props.beforeChange) return handle();
+
+        const before = props.beforeChange(isChecked.value);
+
+        if (before && before.then) {
+          before.then(() => {
+            handle();
+          });
+        } else {
+          handle();
+        }
       },
     };
   },

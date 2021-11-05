@@ -7,6 +7,7 @@
         :name="pName || name"
         :checked="isChecked"
         :disabled="isDisabled"
+        :value="trueValue"
         class="de-checkbox__ipt"
         @focus="onFocus"
         @blur="onBlur"
@@ -122,13 +123,16 @@ export default defineComponent({
       ];
     });
 
-    const update = () => {
+    const setValue = (isChecked: boolean) => {
+      value.value = isChecked
+        ? props.trueValue
+        : getUncheckedDefaultValue(props.trueValue, props.falseValue);
+    };
+    const handle = () => {
       if (isRadio.value && isChecked.value && !isRadioOptional.value) return;
       isChecked.value = !isChecked.value;
       emit('onBeforeChange', value.value);
-      value.value = isChecked.value
-        ? props.trueValue
-        : getUncheckedDefaultValue(props.trueValue, props.falseValue);
+      setValue(isChecked.value);
       emit('onChange', {
         checked: isChecked.value,
         value: value.value,
@@ -137,8 +141,7 @@ export default defineComponent({
     const updateParent = () => {
       if (typeof pUpdate !== 'function') return;
       if (isRadio.value) {
-        pUpdate(value.value);
-        return;
+        return pUpdate(value.value);
       }
 
       const _pModelValue = Array.isArray(pModelValue.value)
@@ -146,28 +149,31 @@ export default defineComponent({
         : [];
       if (isChecked.value) {
         pUpdate([...new Set([..._pModelValue, value.value])]);
-      } else {
-        const index = _pModelValue.findIndex(
-          (item) => item === props.trueValue
-        );
-        if (index === -1) return;
-        _pModelValue.splice(index, 1);
-        pUpdate([..._pModelValue]);
+        return;
       }
+
+      const index = _pModelValue.findIndex((item) => item === props.trueValue);
+      if (index === -1) return;
+      _pModelValue.splice(index, 1);
+      pUpdate([..._pModelValue]);
     };
 
     watchEffect(() => {
-      if (inGroup) {
-        if (isRadio.value) {
-          isChecked.value = pModelValue.value === props.trueValue;
-          return;
-        }
-
-        if (Array.isArray(pModelValue.value)) {
-          isChecked.value = pModelValue.value.includes(props.trueValue);
-        }
-      } else {
+      if (!inGroup) {
         isChecked.value = props.modelValue === props.trueValue;
+        setValue(isChecked.value);
+        return;
+      }
+
+      if (isRadio.value) {
+        isChecked.value = pModelValue.value === props.trueValue;
+        setValue(isChecked.value);
+        return;
+      }
+
+      if (Array.isArray(pModelValue.value)) {
+        isChecked.value = pModelValue.value.includes(props.trueValue);
+        setValue(isChecked.value);
       }
     });
 
@@ -180,7 +186,7 @@ export default defineComponent({
       iconClassList,
       onClick() {
         if (isDisabled.value) return;
-        update();
+        handle();
         updateParent();
         emit('update:indeterminate', false);
         emit('update:modelValue', value.value);

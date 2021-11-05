@@ -5,6 +5,7 @@
   overflow: hidden;
   position: relative;
   display: inline-block;
+  background-color: #fff;
   vertical-align: middle;
   cursor: pointer;
   box-sizing: border-box;
@@ -16,13 +17,24 @@
   &__inner {
     display: flex;
     justify-content: start;
+    align-items: center;
     padding: 1px;
     background-color: @switch-off-bg-color;
     border: 1px solid @switch-off-bg-color;
     box-sizing: border-box;
   }
 
+  &__text {
+    flex: auto;
+    color: @switch-text-color;
+    font-size: @switch-text-size;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+  }
+
   &__i {
+    flex-shrink: 0;
     background-color: #fff;
     content: '';
   }

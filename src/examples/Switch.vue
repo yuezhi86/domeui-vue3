@@ -8,42 +8,29 @@
         @onChange="onChange"
       />
       <DeSwitch
-        v-model="b"
-        name="b"
+        v-model="c"
+        name="c"
         type="success"
+        :width="80"
+        :height="30"
         :disabled="disabled"
+        @onChange="onChange"
+      >
+        <template #on>已打开</template>
+        <template #off>已关闭</template>
+      </DeSwitch>
+      <DeButton @click="onTrigger">{{ disabled ? '启用' : '禁用' }}</DeButton>
+    </div>
+    <div class="item-group">
+      <h3>beforeChange</h3>
+      <DeSwitch
+        v-model="a"
+        name="a"
+        :disabled="disabled"
+        :before-change="beforeChange"
         @onChange="onChange"
       />
     </div>
-    <!--    <div class="item-group">-->
-    <!--      <h3>横向组</h3>-->
-    <!--      <DeCheckboxGroup-->
-    <!--        v-model="a"-->
-    <!--        name="a"-->
-    <!--        html-type="radio"-->
-    <!--        :disabled="disabled"-->
-    <!--      >-->
-    <!--        <DeCheckbox true-value="apple">苹果</DeCheckbox>-->
-    <!--        <DeCheckbox true-value="banana">香蕉</DeCheckbox>-->
-    <!--        <DeCheckbox true-value="pear">梨</DeCheckbox>-->
-    <!--      </DeCheckboxGroup>-->
-    <!--    </div>-->
-    <!--    <div class="item-group">-->
-    <!--      <h3>纵向组</h3>-->
-    <!--      <DeCheckboxGroup-->
-    <!--        v-model="d"-->
-    <!--        name="d"-->
-    <!--        html-type="checkbox"-->
-    <!--        :disabled="disabled"-->
-    <!--        vertical-->
-    <!--        radio-optional-->
-    <!--      >-->
-    <!--        <DeCheckbox true-value="apple">苹果</DeCheckbox>-->
-    <!--        <DeCheckbox true-value="banana">香蕉</DeCheckbox>-->
-    <!--        <DeCheckbox true-value="pear">梨</DeCheckbox>-->
-    <!--      </DeCheckboxGroup>-->
-    <!--    </div>-->
-    <DeButton @click="onTrigger">{{ disabled ? '启用' : '禁用' }}</DeButton>
   </section>
 </template>
 
@@ -58,12 +45,18 @@ export default {
   setup() {
     const disabled = ref(false);
     return {
-      a: ref('apple'),
-      b: ref(''),
+      a: ref(false),
+      b: ref(true),
       c: ref(''),
-      d: ref(['apple', 'pear']),
       disabled,
-      indeterminate: ref(false),
+      beforeChange(checked) {
+        console.log(checked);
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, 3000);
+        });
+      },
       onChange(e) {
         console.log(2, e);
       },
