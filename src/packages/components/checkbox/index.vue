@@ -65,7 +65,7 @@ export default defineComponent({
     'onBeforeChange',
   ],
   setup(props, {emit}) {
-    const inGroup = inject('group', false);
+    const inGroups = inject('group', false);
     const pName = inject('name', '');
     const pHtmlType = inject<{value: 'radio' | 'checkbox'} | null>(
       'htmlType',
@@ -83,6 +83,7 @@ export default defineComponent({
       }
     );
     const pUpdate = inject<Function | null>('update', null);
+
     const value = ref<CheckboxValue>('');
     const isFocus = ref(false);
     const isChecked = ref(false);
@@ -159,7 +160,7 @@ export default defineComponent({
     };
 
     watchEffect(() => {
-      if (!inGroup) {
+      if (!inGroups) {
         isChecked.value = props.modelValue === props.trueValue;
         setValue(isChecked.value);
         return;

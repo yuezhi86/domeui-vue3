@@ -1,3 +1,6 @@
+import {App} from 'vue';
+import {Config} from './types';
+import {setConfig} from './config';
 import Button from './components/button/index.vue';
 import Input from './components/input/index.vue';
 import Checkbox from './components/checkbox/index.vue';
@@ -11,3 +14,10 @@ export const DeCheckbox = Checkbox;
 export const DeCheckboxGroup = CheckboxGroup;
 export const DeSwitch = Switch;
 export const DeMessage = Message;
+
+export function config(options?: Config) {
+  setConfig(options);
+}
+export function install(app: App) {
+  console.log(app);
+}

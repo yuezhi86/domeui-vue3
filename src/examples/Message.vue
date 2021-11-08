@@ -11,7 +11,7 @@ import {DeMessage} from '@/packages';
 export default defineComponent({
   setup() {
     DeMessage({
-      message: 'ok',
+      content: 'ok',
       className: 'custom-message',
       render: () => h('div', '12345'),
     });
