@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "author": "yuezhi86",
-  "homepage": "",
+  "homepage": "git@github.com:yuezhi86/domeui-vue3",
   "main": "src/packages/index.ts",
   "module": "src/packages/index.ts",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:yuezhi86/domeui-vue3.git"
   },
   "keywords": [
     "domeui",
