@@ -1,8 +1,8 @@
-import {CommonConfig, MessageConfig, Config} from './types';
+import {CommonConfig, MessageConfig, GlobalConfig} from './types';
 import merge from 'lodash-es/merge';
 import cloneDeep from 'lodash-es/cloneDeep';
 
-const defaultConfig: Config = {
+const defaultConfig: GlobalConfig = {
   common: {
     zIndex: 1000, // 基础z-index
     transfer: true,
@@ -12,13 +12,13 @@ const defaultConfig: Config = {
     duration: 1.5, // 1.5s
   },
 };
-const globalConfig: Config = {};
+const globalConfig: GlobalConfig = {};
 
 type ReturnConfig = CommonConfig | MessageConfig;
 export function getConfig(name: string): ReturnConfig {
   return globalConfig[name];
 }
-export function setConfig(config: Config | undefined) {
+export function setConfig(config: GlobalConfig | undefined) {
   if (!config) return;
   merge(globalConfig, cloneDeep(defaultConfig), config);
   console.log('globalConfig', globalConfig);

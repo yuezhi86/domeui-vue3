@@ -1,33 +1,32 @@
-import {MessageOptions, MessageTypes} from '../../types';
+import {
+  MessageFunction,
+  MessageRestOptions,
+  MessageOptions,
+  MessageTypes,
+} from '../../types';
 
-type Config = Omit<MessageOptions, 'type' | 'content'>;
-type MethodHandle = (content: string, config?: Config) => void;
-interface MessageType {
-  (options: MessageOptions): void;
-  info: MethodHandle;
-  success: MethodHandle;
-  fail: MethodHandle;
-  warning: MethodHandle;
-}
-
-const Message: MessageType = function (options: MessageOptions): void {
+const Message: MessageFunction = function (options: MessageOptions): void {
   console.log(options);
 };
 
-Message.info = (content: string, config?: Config): void => {
+Message.info = (content: string, config?: MessageRestOptions): void => {
   _call('info', content, config);
 };
-Message.success = (content: string, config?: Config): void => {
+Message.success = (content: string, config?: MessageRestOptions): void => {
   _call('success', content, config);
 };
-Message.fail = (content: string, config?: Config): void => {
+Message.fail = (content: string, config?: MessageRestOptions): void => {
   _call('fail', content, config);
 };
-Message.warning = (content: string, config?: Config): void => {
+Message.warning = (content: string, config?: MessageRestOptions): void => {
   _call('warning', content, config);
 };
 
-function _call(type: MessageTypes, content: string, config?: Config) {
+function _call(
+  type: MessageTypes,
+  content: string,
+  config?: MessageRestOptions
+) {
   Message(
     Object.assign({}, config, {
       type,
