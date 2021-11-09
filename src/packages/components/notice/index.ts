@@ -1,36 +1,32 @@
 import {
-  MessageFunction,
-  MessageRestOptions,
-  MessageOptions,
-  MessageTypes,
+  NoticeFunction,
+  NoticeRestOptions,
+  NoticeOptions,
+  NoticeTypes,
 } from '../../types';
 
-const Message: MessageFunction = function (options: MessageOptions): void {
+const Notice: NoticeFunction = function (options: NoticeOptions): void {
   console.log(options);
 };
 
-Message.info = (content: string, config?: MessageRestOptions): void => {
+Notice.info = (content: string, config?: NoticeRestOptions): void => {
   _call('info', content, config);
 };
-Message.success = (content: string, config?: MessageRestOptions): void => {
+Notice.success = (content: string, config?: NoticeRestOptions): void => {
   _call('success', content, config);
 };
-Message.fail = (content: string, config?: MessageRestOptions): void => {
+Notice.fail = (content: string, config?: NoticeRestOptions): void => {
   _call('fail', content, config);
 };
-Message.warning = (content: string, config?: MessageRestOptions): void => {
+Notice.warning = (content: string, config?: NoticeRestOptions): void => {
   _call('warning', content, config);
 };
-Message.destroy = () => {
+Notice.destroy = () => {
   console.log('destroy');
 };
 
-function _call(
-  type: MessageTypes,
-  content: string,
-  config?: MessageRestOptions
-) {
-  Message(
+function _call(type: NoticeTypes, content: string, config?: NoticeRestOptions) {
+  Notice(
     Object.assign({}, config, {
       type,
       content,
@@ -38,4 +34,4 @@ function _call(
   );
 }
 
-export default Message;
+export default Notice;
