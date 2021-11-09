@@ -20,8 +20,15 @@
 
 <script lang="ts">
 import './index.less';
-import {defineComponent, ref, computed, watchEffect, inject} from 'vue';
-import {CheckboxValue} from '../../types';
+import {
+  defineComponent,
+  ref,
+  computed,
+  watchEffect,
+  inject,
+  PropType,
+} from 'vue';
+import {CheckboxValue, CheckboxNativeType} from '../../types';
 import {getUncheckedDefaultValue} from '../../utils/assist';
 
 const DEFAULT_HTML_TYPE = 'checkbox';
@@ -50,7 +57,7 @@ export default defineComponent({
       default: '',
     },
     nativeType: {
-      type: String,
+      type: String as PropType<CheckboxNativeType>,
       default: DEFAULT_HTML_TYPE,
       validator: (v: string) => ['checkbox', 'radio'].includes(v),
     },

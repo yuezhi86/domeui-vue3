@@ -11,6 +11,9 @@ DomeUIConfig({
   message: {
     duration: 2,
   },
+  notice: {
+    duration: 4.5,
+  },
 });
 DomeUIInstall(app);
 

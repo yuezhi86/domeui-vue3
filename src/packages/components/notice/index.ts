@@ -4,6 +4,7 @@ import {
   NoticeOptions,
   NoticeTypes,
 } from '../../types';
+import './index.less';
 
 const Notice: NoticeFunction = function (options: NoticeOptions): void {
   console.log(options);

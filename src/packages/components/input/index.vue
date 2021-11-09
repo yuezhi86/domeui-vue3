@@ -43,7 +43,8 @@
 
 <script lang="ts">
 import './index.less';
-import {defineComponent, ref, computed, watchEffect} from 'vue';
+import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
+import {InputType, Size, TextareaResize, TextareaWrap} from '../../types';
 
 const name = 'de-input';
 export default defineComponent({
@@ -54,11 +55,12 @@ export default defineComponent({
       default: '',
     },
     type: {
-      type: String,
+      type: String as PropType<InputType>,
       default: 'input',
       validator: (v: string) => ['input', 'textarea'].includes(v),
     },
     size: {
+      type: String as PropType<Size | string>,
       default: 'middle',
       validator: (v: string) =>
         ['xsmall', 'small', 'middle', 'large', 'xlarge'].includes(v) || !!v,
@@ -108,12 +110,12 @@ export default defineComponent({
       default: 5,
     },
     wrap: {
-      type: String,
+      type: String as PropType<TextareaWrap>,
       default: 'soft',
       validator: (v: string) => ['soft', 'hard'].includes(v),
     },
     resize: {
-      type: String,
+      type: String as PropType<TextareaResize>,
       default: 'none',
       validator: (v: string) =>
         ['none', 'both', 'vertical', 'horizontal'].includes(v),

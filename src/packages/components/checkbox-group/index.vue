@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import './index.less';
-import {defineComponent, computed, provide} from 'vue';
-import {CheckboxValue} from '../../types';
+import {defineComponent, computed, provide, PropType} from 'vue';
+import {CheckboxNativeType, CheckboxValue} from '../../types';
 
 const name = 'de-checkbox-group';
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
       required: true,
     },
     nativeType: {
-      type: String,
+      type: String as PropType<CheckboxNativeType>,
       default: 'checkbox',
       validator: (v: string) => ['checkbox', 'radio'].includes(v),
     },

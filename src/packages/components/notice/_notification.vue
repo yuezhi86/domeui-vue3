@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import '../../notice/index.less';
+import './index.less';
 import {defineComponent, ref, computed} from 'vue';
 
 const name = 'de-';

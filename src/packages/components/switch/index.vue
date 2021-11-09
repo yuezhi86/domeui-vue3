@@ -46,7 +46,7 @@ export default defineComponent({
       default: '',
     },
     theme: {
-      type: String,
+      type: String as PropType<'primary' | 'success' | string>,
       default: 'primary',
       validator: (v: string) => ['primary', 'success'].includes(v) || !!v,
     },

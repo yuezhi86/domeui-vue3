@@ -3,11 +3,13 @@ export type CommonConfig = {
   transfer?: boolean;
 };
 export type NoticeConfig = {
-  top?: number;
+  margin?: number;
   duration?: number;
 };
+export type MessageConfig = NoticeConfig & {};
 export type GlobalConfig = {
   [key: string]: any;
   common?: CommonConfig;
-  message?: NoticeConfig;
+  notice?: NoticeConfig;
+  message?: MessageConfig;
 };

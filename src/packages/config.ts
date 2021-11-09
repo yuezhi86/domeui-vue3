@@ -1,4 +1,4 @@
-import {CommonConfig, NoticeConfig, GlobalConfig} from './types';
+import {CommonConfig, NoticeConfig, MessageConfig, GlobalConfig} from './types';
 import merge from 'lodash-es/merge';
 import cloneDeep from 'lodash-es/cloneDeep';
 
@@ -8,13 +8,17 @@ const defaultConfig: GlobalConfig = {
     transfer: true,
   },
   message: {
-    top: 25, // 25px
+    margin: 25, // 25px
     duration: 1.5, // 1.5s
+  },
+  notice: {
+    margin: 25,
+    duration: 4.5,
   },
 };
 const globalConfig: GlobalConfig = {};
 
-type ReturnConfig = CommonConfig | NoticeConfig;
+type ReturnConfig = CommonConfig | NoticeConfig | MessageConfig;
 export function getConfig(name: string): ReturnConfig {
   return globalConfig[name];
 }
