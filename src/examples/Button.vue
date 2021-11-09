@@ -1,16 +1,16 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
-      <h3>type: default</h3>
-      <DeButton size="xsmall" type="default">xsmall</DeButton>
-      <DeButton size="small" type="default">small</DeButton>
-      <DeButton type="default">middle</DeButton>
-      <DeButton size="large" type="default">large</DeButton>
-      <DeButton size="xlarge" type="default">xlarge</DeButton>
-      <DeButton disabled size="xlarge" type="default">xlarge</DeButton>
+      <h3>theme: default</h3>
+      <DeButton size="xsmall" theme="default">xsmall</DeButton>
+      <DeButton size="small" theme="default">small</DeButton>
+      <DeButton theme="default">middle</DeButton>
+      <DeButton size="large" theme="default">large</DeButton>
+      <DeButton size="xlarge" theme="default">xlarge</DeButton>
+      <DeButton disabled size="xlarge" theme="default">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h3>type: primary</h3>
+      <h3>theme: primary</h3>
       <DeButton size="xsmall">xsmall</DeButton>
       <DeButton size="small">small</DeButton>
       <DeButton>middle</DeButton>
@@ -19,44 +19,44 @@
       <DeButton disabled size="xlarge">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h3>type: bright</h3>
-      <DeButton size="xsmall" type="bright">xsmall</DeButton>
-      <DeButton size="small" type="bright">small</DeButton>
-      <DeButton type="bright">middle</DeButton>
-      <DeButton size="large" type="bright">large</DeButton>
-      <DeButton size="xlarge" type="bright">xlarge</DeButton>
-      <DeButton disabled size="xlarge" type="bright">xlarge</DeButton>
+      <h3>theme: bright</h3>
+      <DeButton size="xsmall" theme="bright">xsmall</DeButton>
+      <DeButton size="small" theme="bright">small</DeButton>
+      <DeButton theme="bright">middle</DeButton>
+      <DeButton size="large" theme="bright">large</DeButton>
+      <DeButton size="xlarge" theme="bright">xlarge</DeButton>
+      <DeButton disabled size="xlarge" theme="bright">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h3>type: second</h3>
-      <DeButton size="xsmall" type="second">xsmall</DeButton>
-      <DeButton size="small" type="second">small</DeButton>
-      <DeButton type="second">middle</DeButton>
-      <DeButton size="large" type="second">large</DeButton>
-      <DeButton size="xlarge" type="second">xlarge</DeButton>
-      <DeButton disabled size="xlarge" type="second">xlarge</DeButton>
+      <h3>theme: second</h3>
+      <DeButton size="xsmall" theme="second">xsmall</DeButton>
+      <DeButton size="small" theme="second">small</DeButton>
+      <DeButton theme="second">middle</DeButton>
+      <DeButton size="large" theme="second">large</DeButton>
+      <DeButton size="xlarge" theme="second">xlarge</DeButton>
+      <DeButton disabled size="xlarge" theme="second">xlarge</DeButton>
     </div>
     <div class="item-group">
-      <h3>type: text</h3>
-      <DeButton size="xsmall" type="text">xsmall</DeButton>
-      <DeButton size="small" type="text">small</DeButton>
-      <DeButton type="text">middle</DeButton>
-      <DeButton size="large" type="text">large</DeButton>
-      <DeButton size="xlarge" type="text">xlarge</DeButton>
-      <DeButton disabled size="xlarge" type="text">xlarge</DeButton>
+      <h3>theme: text</h3>
+      <DeButton size="xsmall" theme="text">xsmall</DeButton>
+      <DeButton size="small" theme="text">small</DeButton>
+      <DeButton theme="text">middle</DeButton>
+      <DeButton size="large" theme="text">large</DeButton>
+      <DeButton size="xlarge" theme="text">xlarge</DeButton>
+      <DeButton disabled size="xlarge" theme="text">xlarge</DeButton>
     </div>
     <div class="item-group">
       <h3>plain</h3>
       <DeButton plain>primary</DeButton>
-      <DeButton type="bright" plain>bright</DeButton>
-      <DeButton type="second" plain>second</DeButton>
+      <DeButton theme="bright" plain>bright</DeButton>
+      <DeButton theme="second" plain>second</DeButton>
     </div>
     <div class="item-group">
       <h3>href</h3>
       <DeButton href="https://www.baidu.com" size="small" plain target="_blank">
         链接
       </DeButton>
-      <DeButton size="small" type="bright" plain @click="onClick">
+      <DeButton size="small" theme="bright" plain @click="onClick">
         点击
       </DeButton>
     </div>

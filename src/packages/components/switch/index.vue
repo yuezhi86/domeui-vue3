@@ -45,7 +45,7 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    type: {
+    theme: {
       type: String,
       default: 'primary',
       validator: (v: string) => ['primary', 'success'].includes(v) || !!v,
@@ -70,7 +70,7 @@ export default defineComponent({
     const value = ref<CheckboxValue>('');
     const classList = computed(() => [
       name,
-      `${name}__${props.type}`,
+      `${name}__${props.theme}`,
       {
         [`${name}__disabled`]: props.disabled,
         [`${name}__checked`]: isChecked.value,

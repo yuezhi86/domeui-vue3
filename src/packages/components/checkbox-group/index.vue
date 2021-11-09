@@ -21,7 +21,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    htmlType: {
+    nativeType: {
       type: String,
       default: 'checkbox',
       validator: (v: string) => ['checkbox', 'radio'].includes(v),
@@ -33,7 +33,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'onChange'],
   setup(props, {emit}) {
     const _name = computed(() => props.name);
-    const _htmlType = computed(() => props.htmlType);
+    const _nativeType = computed(() => props.nativeType);
     const _disabled = computed(() => props.disabled);
     const _radioOptional = computed(() => props.radioOptional);
     const _modelValue = computed(() => props.modelValue);
@@ -51,7 +51,7 @@ export default defineComponent({
 
     provide('group', true);
     provide('name', _name);
-    provide('htmlType', _htmlType);
+    provide('nativeType', _nativeType);
     provide('disabled', _disabled);
     provide('radioOptional', _radioOptional);
     provide('modelValue', _modelValue);

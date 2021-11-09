@@ -12,7 +12,7 @@ const name = 'de-button';
 export default defineComponent({
   name,
   props: {
-    type: {
+    theme: {
       default: 'primary',
       validator: (v: string) =>
         ['primary', 'bright', 'second', 'text', 'default'].includes(v) || !!v,
@@ -22,7 +22,7 @@ export default defineComponent({
       validator: (v: string) =>
         ['xsmall', 'small', 'middle', 'large', 'xlarge'].includes(v) || !!v,
     },
-    htmlType: {
+    nativeType: {
       default: 'button',
       validator: (v: string) => ['button', 'submit', 'reset'].includes(v),
     },
@@ -44,7 +44,7 @@ export default defineComponent({
       if (props.href) {
         attrs.href = props.href;
       } else {
-        attrs.type = props.htmlType;
+        attrs.type = props.nativeType;
       }
 
       if (props.disabled) {
@@ -56,11 +56,11 @@ export default defineComponent({
     const classList = computed(() => {
       return [
         name,
-        `${name}__${props.type}`,
+        `${name}__${props.theme}`,
         `${name}__${props.size}`,
         {
           [`${name}__long`]: props.long,
-          [`${name}__${props.type}-plain`]: props.plain,
+          [`${name}__${props.theme}-plain`]: props.plain,
           [`${name}__${props.size}-round`]: props.round,
         },
       ];

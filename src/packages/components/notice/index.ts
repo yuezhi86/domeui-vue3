@@ -21,6 +21,9 @@ Message.fail = (content: string, config?: MessageRestOptions): void => {
 Message.warning = (content: string, config?: MessageRestOptions): void => {
   _call('warning', content, config);
 };
+Message.destroy = () => {
+  console.log('destroy');
+};
 
 function _call(
   type: MessageTypes,

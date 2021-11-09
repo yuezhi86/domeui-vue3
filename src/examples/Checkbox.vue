@@ -4,7 +4,7 @@
       <h3>单个使用</h3>
       <DeCheckbox
         v-model="b"
-        html-type="radio"
+        native-type="radio"
         label="可取消的单选按钮"
         radio-optional
         name="b"
@@ -15,7 +15,7 @@
       <DeCheckbox
         v-model="c"
         v-model:indeterminate="indeterminate"
-        html-type="checkbox"
+        native-type="checkbox"
         label="香蕉"
         name="c"
         :true-value="1"
@@ -30,7 +30,7 @@
       <DeCheckboxGroup
         v-model="a"
         name="a"
-        html-type="radio"
+        native-type="radio"
         :disabled="disabled"
       >
         <DeCheckbox true-value="apple">苹果</DeCheckbox>
@@ -43,7 +43,7 @@
       <DeCheckboxGroup
         v-model="d"
         name="d"
-        html-type="checkbox"
+        native-type="checkbox"
         :disabled="disabled"
         vertical
         radio-optional

@@ -3,7 +3,7 @@
     <span :class="iconClassList">
       <i class="de-checkbox__icon-inner"></i>
       <input
-        :type="pHtmlType || htmlType"
+        :type="pNativeType || nativeType"
         :name="pName || name"
         :checked="isChecked"
         :disabled="isDisabled"
@@ -49,7 +49,7 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    htmlType: {
+    nativeType: {
       type: String,
       default: DEFAULT_HTML_TYPE,
       validator: (v: string) => ['checkbox', 'radio'].includes(v),
@@ -67,8 +67,8 @@ export default defineComponent({
   setup(props, {emit}) {
     const inGroups = inject('group', false);
     const pName = inject('name', '');
-    const pHtmlType = inject<{value: 'radio' | 'checkbox'} | null>(
-      'htmlType',
+    const pNativeType = inject<{value: 'radio' | 'checkbox'} | null>(
+      'nativeType',
       null
     );
     const pDisabled = inject<{value: boolean} | null>('disabled', null);
@@ -89,7 +89,8 @@ export default defineComponent({
     const isChecked = ref(false);
     const isRadio = computed(
       () =>
-        (pHtmlType && pHtmlType.value === 'radio') || props.htmlType === 'radio'
+        (pNativeType && pNativeType.value === 'radio') ||
+        props.nativeType === 'radio'
     );
     const isDisabled = computed(() => {
       if (pDisabled !== null) return pDisabled.value || props.disabled;
@@ -180,7 +181,7 @@ export default defineComponent({
 
     return {
       pName,
-      pHtmlType,
+      pNativeType,
       isDisabled,
       isChecked,
       wrapClassList,
