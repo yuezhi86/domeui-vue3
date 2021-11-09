@@ -12,7 +12,7 @@ export default defineComponent({
   setup() {
     DeNotice({
       content: 'ok',
-      className: 'custom-message',
+      classNames: 'custom-message',
       render: () => h('div', '12345'),
     });
     DeNotice.info('Hello');
