@@ -1,5 +1,24 @@
-@import 'mixins/utils';
-@import 'mixins/button';
-@import 'mixins/input';
-@import 'mixins/switch';
-@import 'mixins/notice';
+.margin-x(@value) {
+  margin-right: @value;
+  margin-left: @value;
+}
+
+.margin-y(@value) {
+  margin-top: @value;
+  margin-bottom: @value;
+}
+
+.padding-x(@value) {
+  padding-right: @value;
+  padding-left: @value;
+}
+
+.padding-y(@value) {
+  padding-top: @value;
+  padding-bottom: @value;
+}
+
+.long(@display: block) {
+  display: @display;
+  width: 100%;
+}

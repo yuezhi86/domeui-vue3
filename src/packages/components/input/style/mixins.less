@@ -101,7 +101,7 @@
 }
 
 .input-size(@height, @border-width, @padding-x, @line-height) {
-  height: @height;
+  height: @height - @border-width * 2;
   padding: ((@height - @line-height) / 2 - @border-width) @padding-x;
 }
 

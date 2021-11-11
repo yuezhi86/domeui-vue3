@@ -34,4 +34,5 @@ function _call(type: NoticeTypes, content: string, config?: NoticeRestOptions) {
   );
 }
 
+export const DeNotice = Notice;
 export default Notice;

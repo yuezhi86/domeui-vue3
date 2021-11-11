@@ -1,5 +1,6 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+@import './variables';
 
 .de-checkbox {
   display: inline-flex;
@@ -121,5 +122,23 @@
   }
   &__disabled &__icon-radio &__icon-inner {
     background-color: @de-checkbox-icon-border-color;
+  }
+}
+
+.de-checkbox-group {
+  display: inline-flex;
+  vertical-align: middle;
+
+  .de-checkbox {
+    margin-right: @de-checkbox-group-item-margin;
+  }
+
+  &__vertical {
+    flex-direction: column;
+
+    .de-checkbox {
+      margin-right: 0;
+      .padding-y((@de-checkbox-group-item-margin / 2));
+    }
   }
 }

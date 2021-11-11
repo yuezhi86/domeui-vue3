@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts">
-import '../../styles/animation/index.less';
-import './index.less';
+import '../../styles/animation.less';
+import './style/index.less';
 import {NoticePlacement, NoticeTheme, NoticeTransition} from '../../types';
 import {
   defineComponent,
