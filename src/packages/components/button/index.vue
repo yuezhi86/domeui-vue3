@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-import './index.less';
 import {defineComponent, computed, PropType} from 'vue';
 import {ButtonNativeType, ButtonTheme, Size} from '../../types';
 

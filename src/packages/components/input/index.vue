@@ -42,7 +42,6 @@
 </template>
 
 <script lang="ts">
-import './index.less';
 import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
 import {InputType, Size, TextareaResize, TextareaWrap} from '../../types';
 

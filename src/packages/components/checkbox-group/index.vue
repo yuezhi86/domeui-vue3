@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-import './index.less';
 import {defineComponent, computed, provide, PropType} from 'vue';
 import {CheckboxNativeType, CheckboxValue} from '../../types';
 
