@@ -13,11 +13,11 @@
   transition: border @transition-time linear, box-shadow @transition-time linear;
 }
 
-.input-base(@placeholder-color) {
+.input-base(@radius, @placeholder-color) {
   flex: auto;
   background-color: transparent;
   border: none;
-  border-radius: 0;
+  border-radius: @radius;
   box-sizing: border-box;
   font-size: inherit;
   font-family: inherit;
