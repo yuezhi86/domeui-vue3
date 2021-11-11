@@ -1,10 +1,10 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@import "../../styles/variables";
+@import "../../styles/mixins";
 
 .de-button {
   .button-base(
-    @button-padding-x, @button-border-style, @button-border-width, @button-radius,
-    @button-transition-time
+    @de-button-padding-x, @de-button-border-style, @de-button-border-width, @de-button-radius,
+    @de-button-transition-time
   );
 
   &[href] {
@@ -16,90 +16,90 @@
   }
 
   &[disabled] {
-    cursor: @button-disabled-cursor !important;
+    cursor: @de-button-disabled-cursor !important;
   }
 
   &__default {
     .button-theme(
-      @button-default-bg-color, @button-default-border-color, @button-default-font-color,
-      @button-default-hover-bg-color, @button-default-hover-border-color, @button-default-hover-font-color,
-      @button-default-disabled-bg-color, @button-default-disabled-border-color, @button-default-disabled-font-color
+      @de-button-default-bg-color, @de-button-default-border-color, @de-button-default-font-color,
+      @de-button-default-hover-bg-color, @de-button-default-hover-border-color, @de-button-default-hover-font-color,
+      @de-button-default-disabled-bg-color, @de-button-default-disabled-border-color, @de-button-default-disabled-font-color
     );
   }
   &__primary {
     .button-theme(
-      @button-primary-bg-color, @button-primary-border-color, @button-primary-font-color,
-      @button-primary-hover-bg-color, @button-primary-hover-border-color, @button-primary-hover-font-color,
-      @button-primary-disabled-bg-color, @button-primary-disabled-border-color, @button-primary-disabled-font-color
+      @de-button-primary-bg-color, @de-button-primary-border-color, @de-button-primary-font-color,
+      @de-button-primary-hover-bg-color, @de-button-primary-hover-border-color, @de-button-primary-hover-font-color,
+      @de-button-primary-disabled-bg-color, @de-button-primary-disabled-border-color, @de-button-primary-disabled-font-color
     );
 
     &-plain {
-      .button-plain(@button-primary-bg-color);
+      .button-plain(@de-button-primary-bg-color);
     }
   }
   &__bright {
     .button-theme(
-      @button-bright-bg-color, @button-bright-border-color, @button-bright-font-color,
-      @button-bright-hover-bg-color, @button-bright-hover-border-color, @button-bright-hover-font-color,
-      @button-bright-disabled-bg-color, @button-bright-disabled-border-color, @button-bright-disabled-font-color
+      @de-button-bright-bg-color, @de-button-bright-border-color, @de-button-bright-font-color,
+      @de-button-bright-hover-bg-color, @de-button-bright-hover-border-color, @de-button-bright-hover-font-color,
+      @de-button-bright-disabled-bg-color, @de-button-bright-disabled-border-color, @de-button-bright-disabled-font-color
     );
 
     &-plain {
-      .button-plain(@button-bright-bg-color);
+      .button-plain(@de-button-bright-bg-color);
     }
   }
   &__second {
     .button-theme(
-      @button-second-bg-color, @button-second-border-color, @button-second-font-color,
-      @button-second-hover-bg-color, @button-second-hover-border-color, @button-second-hover-font-color,
-      @button-second-disabled-bg-color, @button-second-disabled-border-color, @button-second-disabled-font-color
+      @de-button-second-bg-color, @de-button-second-border-color, @de-button-second-font-color,
+      @de-button-second-hover-bg-color, @de-button-second-hover-border-color, @de-button-second-hover-font-color,
+      @de-button-second-disabled-bg-color, @de-button-second-disabled-border-color, @de-button-second-disabled-font-color
     );
 
     &-plain {
-      .button-plain(@button-second-bg-color);
+      .button-plain(@de-button-second-bg-color);
     }
   }
   &__text {
     .button-theme(
-      transparent, transparent, @button-text-font-color,
-      transparent, transparent, @button-text-hover-font-color,
-      transparent, transparent, @button-text-disabled-font-color
+      transparent, transparent, @de-button-text-font-color,
+      transparent, transparent, @de-button-text-hover-font-color,
+      transparent, transparent, @de-button-text-disabled-font-color
     );
   }
 
   &__xsmall {
-    .button-size(@button-xsmall-size, @button-border-width, @button-xsmall-font-size);
+    .button-size(@de-button-xsmall-size, @de-button-border-width, @de-button-xsmall-font-size);
 
     &-round {
-      .button-round(@button-xsmall-size);
+      .button-round(@de-button-xsmall-size);
     }
   }
   &__small {
-    .button-size(@button-small-size, @button-border-width, @button-small-font-size);
+    .button-size(@de-button-small-size, @de-button-border-width, @de-button-small-font-size);
 
     &-round {
-      .button-round(@button-small-size);
+      .button-round(@de-button-small-size);
     }
   }
   &__middle {
-    .button-size(@button-middle-size, @button-border-width, @button-middle-font-size);
+    .button-size(@de-button-middle-size, @de-button-border-width, @de-button-middle-font-size);
 
     &-round {
-      .button-round(@button-middle-size);
+      .button-round(@de-button-middle-size);
     }
   }
   &__large {
-    .button-size(@button-large-size, @button-border-width, @button-large-font-size);
+    .button-size(@de-button-large-size, @de-button-border-width, @de-button-large-font-size);
 
     &-round {
-      .button-round(@button-large-size);
+      .button-round(@de-button-large-size);
     }
   }
   &__xlarge {
-    .button-size(@button-xlarge-size, @button-border-width, @button-xlarge-font-size);
+    .button-size(@de-button-xlarge-size, @de-button-border-width, @de-button-xlarge-font-size);
 
     &-round {
-      .button-round(@button-xlarge-size);
+      .button-round(@de-button-xlarge-size);
     }
   }
 }
