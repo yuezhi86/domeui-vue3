@@ -42,11 +42,13 @@
   cursor: default !important;
 }
 
-.input-kit(@border-width) {
+.input-kit(@border-width, @radius) {
+  overflow: hidden;
   position: relative;
   display: flex;
   flex-shrink: 0;
   align-items: center;
+  border-radius: @radius;
 }
 
 .input-counter(@bg-color, @color) {
