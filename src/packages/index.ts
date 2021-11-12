@@ -7,6 +7,7 @@ export {DeInput} from './components/input';
 export {DeSwitch} from './components/switch';
 export {DeCheckbox, DeCheckboxGroup} from './components/checkbox';
 export {DeNotice} from './components/notice';
+export {DeIcon} from './components/icon';
 
 export function config(options?: GlobalConfig) {
   setConfig(options);

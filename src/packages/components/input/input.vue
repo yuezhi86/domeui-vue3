@@ -6,7 +6,7 @@
       :id="elementId"
       ref="input"
       :name="name"
-      :type="htmlType"
+      :type="nativeType"
       :value="value"
       class="de-input__ipt"
       :style="inputStyleList"
@@ -64,7 +64,7 @@ export default defineComponent({
       validator: (v: string) =>
         ['xsmall', 'small', 'middle', 'large', 'xlarge'].includes(v) || !!v,
     },
-    htmlType: {
+    nativeType: {
       type: String,
       default: 'text',
     },
