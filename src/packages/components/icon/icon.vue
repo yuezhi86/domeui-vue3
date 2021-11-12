@@ -1,5 +1,5 @@
 <template>
-  <i :class="classList"></i>
+  <i :class="classList" :style="styleList"></i>
 </template>
 
 <script lang="ts">
@@ -13,12 +13,30 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    color: {
+      type: String,
+      default: '',
+    },
+    size: {
+      type: [Number, String],
+      default: '',
+    },
   },
   setup(props) {
     const classList = computed(() => [name, `${name}-${props.name}`]);
+    const styleList = computed(() => [
+      {
+        color: props.color,
+        fontSize:
+          props.size && Number.isNaN(Number(props.size))
+            ? props.size
+            : `${props.size}px`,
+      },
+    ]);
 
     return {
       classList,
+      styleList,
     };
   },
 });
