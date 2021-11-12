@@ -43,7 +43,6 @@
 }
 
 .input-kit(@border-width, @radius) {
-  overflow: hidden;
   position: relative;
   display: flex;
   flex-shrink: 0;
@@ -51,12 +50,13 @@
   border-radius: @radius;
 }
 
-.input-counter(@bg-color, @color) {
+.input-counter(@bg-color, @color, @radius) {
   display: flex;
   align-items: center;
   height: 100%;
   padding: 0 6px;
   background-color: @bg-color;
+  border-radius: @radius;
   color: @color;
   font-size: inherit;
   font-weight: 400;
