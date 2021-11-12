@@ -30,6 +30,10 @@
     transition: background-color @de-transition-time linear,
       border @de-transition-time linear, box-shadow @de-transition-time linear;
 
+    * {
+      box-sizing: inherit;
+    }
+
     &-checkbox {
       border-radius: @de-checkbox-icon-radius;
     }
@@ -65,8 +69,8 @@
 
   &__icon-checkbox &__icon-inner {
     display: block;
-    width: @de-checkbox-icon-size - 10;
-    height: @de-checkbox-icon-size - 14;
+    width: @de-checkbox-icon-size - 8;
+    height: @de-checkbox-icon-size - 11;
     border-width: 0 0 2px 2px;
     border-style: solid;
     border-color: #fff;

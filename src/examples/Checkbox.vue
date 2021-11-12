@@ -14,10 +14,24 @@
       />
       <DeCheckbox
         v-model="c"
-        v-model:indeterminate="indeterminate"
         native-type="checkbox"
         label="香蕉"
         name="c"
+        :true-value="1"
+        :false-value="0"
+        :disabled="disabled"
+        @onBeforeChange="onBeforeChange"
+        @onChange="onChange"
+      />
+    </div>
+    <div class="item-group">
+      <h3>indeterminate</h3>
+      <DeCheckbox
+        v-model="e"
+        v-model:indeterminate="indeterminate"
+        native-type="checkbox"
+        label="香蕉"
+        name="e"
         :true-value="1"
         :false-value="0"
         :disabled="disabled"
@@ -73,8 +87,9 @@ export default {
       b: ref(''),
       c: ref(''),
       d: ref(['apple', 'pear']),
+      e: ref(''),
       disabled,
-      indeterminate: ref(false),
+      indeterminate: ref(true),
       onChange(e: any) {
         console.log(2, e);
       },

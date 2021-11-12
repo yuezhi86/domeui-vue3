@@ -17,6 +17,10 @@
   user-select: none;
   outline: none;
 
+  * {
+    box-sizing: inherit;
+  }
+
   &__inner {
     display: flex;
     justify-content: flex-start;
@@ -24,7 +28,6 @@
     padding: 1px;
     background-color: @de-switch-off-bg-color;
     border: 1px solid @de-switch-off-bg-color;
-    box-sizing: border-box;
   }
 
   &__text {

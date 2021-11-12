@@ -11,6 +11,10 @@
   color: @font-color;
   vertical-align: middle;
   transition: border @transition-time linear, box-shadow @transition-time linear;
+
+  * {
+    box-sizing: inherit;
+  }
 }
 
 .input-base(@radius, @placeholder-color) {
@@ -18,7 +22,6 @@
   background-color: transparent;
   border: none;
   border-radius: @radius;
-  box-sizing: border-box;
   font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
