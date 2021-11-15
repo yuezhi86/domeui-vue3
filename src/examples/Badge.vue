@@ -1,6 +1,12 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
+      <DeBadge :value="0" size="small">
+        <DeIcon name="bell-l" />
+      </DeBadge>
+      <DeBadge :value="0" size="small" mode="always">
+        <DeIcon name="bell-l" />
+      </DeBadge>
       <DeBadge :value="8" size="small">
         <DeIcon name="bell-l" />
       </DeBadge>
@@ -16,12 +22,7 @@
       <DeBadge :value="18" background-color="orange" text-color="black">
         <DeIcon name="bell-l" />
       </DeBadge>
-      <DeBadge
-        :value="18"
-        background-color="black"
-        text-color="gold"
-        text="Plus"
-      >
+      <DeBadge background-color="black" text-color="gold" text="Plus">
         <DeIcon name="bell-l" />
       </DeBadge>
       <DeBadge :value="18" background-color="red" text-color="white">
@@ -30,6 +31,9 @@
       </DeBadge>
     </div>
     <div class="item-group">
+      <DeBadge :value="0" size="small" theme="dot" mode="always">
+        <DeIcon name="bell-l" />
+      </DeBadge>
       <DeBadge :value="8" size="small" theme="dot">
         <DeIcon name="bell-l" />
       </DeBadge>
