@@ -1,0 +1,18 @@
+@import '../../../styles/mixins';
+.badge-size(@height, @font-size, @padding-x) {
+  min-width: @height;
+  height: @height;
+  .padding-x(@padding-x);
+  border-radius: @height;
+  font-size: @font-size;
+}
+
+.badge-dot-size(@height) {
+  @size: floor(@height * 0.4);
+  min-width: 0;
+  width: @size;
+  height: @size;
+  padding: 0;
+  border-radius: 100%;
+  font-size: 0;
+}

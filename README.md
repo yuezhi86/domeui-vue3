@@ -7,6 +7,7 @@
 - ~~Checkbox & Radio~~
 - ~~CheckboxGroup~~
 - ~~Switch~~
+- ~~Badge~~
 - Message
 - Alert
 - Select

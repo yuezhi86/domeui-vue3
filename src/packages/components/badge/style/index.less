@@ -1,0 +1,40 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+@import './variables';
+@import './mixins';
+
+.de-badge {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  &__count {
+    position: absolute;
+    left: 100%;
+    bottom: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: @de-badge-bg-color;
+    color: @de-badge-text-color;
+    line-height: 1;
+    user-select: none;
+  }
+
+  &__small {
+    .badge-size(@de-badge-small-height, @de-badge-small-font-size, @de-badge-small-padding-x);
+
+    &-dot {
+      .badge-dot-size(@de-badge-small-height);
+    }
+  }
+
+  &__middle {
+    .badge-size(@de-badge-middle-height, @de-badge-middle-font-size, @de-badge-middle-padding-x);
+
+    &-dot {
+      .badge-dot-size(@de-badge-middle-height);
+    }
+  }
+}
