@@ -46,6 +46,15 @@
       <DeButton disabled size="xlarge" theme="text">xlarge</DeButton>
     </div>
     <div class="item-group">
+      <h3>theme: text-primary</h3>
+      <DeButton size="xsmall" theme="text-primary">xsmall</DeButton>
+      <DeButton size="small" theme="text-primary">small</DeButton>
+      <DeButton theme="text-primary">middle</DeButton>
+      <DeButton size="large" theme="text-primary">large</DeButton>
+      <DeButton size="xlarge" theme="text-primary">xlarge</DeButton>
+      <DeButton disabled size="xlarge" theme="text-primary">xlarge</DeButton>
+    </div>
+    <div class="item-group">
       <h3>plain</h3>
       <DeButton plain>primary</DeButton>
       <DeButton theme="bright" plain>bright</DeButton>

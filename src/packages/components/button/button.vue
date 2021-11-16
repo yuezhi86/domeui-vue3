@@ -16,7 +16,14 @@ export default defineComponent({
       type: String as PropType<ButtonTheme | string>,
       default: 'primary',
       validator: (v: string) =>
-        ['primary', 'bright', 'second', 'text', 'default'].includes(v) || !!v,
+        [
+          'primary',
+          'bright',
+          'second',
+          'text',
+          'text-primary',
+          'default',
+        ].includes(v) || !!v,
     },
     size: {
       type: String as PropType<Size | string>,
