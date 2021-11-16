@@ -1,6 +1,6 @@
 {
   "name": "domeui-vue3",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "",
   "author": "yuezhi86",
   "homepage": "",
@@ -63,6 +63,8 @@
     "vue-jest": "^5.0.0-0"
   },
   "peerDependencies": {
+    "core-js": "^3.6.5",
+    "lodash-es": "^4.17.21",
     "vue": "^3.0.0"
   },
   "browserslist": [

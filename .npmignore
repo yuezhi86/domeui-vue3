@@ -4,4 +4,3 @@
 .prettierrc.js
 babel.config.js
 tsconfig.json
-node_modules
