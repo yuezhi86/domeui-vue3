@@ -1,6 +1,5 @@
 import {App} from 'vue';
-import {GlobalConfig} from './types';
-import {setConfig} from './config';
+import {setConfig, GlobalConfig} from './config';
 
 export * from './components/button';
 export * from './components/input';

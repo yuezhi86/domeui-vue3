@@ -3,7 +3,7 @@ import {
   NoticeRestOptions,
   NoticeOptions,
   NoticeTypes,
-} from '../../types';
+} from './types';
 
 const Notice: NoticeFunction = function (options: NoticeOptions): void {
   console.log(options);
