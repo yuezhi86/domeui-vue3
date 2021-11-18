@@ -1,6 +1,21 @@
-import {CommonConfig, NoticeConfig, MessageConfig, GlobalConfig} from './types';
 import merge from 'lodash-es/merge';
 import cloneDeep from 'lodash-es/cloneDeep';
+
+export type CommonConfig = {
+  zIndex?: number;
+  transfer?: boolean;
+};
+export type NoticeConfig = {
+  margin?: number;
+  duration?: number;
+};
+export type MessageConfig = NoticeConfig & {};
+export type GlobalConfig = {
+  [key: string]: any;
+  common?: CommonConfig;
+  notice?: NoticeConfig;
+  message?: MessageConfig;
+};
 
 const defaultConfig: GlobalConfig = {
   common: {

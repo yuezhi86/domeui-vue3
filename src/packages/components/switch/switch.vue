@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
-import {CheckboxValue} from '../../types';
+import {CheckboxValue} from '../checkbox';
 import {getUncheckedDefaultValue} from '../../utils/assist';
 
 const name = 'de-switch';

@@ -43,9 +43,13 @@
 
 <script lang="ts">
 import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
-import {InputType, Size, TextareaResize, TextareaWrap} from '../../types';
 
 const name = 'de-input';
+
+export type InputType = 'input' | 'textarea';
+export type InputSize = 'xsmall' | 'small' | 'middle' | 'large' | 'xlarge';
+export type TextareaWrap = 'soft' | 'hard';
+export type TextareaResize = 'none' | 'both' | 'vertical' | 'horizontal';
 export default defineComponent({
   name,
   props: {
@@ -59,7 +63,7 @@ export default defineComponent({
       validator: (v: string) => ['input', 'textarea'].includes(v),
     },
     size: {
-      type: String as PropType<Size | string>,
+      type: String as PropType<InputSize | string>,
       default: 'middle',
       validator: (v: string) =>
         ['xsmall', 'small', 'middle', 'large', 'xlarge'].includes(v) || !!v,

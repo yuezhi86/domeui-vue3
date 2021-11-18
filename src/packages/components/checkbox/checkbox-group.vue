@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {defineComponent, computed, provide, PropType} from 'vue';
-import {CheckboxNativeType, CheckboxValue} from '../../types';
+import {CheckboxNativeType, CheckboxValue} from './checkbox.vue';
 
 const name = 'de-checkbox-group';
 export default defineComponent({

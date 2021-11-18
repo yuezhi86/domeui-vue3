@@ -1,11 +1,12 @@
 {
   "name": "domeui-vue3",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "",
   "author": "yuezhi86",
   "homepage": "",
   "main": "src/packages/index.ts",
   "module": "src/packages/index.ts",
+  "types": "src/packages/index.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

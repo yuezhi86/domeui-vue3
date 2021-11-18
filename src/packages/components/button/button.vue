@@ -6,9 +6,18 @@
 
 <script lang="ts">
 import {defineComponent, computed, PropType} from 'vue';
-import {ButtonNativeType, ButtonTheme, Size} from '../../types';
 
 const name = 'de-button';
+
+export type ButtonTheme =
+  | 'primary'
+  | 'bright'
+  | 'second'
+  | 'text'
+  | 'text-primary'
+  | 'default';
+export type ButtonNativeType = 'button' | 'submit' | 'reset';
+export type ButtonSize = 'xsmall' | 'small' | 'middle' | 'large' | 'xlarge';
 export default defineComponent({
   name,
   props: {
@@ -26,7 +35,7 @@ export default defineComponent({
         ].includes(v) || !!v,
     },
     size: {
-      type: String as PropType<Size | string>,
+      type: String as PropType<ButtonSize | string>,
       default: 'middle',
       validator: (v: string) =>
         ['xsmall', 'small', 'middle', 'large', 'xlarge'].includes(v) || !!v,

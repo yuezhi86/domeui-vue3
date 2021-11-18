@@ -5,7 +5,9 @@
 <script lang="ts">
 import {defineComponent, computed, PropType} from 'vue';
 
-type IconName =
+const name = 'de-icon';
+
+export type IconName =
   | 'upload'
   | 'alert'
   | 'close'
@@ -31,8 +33,6 @@ type IconName =
   | 'bell-l'
   | 'close-l'
   | 'location-l';
-
-const name = 'de-icon';
 export default defineComponent({
   name,
   props: {

@@ -27,11 +27,13 @@ import {
   inject,
   PropType,
 } from 'vue';
-import {CheckboxValue, CheckboxNativeType} from '../../types';
 import {getUncheckedDefaultValue} from '../../utils/assist';
 
 const DEFAULT_HTML_TYPE = 'checkbox';
 const name = 'de-checkbox';
+
+export type CheckboxValue = string | number | boolean;
+export type CheckboxNativeType = 'checkbox' | 'radio';
 export default defineComponent({
   name,
   props: {

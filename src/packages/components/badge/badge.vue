@@ -13,9 +13,13 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue';
-import {BadgeTheme, BadgeSize, BadgeMode, BadgeOffset} from '../../types';
 
 const name = 'de-badge';
+
+export type BadgeTheme = 'number' | 'dot';
+export type BadgeSize = 'small' | 'middle';
+export type BadgeMode = 'auto' | 'always';
+export type BadgeOffset = Array<number>;
 export default defineComponent({
   name,
   props: {
