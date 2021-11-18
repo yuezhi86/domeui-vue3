@@ -1,4 +1,4 @@
-import {CheckboxValue} from '../types';
+import {CheckboxValue} from '../components/checkbox';
 
 export function getUncheckedDefaultValue(
   trueValue: CheckboxValue,
