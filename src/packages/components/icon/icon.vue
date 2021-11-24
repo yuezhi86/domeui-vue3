@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import {defineComponent, computed, PropType} from 'vue';
+import {getSizeOrPx} from '../../utils';
 
 const name = 'de-icon';
 
@@ -54,10 +55,7 @@ export default defineComponent({
     const styleList = computed(() => [
       {
         color: props.color,
-        fontSize:
-          props.size && Number.isNaN(Number(props.size))
-            ? props.size
-            : `${props.size}px`,
+        fontSize: props.size && getSizeOrPx(props.size),
       },
     ]);
 

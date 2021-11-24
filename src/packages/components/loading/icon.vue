@@ -14,10 +14,10 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
-@import '~@/assets/styles/variables';
-@import '~@/assets/styles/mixins';
+@import './style/variables';
+@import './style/mixins';
 
-@keyframes ball-beat {
+@keyframes loading-animation {
   50% {
     opacity: 0.2;
     -webkit-transform: scale(0.75);
@@ -38,9 +38,9 @@ export default defineComponent({
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: @color-primary;
+    background-color: @de-color-primary;
     border-radius: 100%;
-    animation: ball-beat 0.9s 0s infinite linear;
+    animation: loading-animation 0.9s 0s infinite linear;
 
     &:nth-child(2n-1) {
       animation-delay: -0.35s !important;

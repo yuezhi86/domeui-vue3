@@ -1,47 +1,68 @@
 <template>
-  <section
-    v-if="show"
-    :class="{
-      'popup-loading': popupLoading,
-      'has-mask': showMask || mask,
-    }"
-    class="loading"
-  >
-    <div class="loading-inner">
-      <div class="img-box">
-        <div class="img">
-          <Loading />
-        </div>
+  <section :class="classList">
+    <div class="de-loading__inner" :style="innerStyleList">
+      <div class="de-loading__icon">
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
-      <p>
-        <slot>{{ content }}</slot>
-      </p>
+      <div class="de-loading__text">
+        <slot>{{ text }}</slot>
+      </div>
     </div>
   </section>
 </template>
 
-<script>
-import Loading from './icon';
+<script lang="ts">
+import {computed, defineComponent} from 'vue';
+import {getConfig} from '../../config';
 
-export default {
-  name: 'PageLoading',
-  components: {
-    Loading,
-  },
+const name = 'de-loading';
+const loadingConfig = getConfig('loading');
+export default defineComponent({
+  name,
   props: {
-    showMask: {
+    text: {
+      type: String,
+      default: '正在加载...',
+    },
+    size: {
+      type: Number,
+      default: loadingConfig.size,
+    },
+    mask: {
       type: Boolean,
-      default: false,
+      default: true,
+    },
+    fixed: {
+      type: Boolean,
+      default: true,
     },
   },
-  data() {
+  setup(props) {
+    const classList = computed(() => [
+      name,
+      {
+        [`${name}__mask`]: props.mask,
+        [`${name}__fixed`]: props.fixed,
+      },
+    ]);
+    const innerStyleList = computed(() => {
+      const size = props.size ? `${props.size}px` : '';
+      return {
+        width: size,
+        height: size,
+      };
+    });
+
     return {
-      mask: false,
-      popupLoading: false,
-      show: false,
-      content: '正在加载...',
+      classList,
+      innerStyleList,
     };
   },
+});
+
+const a = {
   mounted() {
     this.show = true;
   },
@@ -56,9 +77,9 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import '~@/assets/styles/variables';
-@import '~@/assets/styles/mixins';
+<style lang="less">
+@import '../../styles/variables';
+@import '../../styles/mixins';
 
 .loading {
   position: absolute;
@@ -84,7 +105,7 @@ export default {
   }
 
   .loading-inner {
-    .position-center();
+    .absolute-center();
     top: 45%;
     padding-top: 19px;
     padding-bottom: 19px;
@@ -124,10 +145,5 @@ export default {
       line-height: 40px;
     }
   }
-}
-</style>
-<style>
-.popup-loading-show {
-  overflow: hidden !important;
 }
 </style>

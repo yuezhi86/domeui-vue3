@@ -8,11 +8,11 @@
   >
     <input type="hidden" :name="name" :value="value" />
     <div class="de-switch__inner">
-      <span v-show="isChecked" class="de-switch__text">
+      <span v-show="isChecked" class="de-switch__text de-switch__text-on">
         <slot name="on"></slot>
       </span>
       <i class="de-switch__i" :style="iStyleList"></i>
-      <span v-show="!isChecked" class="de-switch__text">
+      <span v-show="!isChecked" class="de-switch__text de-switch__text-off">
         <slot name="off"></slot>
       </span>
     </div>
