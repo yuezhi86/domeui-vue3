@@ -1,6 +1,6 @@
 import {createApp} from 'vue';
 import App from './App.vue';
-import {config as DomeUIConfig, install as DomeUIInstall} from './packages';
+import {config as DomeUIConfig, loadingInstall} from './packages';
 import './packages/styles/index.less';
 
 const app = createApp(App);
@@ -16,6 +16,7 @@ DomeUIConfig({
     duration: 4.5,
   },
 });
-DomeUIInstall(app);
+
+loadingInstall(app);
 
 app.mount('#app');

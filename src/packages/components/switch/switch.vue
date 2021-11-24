@@ -22,7 +22,7 @@
 <script lang="ts">
 import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
 import {CheckboxValue} from '../checkbox';
-import {getUncheckedDefaultValue} from '../../utils/assist';
+import {getSizeOrPx, getUncheckedDefaultValue} from '../../utils/assist';
 
 const name = 'de-switch';
 export default defineComponent({
@@ -50,11 +50,11 @@ export default defineComponent({
       validator: (v: string) => ['primary', 'success'].includes(v) || !!v,
     },
     width: {
-      type: Number,
+      type: [Number, String],
       default: 50,
     },
     height: {
-      type: Number,
+      type: [Number, String],
       default: 22,
     },
     disabled: Boolean,
@@ -77,13 +77,13 @@ export default defineComponent({
     ]);
     const styleList = computed(() => {
       return {
-        width: `${props.width}px`,
-        height: `${props.height}px`,
-        borderRadius: `${props.height}px`,
+        width: getSizeOrPx(props.width),
+        height: getSizeOrPx(props.height),
+        borderRadius: getSizeOrPx(props.height),
       };
     });
     const iStyleList = computed(() => {
-      const size = `${props.height - 4}px`;
+      const size = `${parseFloat(getSizeOrPx(props.height)) - 4}px`;
       return {
         width: size,
         height: size,

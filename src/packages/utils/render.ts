@@ -3,4 +3,4 @@ import {VNode} from 'vue';
 type RenderProps = {
   render: () => VNode;
 };
-export default (props: RenderProps) => props.render();
+export const render = (props: RenderProps) => props.render();

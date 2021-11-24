@@ -13,3 +13,7 @@ export function getUncheckedDefaultValue(
       return false;
   }
 }
+
+export function getSizeOrPx(value: string | number): string {
+  return Number.isNaN(Number(value)) ? `${value}` : `${value}px`;
+}

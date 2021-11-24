@@ -19,7 +19,7 @@ export type GlobalConfig = {
 
 const defaultConfig: GlobalConfig = {
   common: {
-    zIndex: 1000, // 基础z-index
+    zIndex: 2000, // 基础z-index
     transfer: true,
   },
   message: {
@@ -33,8 +33,8 @@ const defaultConfig: GlobalConfig = {
 };
 const globalConfig: GlobalConfig = {};
 
-type ReturnConfig = CommonConfig | NoticeConfig | MessageConfig;
-export function getConfig(name: string): ReturnConfig {
+type ConfigReturn = CommonConfig | NoticeConfig | MessageConfig;
+export function getConfig(name: string): ConfigReturn {
   return globalConfig[name];
 }
 export function setConfig(config: GlobalConfig | undefined) {
