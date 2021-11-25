@@ -1,6 +1,6 @@
 {
   "name": "domeui-vue3",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "description": "",
   "author": "yuezhi86",
   "homepage": "",
@@ -32,11 +32,6 @@
       "vue-cli-service lint",
       "git add"
     ]
-  },
-  "dependencies": {
-    "core-js": "^3.19.1",
-    "lodash-es": "^4.17.21",
-    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",

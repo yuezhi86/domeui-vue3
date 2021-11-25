@@ -1,6 +1,6 @@
 import merge from 'lodash-es/merge';
 import {cloneDeep} from 'lodash-es';
-import {LoadingTheme} from '@/packages/components/loading/loading.vue';
+import {LoadingTheme} from './components/loading/loading.vue';
 
 export type CommonConfig = {
   zIndex?: number;
