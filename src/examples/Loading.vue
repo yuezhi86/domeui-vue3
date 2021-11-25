@@ -4,7 +4,7 @@
     style="position: relative; height: 200px; background-color: #f0f0f0"
   >
     <h3>容器内的loading</h3>
-    <DeLoading :fixed="false">加载中</DeLoading>
+    <DeLoading :fixed="false"> 加载中 </DeLoading>
   </section>
   <section class="demo-group">
     <h3>全屏loading</h3>

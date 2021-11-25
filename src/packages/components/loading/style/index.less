@@ -13,6 +13,15 @@
     transform: scale(1);
   }
 }
+@keyframes loading-text-animation {
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 
 .de-loading {
   position: absolute;
@@ -68,6 +77,10 @@
     font-size: @de-loading-font-size;
     font-weight: normal;
     line-height: 1.4;
+
+    &-fade {
+      animation: loading-text-animation 2s 0s infinite linear;
+    }
   }
 
   &__fixed {

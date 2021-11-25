@@ -1,12 +1,12 @@
 <template>
   <section :class="classList" :style="styleList">
     <div class="de-loading__inner" :style="innerStyleList">
-      <div class="de-loading__icon">
+      <div v-if="showIcon" class="de-loading__icon">
         <div></div>
         <div></div>
         <div></div>
       </div>
-      <div class="de-loading__text">
+      <div v-if="showText" :class="textClassList">
         <slot>{{ text }}</slot>
       </div>
     </div>
@@ -43,6 +43,14 @@ export default defineComponent({
       type: [String, Number],
       default: '',
     },
+    showText: {
+      type: Boolean,
+      default: true,
+    },
+    showIcon: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     const classList = computed(() => [
@@ -65,43 +73,19 @@ export default defineComponent({
         transform: props.scale ? `scale(${props.scale})` : '',
       };
     });
+    const textClassList = computed(() => [
+      `${name}__text`,
+      {
+        [`${name}__text-fade`]: props.showText && !props.showIcon,
+      },
+    ]);
 
     return {
       classList,
       styleList,
       innerStyleList,
+      textClassList,
     };
   },
 });
 </script>
-
-<style lang="less">
-.loading {
-  .img-box {
-    overflow: hidden;
-    position: relative;
-    height: 55px;
-    z-index: 3;
-    margin: 0 auto;
-    padding-top: 15px;
-    border-radius: 50%;
-    box-sizing: border-box;
-
-    &:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .img {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      line-height: 40px;
-    }
-  }
-}
-</style>
