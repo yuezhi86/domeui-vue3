@@ -1,5 +1,6 @@
 import merge from 'lodash-es/merge';
 import {cloneDeep} from 'lodash-es';
+import {LoadingTheme} from '@/packages/components/loading/loading.vue';
 
 export type CommonConfig = {
   zIndex?: number;
@@ -11,7 +12,7 @@ export type NoticeConfig = {
 };
 export type LoadingConfig = {
   text?: string;
-  size?: number;
+  theme?: LoadingTheme;
   mask?: boolean;
   fixed?: boolean;
   zIndex?: number;
@@ -34,6 +35,7 @@ const defaultConfig: Required<GlobalConfig> = {
   },
   loading: {
     text: '正在加载...',
+    theme: 'white',
     mask: true,
     fixed: true,
     zIndex: 10,

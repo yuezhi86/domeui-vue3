@@ -1,0 +1,14 @@
+.loading-theme(@name, @bg-color, @inner-color, @shadow-color, @text-color) {
+  &__@{name}&__mask {
+    background-color: @bg-color;
+  }
+
+  &__@{name}&__fixed &__inner {
+    background-color: @inner-color;
+    box-shadow: 0 1px 2px @shadow-color;
+  }
+
+  &__@{name} &__text {
+    color: @text-color;
+  }
+}

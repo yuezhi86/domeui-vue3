@@ -14,12 +14,13 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue';
+import {computed, defineComponent, PropType} from 'vue';
 import {getConfig} from '../../config';
 import {getIndexZ} from '../../utils';
 
 const name = 'de-loading';
 const globalConfig = getConfig();
+export type LoadingTheme = 'white' | 'black' | 'transparent';
 export default defineComponent({
   name,
   props: {
@@ -27,10 +28,12 @@ export default defineComponent({
       type: String,
       default: globalConfig.loading.text,
     },
-    size: {
-      type: Number,
-      default: globalConfig.loading.size,
+    theme: {
+      type: String as PropType<LoadingTheme | string>,
+      default: globalConfig.loading.theme,
+      validator: (v: string) => ['white', 'black'].includes(v) || !!v,
     },
+    transparent: Boolean,
     mask: {
       type: Boolean,
       default: globalConfig.loading.mask,
@@ -55,9 +58,11 @@ export default defineComponent({
   setup(props) {
     const classList = computed(() => [
       name,
+      `${name}__${props.theme}`,
       {
         [`${name}__mask`]: props.mask,
         [`${name}__fixed`]: props.fixed,
+        [`${name}__transparent`]: props.transparent,
       },
     ]);
     const styleList = computed(() => {
@@ -66,10 +71,7 @@ export default defineComponent({
       };
     });
     const innerStyleList = computed(() => {
-      const size = props.size ? `${props.size}px` : '';
       return {
-        width: size,
-        height: size,
         transform: props.scale ? `scale(${props.scale})` : '',
       };
     });

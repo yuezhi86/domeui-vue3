@@ -1,7 +1,8 @@
 import {createApp, App} from 'vue';
-import Loading from './loading.vue';
+import Loading, {LoadingTheme} from './loading.vue';
 import {randomStr} from '../../utils';
 
+export * from './loading.vue';
 export const DeLoading = Loading;
 export default DeLoading;
 
@@ -12,6 +13,8 @@ let instance: HTMLElement;
 
 export type LoadingParams = {
   text?: string;
+  theme?: LoadingTheme;
+  transparent?: boolean;
   size?: number;
   mask?: boolean;
   fixed?: boolean;

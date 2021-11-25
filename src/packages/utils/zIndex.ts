@@ -1,4 +1,4 @@
-import {getConfig} from '@/packages/config';
+import {getConfig} from '../config';
 
 let de_zIndex: number;
 
