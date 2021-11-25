@@ -1,5 +1,7 @@
 <template>
   <div id="app" class="demo-wrapper">
+    <h2>LoadingDemo</h2>
+    <LoadingDemo />
     <h2>BadgeDemo</h2>
     <BadgeDemo />
     <h2>IconDemo</h2>
@@ -25,6 +27,7 @@ import SwitchDemo from './examples/Switch.vue';
 import NoticeDemo from './examples/Notice.vue';
 import IconDemo from './examples/Icon.vue';
 import BadgeDemo from './examples/Badge.vue';
+import LoadingDemo from './examples/Loading.vue';
 
 export default {
   components: {
@@ -35,6 +38,7 @@ export default {
     NoticeDemo,
     IconDemo,
     BadgeDemo,
+    LoadingDemo,
   },
 };
 </script>

@@ -1,8 +1,40 @@
-import {App} from 'vue';
+import {createApp, App} from 'vue';
 import Loading from './loading.vue';
-export * from './loading.vue';
+import {randomStr} from '../../utils';
+
 export const DeLoading = Loading;
 export default DeLoading;
-export function loadingInstall(app: App) {
-  console.log(app);
+
+let app: App | null;
+let loading = false;
+let instanceClassName: string;
+let instance: HTMLElement;
+
+export type LoadingParams = {
+  text?: string;
+  size?: number;
+  mask?: boolean;
+  fixed?: boolean;
+  scale?: number | string;
+};
+
+export function showLoading(params?: LoadingParams) {
+  if (loading) return;
+  loading = true;
+
+  if (!instanceClassName) {
+    instance = document.createElement('div');
+    instance.className = instanceClassName = `${DeLoading.name}__${randomStr(
+      10
+    )}`;
+    document.body.append(instance);
+  }
+
+  app = createApp(DeLoading, params);
+  app.mount(instance);
+}
+
+export function hideLoading() {
+  app?.unmount();
+  loading = false;
 }

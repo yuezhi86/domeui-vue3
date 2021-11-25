@@ -1,5 +1,5 @@
 <template>
-  <section :class="classList">
+  <section :class="classList" :style="styleList">
     <div class="de-loading__inner" :style="innerStyleList">
       <div class="de-loading__icon">
         <div></div>
@@ -16,27 +16,32 @@
 <script lang="ts">
 import {computed, defineComponent} from 'vue';
 import {getConfig} from '../../config';
+import {getIndexZ} from '../../utils';
 
 const name = 'de-loading';
-const loadingConfig = getConfig('loading');
+const globalConfig = getConfig();
 export default defineComponent({
   name,
   props: {
     text: {
       type: String,
-      default: '正在加载...',
+      default: globalConfig.loading.text,
     },
     size: {
       type: Number,
-      default: loadingConfig.size,
+      default: globalConfig.loading.size,
     },
     mask: {
       type: Boolean,
-      default: true,
+      default: globalConfig.loading.mask,
     },
     fixed: {
       type: Boolean,
-      default: true,
+      default: globalConfig.loading.fixed,
+    },
+    scale: {
+      type: [String, Number],
+      default: '',
     },
   },
   setup(props) {
@@ -47,78 +52,31 @@ export default defineComponent({
         [`${name}__fixed`]: props.fixed,
       },
     ]);
+    const styleList = computed(() => {
+      return {
+        zIndex: props.fixed ? getIndexZ() : globalConfig.loading.zIndex,
+      };
+    });
     const innerStyleList = computed(() => {
       const size = props.size ? `${props.size}px` : '';
       return {
         width: size,
         height: size,
+        transform: props.scale ? `scale(${props.scale})` : '',
       };
     });
 
     return {
       classList,
+      styleList,
       innerStyleList,
     };
   },
 });
-
-const a = {
-  mounted() {
-    this.show = true;
-  },
-  methods: {
-    hide() {
-      this.show = false;
-      this.$nextTick(() => {
-        this.$destroy();
-      });
-    },
-  },
-};
 </script>
 
 <style lang="less">
-@import '../../styles/variables';
-@import '../../styles/mixins';
-
 .loading {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  color: #666;
-
-  &.has-mask {
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-
-  &.popup-loading {
-    position: fixed;
-    z-index: 2000;
-
-    .loading-inner {
-      background-color: rgba(242, 244, 246, 0.7);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    }
-  }
-
-  .loading-inner {
-    .absolute-center();
-    top: 45%;
-    padding-top: 19px;
-    padding-bottom: 19px;
-    width: 124px;
-    border-radius: 8px;
-    text-align: center;
-  }
-
-  p {
-    margin-top: 10px;
-    margin-left: 5px;
-  }
-
   .img-box {
     overflow: hidden;
     position: relative;

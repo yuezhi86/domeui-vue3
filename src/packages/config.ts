@@ -14,6 +14,7 @@ export type LoadingConfig = {
   size?: number;
   mask?: boolean;
   fixed?: boolean;
+  zIndex?: number;
 };
 
 export type GlobalConfig = {
@@ -35,17 +36,16 @@ const defaultConfig: Required<GlobalConfig> = {
     text: '正在加载...',
     mask: true,
     fixed: true,
+    zIndex: 10,
   },
 };
 const globalConfig: GlobalConfig = {};
 
-type ConfigReturn = CommonConfig & NoticeConfig & LoadingConfig;
-export function getConfig(name: keyof GlobalConfig): ConfigReturn {
-  return globalConfig[name] || defaultConfig[name];
+export function getConfig(): Required<GlobalConfig> {
+  return merge(cloneDeep(defaultConfig), cloneDeep(globalConfig));
 }
 
 export function setConfig(config: GlobalConfig | undefined) {
   if (!config) return;
   merge(globalConfig, cloneDeep(defaultConfig), config);
-  console.log('globalConfig', globalConfig);
 }
