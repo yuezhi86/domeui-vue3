@@ -1,13 +1,13 @@
 import {VNode} from 'vue';
 
 export type NoticeTransition = 'move-out' | 'move-in-out';
-export type NoticeTypes = 'info' | 'success' | 'fail' | 'warning';
+export type NoticeTypes = 'info' | 'success' | 'error' | 'warning';
 export type NoticePlacement =
   | 'top'
   | 'right-start'
   | 'bottom-start'
   | 'bottom-end';
-export type NoticeTheme = 'default' | 'info' | 'success' | 'warning' | 'fail';
+export type NoticeTheme = 'default' | 'info' | 'success' | 'warning' | 'error';
 export type NoticeOptions = {
   title?: string;
   content?: string;
@@ -34,7 +34,7 @@ export interface NoticeFunction {
   (options: NoticeOptions): void;
   info: NoticeMethod;
   success: NoticeMethod;
-  fail: NoticeMethod;
+  error: NoticeMethod;
   warning: NoticeMethod;
   destroy: () => void;
 }

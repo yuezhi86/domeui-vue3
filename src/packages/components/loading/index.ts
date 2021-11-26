@@ -15,7 +15,6 @@ export type LoadingParams = {
   text?: string;
   theme?: LoadingTheme;
   transparent?: boolean;
-  size?: number;
   mask?: boolean;
   fixed?: boolean;
   scale?: number | string;

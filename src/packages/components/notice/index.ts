@@ -15,8 +15,8 @@ Notice.info = (content: string, config?: NoticeRestOptions): void => {
 Notice.success = (content: string, config?: NoticeRestOptions): void => {
   _call('success', content, config);
 };
-Notice.fail = (content: string, config?: NoticeRestOptions): void => {
-  _call('fail', content, config);
+Notice.error = (content: string, config?: NoticeRestOptions): void => {
+  _call('error', content, config);
 };
 Notice.warning = (content: string, config?: NoticeRestOptions): void => {
   _call('warning', content, config);

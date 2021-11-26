@@ -56,7 +56,7 @@ export default defineComponent({
       type: String as PropType<NoticeTheme>,
       default: 'default',
       validator: (v: string) =>
-        ['default', 'info', 'success', 'warning', 'fail'].includes(v) || !!v,
+        ['default', 'info', 'success', 'warning', 'error'].includes(v) || !!v,
     },
     classNames: {
       type: [String, Array] as PropType<string | string[]>,

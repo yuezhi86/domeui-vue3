@@ -13,6 +13,7 @@ export type NoticeConfig = {
 export type LoadingConfig = {
   text?: string;
   theme?: LoadingTheme;
+  transparent?: boolean;
   mask?: boolean;
   fixed?: boolean;
   zIndex?: number;
@@ -36,6 +37,7 @@ const defaultConfig: Required<GlobalConfig> = {
   loading: {
     text: '正在加载...',
     theme: 'white',
+    transparent: false,
     mask: true,
     fixed: true,
     zIndex: 10,

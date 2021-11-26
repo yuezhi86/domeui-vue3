@@ -33,7 +33,10 @@ export default defineComponent({
       default: globalConfig.loading.theme,
       validator: (v: string) => ['white', 'black'].includes(v) || !!v,
     },
-    transparent: Boolean,
+    transparent: {
+      type: Boolean,
+      default: globalConfig.loading.transparent,
+    },
     mask: {
       type: Boolean,
       default: globalConfig.loading.mask,
