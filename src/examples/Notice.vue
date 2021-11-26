@@ -17,7 +17,7 @@ export default defineComponent({
     });
     DeNotice.info('Hello');
     DeNotice.success('Hello');
-    DeNotice.fail('Hello');
+    DeNotice.error('Hello');
     DeNotice.warning('Hello');
   },
 });
