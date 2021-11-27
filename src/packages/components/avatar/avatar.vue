@@ -7,8 +7,9 @@
 <script lang="ts">
 import {defineComponent, ref, computed} from 'vue';
 import {getSizeOrPx} from '../../utils';
-import defImg from './image/def.png';
+import {getConfig} from '../../config';
 
+const globalConfig = getConfig();
 const name = 'de-avatar';
 export default defineComponent({
   name,
@@ -47,7 +48,9 @@ export default defineComponent({
       };
     });
     const img = computed(() => {
-      return isError.value ? defImg : props.src || defImg;
+      return isError.value
+        ? globalConfig.avatar.defImg
+        : props.src || globalConfig.avatar.defImg;
     });
 
     return {

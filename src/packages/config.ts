@@ -2,7 +2,11 @@ import merge from 'lodash-es/merge';
 import {cloneDeep} from 'lodash-es';
 import {LoadingTheme} from './components/loading/loading.vue';
 import avatarDefImg from './components/avatar/image/def.png';
+import loadingImg from './components/image/image/loading.gif';
+import errorImg from './components/image/image/error.png';
+import {ImageRendering} from './components/image/image.vue';
 
+export type Numberish = string | number;
 export type CommonConfig = {
   zIndex?: number;
   transfer?: boolean;
@@ -23,12 +27,19 @@ export type LoadingConfig = {
 export type AvatarConfig = {
   defImg?: string;
 };
+export type ImageConfig = {
+  loadingImg?: string;
+  errorImg?: string;
+  errorReload?: boolean;
+  imageRendering?: ImageRendering;
+};
 
 export type GlobalConfig = {
   common?: CommonConfig;
   notice?: NoticeConfig;
   loading?: LoadingConfig;
   avatar?: AvatarConfig;
+  image?: ImageConfig;
 };
 
 const defaultConfig: Required<GlobalConfig> = {
@@ -51,6 +62,11 @@ const defaultConfig: Required<GlobalConfig> = {
   },
   avatar: {
     defImg: avatarDefImg,
+  },
+  image: {
+    loadingImg,
+    errorImg,
+    errorReload: false,
   },
 };
 const globalConfig: GlobalConfig = {};

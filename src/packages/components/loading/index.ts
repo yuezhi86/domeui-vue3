@@ -1,6 +1,7 @@
 import {createApp, App} from 'vue';
 import Loading, {LoadingTheme} from './loading.vue';
 import {randomStr} from '../../utils';
+import {Numberish} from '../../config';
 
 export * from './loading.vue';
 export const DeLoading = Loading;
@@ -18,7 +19,7 @@ export type LoadingParams = {
   mask?: boolean;
   fixed?: boolean;
   scrollable?: boolean;
-  scale?: number | string;
+  scale?: Numberish;
 };
 
 export function showLoading(params?: LoadingParams) {

@@ -1,4 +1,5 @@
 import {CheckboxValue} from '../components/checkbox';
+import {Numberish} from '../config';
 
 export function getUncheckedDefaultValue(
   trueValue: CheckboxValue,
@@ -14,14 +15,11 @@ export function getUncheckedDefaultValue(
   }
 }
 
-export function getSizeOrPx(value: string | number): string {
+export function getSizeOrPx(value: Numberish): string {
   return Number.isNaN(Number(value)) ? `${value}` : `${value}px`;
 }
 
-export function toFixed(
-  value: number | string | null | undefined,
-  n = 0
-): string {
+export function toFixed(value: Numberish | null | undefined, n = 0): string {
   if (value === undefined || value === null) return '';
   // 不是数字，则直接返回 value
   if (typeof value === 'string' && !/^\d+(\.\d+)?$/.test(value)) return value;

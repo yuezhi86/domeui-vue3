@@ -17,7 +17,6 @@
 import {computed, defineComponent, PropType, ref, onBeforeUnmount} from 'vue';
 import {getConfig} from '../../config';
 import {getIndexZ} from '../../utils';
-import {has} from 'lodash-es';
 
 const name = 'de-loading';
 const globalConfig = getConfig();

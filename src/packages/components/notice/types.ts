@@ -1,4 +1,5 @@
 import {VNode} from 'vue';
+import {Numberish} from '../../config';
 
 export type NoticeTransition = 'move-out' | 'move-in-out';
 export type NoticeTypes = 'info' | 'success' | 'error' | 'warning';
@@ -20,7 +21,7 @@ export type NoticeOptions = {
   classNames?: string | string[]; // 添加到每条消息本身
   containerClassName?: string; // 添加到消息队列容器上
   closeClassNames?: string | string[];
-  maxWidth?: number | string; // 如：300，300px，20%
+  maxWidth?: Numberish; // 如：300，300px，20%
   onClose?: () => void;
   onLeave?: () => void;
   render?: () => VNode;

@@ -3,6 +3,7 @@
     <span :class="iconClassList">
       <i class="de-checkbox__icon-inner"></i>
       <input
+        ref="input"
         :type="pNativeType || nativeType"
         :name="pName || name"
         :checked="isChecked"
@@ -28,11 +29,12 @@ import {
   PropType,
 } from 'vue';
 import {getUncheckedDefaultValue} from '../../utils/assist';
+import {Numberish} from '../../config';
 
 const DEFAULT_HTML_TYPE = 'checkbox';
 const name = 'de-checkbox';
 
-export type CheckboxValue = string | number | boolean;
+export type CheckboxValue = Numberish | boolean;
 export type CheckboxNativeType = 'checkbox' | 'radio';
 export default defineComponent({
   name,

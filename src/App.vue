@@ -20,6 +20,8 @@
     <InputDemo />
     <h2>ButtonDemo</h2>
     <ButtonDemo />
+    <h2>ImageDemo</h2>
+    <ImageDemo />
   </div>
 </template>
 
@@ -33,6 +35,7 @@ import IconDemo from './examples/Icon.vue';
 import BadgeDemo from './examples/Badge.vue';
 import LoadingDemo from './examples/Loading.vue';
 import AvatarDemo from './examples/Avatar.vue';
+import ImageDemo from './examples/Image.vue';
 
 export default {
   components: {
@@ -45,6 +48,7 @@ export default {
     IconDemo,
     BadgeDemo,
     LoadingDemo,
+    ImageDemo,
   },
 };
 </script>

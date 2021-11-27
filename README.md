@@ -11,11 +11,10 @@
 - ~~Notice~~
 - ~~Loading~~
 - ~~Avatar~~
+- ~~Image~~
 - Modal
-- Alert
 - Upload
 - Progress
-- Image
 - Tooltip
 - Poptip
 - Select

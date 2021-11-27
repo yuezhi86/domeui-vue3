@@ -43,6 +43,7 @@
 
 <script lang="ts">
 import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
+import {Numberish} from '../../config';
 
 const name = 'de-input';
 
@@ -144,7 +145,7 @@ export default defineComponent({
     'onComposition',
   ],
   setup(props, {emit}) {
-    const value = ref<string | number>('');
+    const value = ref<Numberish>('');
     const currentLength = ref(0);
     const isOnComposition = ref(false);
     const isFocus = ref(false);

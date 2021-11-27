@@ -6,7 +6,7 @@
     @click="onToggle"
     @keydown.space="onToggle"
   >
-    <input type="hidden" :name="name" :value="value" />
+    <input ref="input" type="hidden" :name="name" :value="value" />
     <div class="de-switch__inner">
       <span v-show="isChecked" class="de-switch__text de-switch__text-on">
         <slot name="on"></slot>
