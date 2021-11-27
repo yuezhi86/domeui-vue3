@@ -1,5 +1,9 @@
 <template>
   <div id="app" class="demo-wrapper">
+    <h2>AvatarDemo</h2>
+    <AvatarDemo />
+    <h2>LoadingDemo</h2>
+    <LoadingDemo />
     <h2>LoadingDemo</h2>
     <LoadingDemo />
     <h2>BadgeDemo</h2>
@@ -28,9 +32,11 @@ import NoticeDemo from './examples/Notice.vue';
 import IconDemo from './examples/Icon.vue';
 import BadgeDemo from './examples/Badge.vue';
 import LoadingDemo from './examples/Loading.vue';
+import AvatarDemo from './examples/Avatar.vue';
 
 export default {
   components: {
+    AvatarDemo,
     ButtonDemo,
     InputDemo,
     CheckboxDemo,

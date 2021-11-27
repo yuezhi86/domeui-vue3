@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue';
+import {computed, defineComponent, PropType, ref, onBeforeUnmount} from 'vue';
 import {getConfig} from '../../config';
 import {getIndexZ} from '../../utils';
+import {has} from 'lodash-es';
 
 const name = 'de-loading';
 const globalConfig = getConfig();
@@ -45,6 +46,11 @@ export default defineComponent({
       type: Boolean,
       default: globalConfig.loading.fixed,
     },
+    // 只有 fixed 为 true 才生效
+    scrollable: {
+      type: Boolean,
+      default: globalConfig.loading.scrollable,
+    },
     scale: {
       type: [String, Number],
       default: '',
@@ -59,6 +65,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const hasHidden = ref(false);
     const classList = computed(() => [
       name,
       `${name}__${props.theme}`,
@@ -84,6 +91,19 @@ export default defineComponent({
         [`${name}__text-fade`]: props.showText && !props.showIcon,
       },
     ]);
+
+    if (!props.scrollable && props.fixed) {
+      if (document.body.style.overflow === 'hidden') {
+        hasHidden.value = true;
+      } else {
+        document.body.style.setProperty('overflow', 'hidden');
+      }
+    }
+
+    onBeforeUnmount(() => {
+      if (!props.fixed || hasHidden.value) return;
+      document.body.style.removeProperty('overflow');
+    });
 
     return {
       classList,

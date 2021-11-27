@@ -1,17 +1,21 @@
 <template>
-  <div></div>
+  <div :class="classList"></div>
 </template>
 
 <script lang="ts">
 import {defineComponent, ref, computed} from 'vue';
 
 const name = 'de-modal';
-export default {
+export default defineComponent({
   name,
   props: {},
   emits: [],
   setup() {
-    return {};
+    const classList = computed(() => [name]);
+
+    return {
+      classList,
+    };
   },
-};
+});
 </script>

@@ -9,6 +9,7 @@ export * from './components/notice';
 export * from './components/icon';
 export * from './components/badge';
 export * from './components/loading';
+export * from './components/avatar';
 
 export function config(options?: GlobalConfig) {
   setConfig(options);

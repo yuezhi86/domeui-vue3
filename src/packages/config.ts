@@ -1,6 +1,7 @@
 import merge from 'lodash-es/merge';
 import {cloneDeep} from 'lodash-es';
 import {LoadingTheme} from './components/loading/loading.vue';
+import avatarDefImg from './components/avatar/image/def.png';
 
 export type CommonConfig = {
   zIndex?: number;
@@ -16,13 +17,18 @@ export type LoadingConfig = {
   transparent?: boolean;
   mask?: boolean;
   fixed?: boolean;
+  scrollable?: boolean;
   zIndex?: number;
+};
+export type AvatarConfig = {
+  defImg?: string;
 };
 
 export type GlobalConfig = {
   common?: CommonConfig;
   notice?: NoticeConfig;
   loading?: LoadingConfig;
+  avatar?: AvatarConfig;
 };
 
 const defaultConfig: Required<GlobalConfig> = {
@@ -40,7 +46,11 @@ const defaultConfig: Required<GlobalConfig> = {
     transparent: false,
     mask: true,
     fixed: true,
+    scrollable: false,
     zIndex: 10,
+  },
+  avatar: {
+    defImg: avatarDefImg,
   },
 };
 const globalConfig: GlobalConfig = {};

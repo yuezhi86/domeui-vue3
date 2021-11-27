@@ -17,6 +17,7 @@ export type LoadingParams = {
   transparent?: boolean;
   mask?: boolean;
   fixed?: boolean;
+  scrollable?: boolean;
   scale?: number | string;
 };
 

@@ -25,22 +25,22 @@ export function toFixed(
   if (value === undefined || value === null) return '';
   // 不是数字，则直接返回 value
   if (typeof value === 'string' && !/^\d+(\.\d+)?$/.test(value)) return value;
+  if (value === -Infinity || value === Infinity || Number.isNaN(value))
+    return String(value);
 
-  const dot = n ? '.' : '';
-  const valueSplit = String(value).split('.');
-  const integer = valueSplit[0];
-  let decimal = valueSplit[1];
+  const [integer, decimal] = String(value).split('.');
 
   // 如果 n 是 0 则直接返回整数部分
   if (!n) return integer;
 
-  if (valueSplit.length === 1) {
-    return `${integer}${dot}${new Array(n).fill('0').join('')}`;
+  // value 是整数
+  if (integer && !decimal) {
+    return `${integer}.${''.padEnd(n, '0')}`;
   }
 
   if (decimal.length < n) {
-    decimal += new Array(n - decimal.length).fill('0').join('');
+    return `${integer}.${decimal}${''.padEnd(n - decimal.length, '0')}`;
   }
 
-  return `${integer}${dot}${decimal.substr(0, n)}`;
+  return `${integer}.${decimal.substr(0, n)}`;
 }
