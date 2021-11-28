@@ -33,6 +33,17 @@ export type ImageConfig = {
   errorReload?: boolean;
   imageRendering?: ImageRendering;
 };
+export type ModalConfig = {
+  confirmText?: string;
+  cancelText?: string;
+  maskClosable?: boolean;
+  mask?: boolean;
+  escClosable?: boolean;
+  closable?: boolean;
+  draggable?: boolean;
+  scrollable?: boolean;
+  transfer?: boolean;
+};
 
 export type GlobalConfig = {
   common?: CommonConfig;
@@ -40,6 +51,7 @@ export type GlobalConfig = {
   loading?: LoadingConfig;
   avatar?: AvatarConfig;
   image?: ImageConfig;
+  modal?: ModalConfig;
 };
 
 const defaultConfig: Required<GlobalConfig> = {
@@ -67,6 +79,15 @@ const defaultConfig: Required<GlobalConfig> = {
     loadingImg,
     errorImg,
     errorReload: false,
+  },
+  modal: {
+    confirmText: '确认',
+    cancelText: '取消',
+    maskClosable: false,
+    mask: true,
+    escClosable: true,
+    closable: false,
+    scrollable: false,
   },
 };
 const globalConfig: GlobalConfig = {};

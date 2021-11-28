@@ -11,6 +11,7 @@ export * from './components/badge';
 export * from './components/loading';
 export * from './components/avatar';
 export * from './components/image';
+export * from './components/modal';
 
 export function config(options?: GlobalConfig) {
   setConfig(options);
