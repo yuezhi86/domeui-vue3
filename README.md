@@ -12,7 +12,7 @@
 - ~~Loading~~
 - ~~Avatar~~
 - ~~Image~~
-- Modal
+- ~~Modal~~
 - Upload
 - Progress
 - Tooltip

@@ -9,6 +9,7 @@
     title="编辑设施-房间"
     :before-close="beforeClose"
   >
+    内容
   </DeModal>
 </template>
 

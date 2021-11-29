@@ -12,5 +12,3 @@ export function hideModal() {
 
 export * from './modal.vue';
 export const DeModal = Model;
-export const DeConfirm = '';
-export const DeAlert = '';
