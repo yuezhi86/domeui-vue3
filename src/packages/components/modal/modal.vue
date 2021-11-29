@@ -9,12 +9,7 @@
       ></div>
     </transition>
     <transition :name="transitionNames[0] || 'fade'">
-      <section
-        v-if="modelValue"
-        :class="classList"
-        :style="styleList"
-        :data-uid="uid"
-      >
+      <section v-if="modelValue" :class="classList" :style="styleList">
         <header
           v-if="showHeader"
           :class="headerClassList"
@@ -38,7 +33,7 @@
           :class="footerClassList"
           :style="[actionParams.style]"
         >
-          <slot name="footer" :methods="{onConfirm, onCancel}">
+          <slot name="action" :methods="{onConfirm, onCancel}">
             <DeButton
               theme="default"
               class="de-modal__action-btn"

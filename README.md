@@ -8,11 +8,14 @@
 - ~~CheckboxGroup~~
 - ~~Switch~~
 - ~~Badge~~
-- ~~Notice~~
 - ~~Loading~~
 - ~~Avatar~~
 - ~~Image~~
 - ~~Modal~~
+  - auto height
+  - draggable
+  - fullscreen
+- Notice
 - Upload
 - Progress
 - Tooltip
