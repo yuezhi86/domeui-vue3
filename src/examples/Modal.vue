@@ -7,6 +7,7 @@
   <DeModal
     v-model="showModal"
     title="编辑设施-房间"
+    class="abc de"
     :before-close="beforeClose"
   >
     内容

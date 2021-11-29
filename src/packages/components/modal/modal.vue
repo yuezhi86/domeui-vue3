@@ -3,13 +3,18 @@
     <transition :name="transitionNames[1] || 'fade'">
       <div
         v-if="modelValue"
-        class="de-modal__mask"
+        :class="maskClassList"
         :style="maskStyleList"
         @click.stop="onClickMask"
       ></div>
     </transition>
     <transition :name="transitionNames[0] || 'fade'">
-      <section v-if="modelValue" :class="classList" :style="styleList">
+      <section
+        v-if="modelValue"
+        :class="classList"
+        :style="styleList"
+        v-bind="$attrs"
+      >
         <header
           v-if="showHeader"
           :class="headerClassList"
@@ -74,13 +79,13 @@ const globalConfig = getConfig();
 const name = 'de-modal';
 const uid = `${name}__${randomStr(10)}`;
 export type ModalHeaderParams = {
-  style?: object;
-  class?: Array<string>;
+  style?: {[p: string]: Numberish};
+  class?: string;
 };
 export type ModalActionParams = ModalHeaderParams;
 export type ModalCloseParams = {
   name?: string;
-  class?: Array<string>;
+  class?: string;
 };
 export type ModalTransitionNames = [string, string];
 export type ModalBeforeCloseAction = 'confirm' | 'cancel';
@@ -93,6 +98,7 @@ export default defineComponent({
     DeIcon,
     DeButton,
   },
+  inheritAttrs: false,
   props: {
     modelValue: Boolean,
     title: {
@@ -144,6 +150,10 @@ export default defineComponent({
       type: Boolean,
       default: globalConfig.modal.mask,
     },
+    maskClassName: {
+      type: String,
+      default: '',
+    },
     scrollable: {
       type: Boolean,
       default: globalConfig.modal.scrollable,
@@ -176,13 +186,17 @@ export default defineComponent({
   emits: ['update:modelValue', 'onConfirm', 'onCancel', 'onShow', 'onHide'],
   setup(props, {emit}) {
     const instanceId = randomStr(10);
-    const zIndex = ref(0);
+    const zIndex = ref<number | null>(null);
     const hasHidden = ref(false);
     const classList = computed(() => [name]);
     const styleList = computed(() => [
       {
         zIndex: zIndex.value,
       },
+    ]);
+    const maskClassList = computed(() => [
+      `${name}__mask`,
+      props.maskClassName,
     ]);
     const maskStyleList = computed(() => [
       {
@@ -191,11 +205,11 @@ export default defineComponent({
     ]);
     const headerClassList = computed(() => [
       `${name}__header`,
-      ...(props.headerParams.class ?? []),
+      props.headerParams.class,
     ]);
     const footerClassList = computed(() => [
       `${name}__action`,
-      ...(props.actionParams.class ?? []),
+      props.actionParams.class,
     ]);
 
     const beforeCloseHandle = (action?: ModalBeforeCloseAction) => {
@@ -276,12 +290,17 @@ export default defineComponent({
       }
     );
 
+    if (props.modelValue) {
+      zIndex.value = getIndexZ();
+    }
+
     modalQueue.set(instanceId, modalHide);
 
     return {
       uid,
       classList,
       styleList,
+      maskClassList,
       maskStyleList,
       headerClassList,
       footerClassList,
