@@ -271,10 +271,7 @@ export default defineComponent({
     window.addEventListener('keydown', onEscClose, false);
 
     onBeforeUnmount(() => {
-      if (!hasHidden.value) {
-        document.body.style.removeProperty('overflow');
-      }
-
+      modalHide();
       window.removeEventListener('keydown', onEscClose, false);
       modalQueue.delete(instanceId);
     });
@@ -291,7 +288,7 @@ export default defineComponent({
     );
 
     if (props.modelValue) {
-      zIndex.value = getIndexZ();
+      modalShow();
     }
 
     modalQueue.set(instanceId, modalHide);
