@@ -1,15 +1,16 @@
-import Model from './index.vue';
+import Model from './modal.vue';
 
-let modalQueue: Array<{hideModal: () => void}> = [];
+type HideModal = () => void;
+const modalQueue: Map<string, HideModal> = new Map();
 
-export * from './index.vue';
+export default modalQueue;
+export function hideModal() {
+  modalQueue.forEach((hideModal) => {
+    hideModal();
+  });
+}
+
+export * from './modal.vue';
 export const DeModal = Model;
 export const DeConfirm = '';
 export const DeAlert = '';
-export const hideModal = () => {
-  modalQueue.forEach((item) => {
-    item.hideModal();
-  });
-
-  modalQueue = [];
-};

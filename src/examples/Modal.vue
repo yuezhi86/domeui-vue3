@@ -4,12 +4,17 @@
       <DeButton @click="onShowModal">打开</DeButton>
     </div>
   </section>
-  <DeModal v-model="showModal" title="编辑设施-房间"> </DeModal>
+  <DeModal
+    v-model="showModal"
+    title="编辑设施-房间"
+    :before-close="beforeClose"
+  >
+  </DeModal>
 </template>
 
 <script lang="ts">
 import {ref} from 'vue';
-import {DeButton, DeModal} from '@/packages';
+import {DeButton, DeModal, ModalBeforeCloseAction} from '@/packages';
 
 export default {
   components: {
@@ -20,6 +25,15 @@ export default {
     const showModal = ref(false);
     return {
       showModal,
+      beforeClose(action: ModalBeforeCloseAction) {
+        if (action === 'confirm') {
+          return new Promise<void>((resolve) => {
+            setTimeout(() => {
+              resolve();
+            }, 3000);
+          });
+        }
+      },
       onShowModal() {
         showModal.value = true;
       },

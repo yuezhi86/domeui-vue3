@@ -123,7 +123,6 @@ export default defineComponent({
         if (!props.beforeChange) return handle();
 
         const before = props.beforeChange(isChecked.value);
-
         if (before && before.then) {
           before.then(() => {
             handle();

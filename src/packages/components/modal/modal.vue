@@ -5,7 +5,6 @@
         v-if="modelValue"
         class="de-modal__mask"
         :style="maskStyleList"
-        :data-uid="uid"
         @click.stop="onClickMask"
       ></div>
     </transition>
@@ -74,6 +73,7 @@ import {DeIcon} from '../icon';
 import {DeButton} from '../button';
 import {getConfig, Numberish} from '../../config';
 import {getIndexZ, randomStr} from '../../utils';
+import modalQueue from './index';
 
 const globalConfig = getConfig();
 const name = 'de-modal';
@@ -88,6 +88,10 @@ export type ModalCloseParams = {
   class?: Array<string>;
 };
 export type ModalTransitionNames = [string, string];
+export type ModalBeforeCloseAction = 'confirm' | 'cancel';
+export type ModalBeforeClose = (
+  action?: ModalBeforeCloseAction
+) => Promise<void>;
 export default defineComponent({
   name,
   components: {
@@ -117,7 +121,7 @@ export default defineComponent({
       default: 'auto',
     },
     beforeClose: {
-      type: Function as PropType<(checked?: boolean) => Promise<void>>,
+      type: Function as PropType<ModalBeforeClose>,
       default: undefined,
     },
     escClosable: {
@@ -176,6 +180,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'onConfirm', 'onCancel', 'onShow', 'onHide'],
   setup(props, {emit}) {
+    const instanceId = randomStr(10);
     const zIndex = ref(0);
     const hasHidden = ref(false);
     const classList = computed(() => [name]);
@@ -198,37 +203,51 @@ export default defineComponent({
       ...(props.actionParams.class ?? []),
     ]);
 
-    watch(
-      () => props.modelValue,
-      (newValue) => {
-        if (newValue) {
-          if (!props.scrollable) {
-            if (document.body.style.overflow === 'hidden') {
-              hasHidden.value = true;
-            } else {
-              document.body.style.setProperty('overflow', 'hidden');
-            }
-          }
+    const beforeCloseHandle = (action?: ModalBeforeCloseAction) => {
+      const isConfirm = action === 'confirm';
+      const isCancel = action === 'cancel';
+      const handle = () => {
+        isConfirm && emit('onConfirm');
+        isCancel && emit('onCancel');
+        modalHide();
+      };
 
-          zIndex.value = getIndexZ();
-          emit('onShow');
+      if (!props.beforeClose) return handle();
+
+      const before = props.beforeClose(action);
+      if (before && before.then) {
+        before.then(() => {
+          handle();
+        });
+      } else {
+        handle();
+      }
+    };
+    const modalShow = () => {
+      if (!props.scrollable) {
+        if (document.body.style.overflow === 'hidden') {
+          hasHidden.value = true;
         } else {
-          if (!props.scrollable && !hasHidden.value) {
-            document.body.style.removeProperty('overflow');
-          }
-
-          emit('onHide');
+          document.body.style.setProperty('overflow', 'hidden');
         }
       }
-    );
 
-    const onConfirm = () => {
-      emit('onConfirm');
+      zIndex.value = getIndexZ();
+      emit('onShow');
+    };
+    const modalHide = () => {
+      if (!props.scrollable && !hasHidden.value) {
+        document.body.style.removeProperty('overflow');
+      }
+
       emit('update:modelValue', false);
+      emit('onHide');
+    };
+    const onConfirm = () => {
+      beforeCloseHandle('confirm');
     };
     const onCancel = () => {
-      emit('onCancel');
-      emit('update:modelValue', false);
+      beforeCloseHandle('cancel');
     };
     const onClickMask = () => {
       if (!props.maskClosable) return;
@@ -243,10 +262,26 @@ export default defineComponent({
     window.addEventListener('keydown', onEscClose, false);
 
     onBeforeUnmount(() => {
-      if (hasHidden.value) return;
-      document.body.style.removeProperty('overflow');
+      if (!hasHidden.value) {
+        document.body.style.removeProperty('overflow');
+      }
+
       window.removeEventListener('keydown', onEscClose, false);
+      modalQueue.delete(instanceId);
     });
+
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        if (newValue) {
+          modalShow();
+        } else {
+          modalHide();
+        }
+      }
+    );
+
+    modalQueue.set(instanceId, modalHide);
 
     return {
       uid,
