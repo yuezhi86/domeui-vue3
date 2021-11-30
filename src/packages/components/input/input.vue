@@ -132,17 +132,17 @@ export default defineComponent({
   },
   emits: [
     'update:modelValue',
-    'onInput',
-    'onChange',
-    'onFocus',
-    'onBlur',
-    'onSelect',
-    'onKeyup',
-    'onKeydown',
-    'onKeypress',
-    'onEnter',
-    'onClear',
-    'onComposition',
+    'input',
+    'change',
+    'focus',
+    'blur',
+    'select',
+    'keyup',
+    'keydown',
+    'keypress',
+    'enter',
+    'clear',
+    'composition',
   ],
   setup(props, {emit}) {
     const value = ref<Numberish>('');
@@ -182,7 +182,7 @@ export default defineComponent({
 
     const onInput = (e: InputEvent) => {
       if (isOnComposition.value) return;
-      emit('onInput', e);
+      emit('input', e);
       emit('update:modelValue', (e.target as HTMLInputElement).value);
     };
 
@@ -216,7 +216,7 @@ export default defineComponent({
       ),
       onInput,
       onComposition(e: InputEvent) {
-        emit('onComposition', e);
+        emit('composition', e);
 
         if (e.type === 'compositionstart') {
           isOnComposition.value = true;
@@ -229,33 +229,33 @@ export default defineComponent({
       },
       onClear() {
         emit('update:modelValue', '');
-        emit('onClear');
+        emit('clear');
       },
       onBlur(e: InputEvent) {
         isFocus.value = false;
-        emit('onBlur', e);
+        emit('blur', e);
       },
       onFocus(e: InputEvent) {
         isFocus.value = true;
-        emit('onFocus', e);
+        emit('focus', e);
       },
       onChange(e: InputEvent) {
-        emit('onChange', e);
+        emit('change', e);
       },
       onSelect(e: InputEvent) {
-        emit('onSelect', e);
+        emit('select', e);
       },
       onKeyup(e: InputEvent) {
-        emit('onKeyup', e);
+        emit('keyup', e);
       },
       onEnter(e: InputEvent) {
-        emit('onEnter', e);
+        emit('enter', e);
       },
       onKeypress(e: InputEvent) {
-        emit('onKeypress', e);
+        emit('keypress', e);
       },
       onKeydown(e: InputEvent) {
-        emit('onKeydown', e);
+        emit('keydown', e);
       },
     };
   },

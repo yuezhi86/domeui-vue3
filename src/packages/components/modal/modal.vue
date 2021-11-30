@@ -183,7 +183,7 @@ export default defineComponent({
       default: () => [],
     },
   },
-  emits: ['update:modelValue', 'onConfirm', 'onCancel', 'onShow', 'onHide'],
+  emits: ['update:modelValue', 'confirm', 'cancel', 'show', 'hide'],
   setup(props, {emit}) {
     const instanceId = randomStr(10);
     const zIndex = ref<number | null>(null);
@@ -216,8 +216,8 @@ export default defineComponent({
       const isConfirm = action === 'confirm';
       const isCancel = action === 'cancel';
       const handle = () => {
-        isConfirm && emit('onConfirm');
-        isCancel && emit('onCancel');
+        isConfirm && emit('confirm');
+        isCancel && emit('cancel');
         modalHide();
       };
 
@@ -242,7 +242,7 @@ export default defineComponent({
       }
 
       zIndex.value = getIndexZ();
-      emit('onShow');
+      emit('show');
     };
     const modalHide = () => {
       if (!props.scrollable && !hasHidden.value) {
@@ -250,7 +250,7 @@ export default defineComponent({
       }
 
       emit('update:modelValue', false);
-      emit('onHide');
+      emit('hide');
     };
     const onConfirm = () => {
       beforeCloseHandle('confirm');

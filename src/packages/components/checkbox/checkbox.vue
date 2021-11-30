@@ -71,8 +71,8 @@ export default defineComponent({
   emits: [
     'update:modelValue',
     'update:indeterminate',
-    'onChange',
-    'onBeforeChange',
+    'change',
+    'before-change',
   ],
   setup(props, {emit}) {
     const inGroups = inject('group', false);
@@ -143,9 +143,9 @@ export default defineComponent({
     const handle = () => {
       if (isRadio.value && isChecked.value && !isRadioOptional.value) return;
       isChecked.value = !isChecked.value;
-      emit('onBeforeChange', value.value);
+      emit('before-change', value.value);
       setValue(isChecked.value);
-      emit('onChange', {
+      emit('change', {
         checked: isChecked.value,
         value: value.value,
       });

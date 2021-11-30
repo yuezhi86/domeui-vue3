@@ -35,7 +35,7 @@ export default defineComponent({
       default: undefined,
     },
   },
-  emits: ['onError'],
+  emits: ['error'],
   setup(props, {emit}) {
     const isError = ref(false);
     const styleList = computed(() => {
@@ -59,7 +59,7 @@ export default defineComponent({
       onError() {
         if (!props.src) return;
         isError.value = true;
-        emit('onError');
+        emit('error');
       },
     };
   },

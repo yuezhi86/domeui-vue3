@@ -63,7 +63,7 @@ export default defineComponent({
       default: undefined,
     },
   },
-  emits: ['update:modelValue', 'onChange'],
+  emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
     const isChecked = ref(false);
     const value = ref<CheckboxValue>('');
@@ -100,7 +100,7 @@ export default defineComponent({
       isChecked.value = !isChecked.value;
       setValue(isChecked.value);
       emit('update:modelValue', value.value);
-      emit('onChange', {
+      emit('change', {
         checked: isChecked.value,
         value: value.value,
       });

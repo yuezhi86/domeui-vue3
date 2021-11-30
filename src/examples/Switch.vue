@@ -1,12 +1,7 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
-      <DeSwitch
-        v-model="b"
-        name="b"
-        :disabled="disabled"
-        @onChange="onChange"
-      />
+      <DeSwitch v-model="b" name="b" :disabled="disabled" @change="onChange" />
       <DeSwitch
         v-model="c"
         name="c"
@@ -14,7 +9,7 @@
         :width="80"
         :height="30"
         :disabled="disabled"
-        @onChange="onChange"
+        @change="onChange"
       >
         <template #on>已打开</template>
         <template #off>已关闭</template>
@@ -28,7 +23,7 @@
         name="a"
         :disabled="disabled"
         :before-change="beforeChange"
-        @onChange="onChange"
+        @change="onChange"
       />
     </div>
   </section>

@@ -9,8 +9,8 @@
         radio-optional
         name="b"
         :disabled="disabled"
-        @onBeforeChange="onBeforeChange"
-        @onChange="onChange"
+        @before-change="onBeforeChange"
+        @change="onChange"
       />
       <DeCheckbox
         v-model="c"
@@ -20,8 +20,8 @@
         :true-value="1"
         :false-value="0"
         :disabled="disabled"
-        @onBeforeChange="onBeforeChange"
-        @onChange="onChange"
+        @before-change="onBeforeChange"
+        @change="onChange"
       />
     </div>
     <div class="item-group">
@@ -35,8 +35,8 @@
         :true-value="1"
         :false-value="0"
         :disabled="disabled"
-        @onBeforeChange="onBeforeChange"
-        @onChange="onChange"
+        @before-change="onBeforeChange"
+        @change="onChange"
       />
     </div>
     <div class="item-group">

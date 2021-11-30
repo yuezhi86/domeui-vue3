@@ -118,7 +118,7 @@ export default defineComponent({
       default: () => ({}),
     },
   },
-  emits: ['onLoading', 'onLoaded', 'onError'],
+  emits: ['loading', 'loaded', 'error'],
   setup(props, {emit}) {
     const loadParams: ImageLoadParams = Object.assign(
       defLoadParams,
@@ -195,25 +195,25 @@ export default defineComponent({
     const onLoaded = () => {
       complete.value = true;
       loading.value = false;
-      emit('onLoaded', props.src);
+      emit('loaded', props.src);
     };
     const onError = () => {
       error.value = true;
       loading.value = false;
-      emit('onError', image.value);
+      emit('error', image.value);
     };
     const onLoading = () => {
       const _img = new Image();
       _img.onload = () => {
-        onLoaded();
         img.value = props.src;
+        onLoaded();
       };
       _img.onerror = () => {
         onError();
       };
       _img.src = props.src;
 
-      emit('onLoading', props.src);
+      emit('loading', props.src);
     };
 
     watch(

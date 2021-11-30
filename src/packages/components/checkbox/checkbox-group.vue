@@ -29,7 +29,7 @@ export default defineComponent({
     disabled: Boolean,
     vertical: Boolean,
   },
-  emits: ['update:modelValue', 'onChange'],
+  emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
     const _name = computed(() => props.name);
     const _nativeType = computed(() => props.nativeType);
@@ -45,7 +45,7 @@ export default defineComponent({
 
     const update = (value: CheckboxValue) => {
       emit('update:modelValue', value);
-      emit('onChange', value);
+      emit('change', value);
     };
 
     provide('group', true);
