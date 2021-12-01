@@ -3,7 +3,7 @@
     <div
       v-if="(isAlways && !isDot) || count"
       :class="countClassList"
-      :style="countStyleList"
+      :style="countStyle"
     >
       <slot v-if="!isDot" name="count">{{ count }}</slot>
     </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue';
+import {computed, CSSProperties, defineComponent, PropType} from 'vue';
 
 const name = 'de-badge';
 
@@ -79,7 +79,7 @@ export default defineComponent({
         [`${name}__${props.size}-dot`]: isDot.value,
       },
     ]);
-    const countStyleList = computed(() => {
+    const countStyle = computed<CSSProperties>(() => {
       return {
         marginLeft: props.offset[0] + 'px',
         marginBottom: props.offset[1] + 'px',
@@ -94,7 +94,7 @@ export default defineComponent({
       isAlways,
       classList,
       countClassList,
-      countStyleList,
+      countStyle,
     };
   },
 });

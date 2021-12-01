@@ -2,7 +2,7 @@
   <div
     tabindex="0"
     :class="classList"
-    :style="styleList"
+    :style="style"
     @click="onToggle"
     @keydown.space="onToggle"
   >
@@ -11,7 +11,7 @@
       <span v-show="isChecked" class="de-switch__text de-switch__text-on">
         <slot name="on"></slot>
       </span>
-      <i class="de-switch__i" :style="iStyleList"></i>
+      <i class="de-switch__i" :style="iStyle"></i>
       <span v-show="!isChecked" class="de-switch__text de-switch__text-off">
         <slot name="off"></slot>
       </span>
@@ -20,7 +20,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
+import {
+  defineComponent,
+  ref,
+  computed,
+  watchEffect,
+  PropType,
+  CSSProperties,
+} from 'vue';
 import {CheckboxValue} from '../checkbox';
 import {getSizeOrPx, getUncheckedDefaultValue} from '../../utils/assist';
 
@@ -75,14 +82,14 @@ export default defineComponent({
         [`${name}__checked`]: isChecked.value,
       },
     ]);
-    const styleList = computed(() => {
+    const style = computed<CSSProperties>(() => {
       return {
         width: getSizeOrPx(props.width),
         height: getSizeOrPx(props.height),
         borderRadius: getSizeOrPx(props.height),
       };
     });
-    const iStyleList = computed(() => {
+    const iStyle = computed<CSSProperties>(() => {
       const size = `${parseFloat(getSizeOrPx(props.height)) - 4}px`;
       return {
         width: size,
@@ -113,8 +120,8 @@ export default defineComponent({
 
     return {
       classList,
-      styleList,
-      iStyleList,
+      style,
+      iStyle,
       isChecked,
       value,
       onToggle(e: Event) {

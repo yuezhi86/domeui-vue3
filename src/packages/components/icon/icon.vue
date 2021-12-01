@@ -1,9 +1,9 @@
 <template>
-  <i :class="classList" :style="styleList"></i>
+  <i :class="classList" :style="style"></i>
 </template>
 
 <script lang="ts">
-import {defineComponent, computed, PropType} from 'vue';
+import {defineComponent, computed, PropType, CSSProperties} from 'vue';
 
 const name = 'de-icon';
 
@@ -52,7 +52,7 @@ export default defineComponent({
   },
   setup(props) {
     const classList = computed(() => [name, `${name}-${props.name}`]);
-    const styleList = computed(() => {
+    const style = computed<CSSProperties>(() => {
       const style: any = {color: props.color};
       let size: number = Number(props.size);
 
@@ -81,7 +81,7 @@ export default defineComponent({
 
     return {
       classList,
-      styleList,
+      style,
     };
   },
 });

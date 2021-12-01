@@ -1,11 +1,11 @@
 <template>
-  <div class="de-avatar" :style="styleList">
+  <div class="de-avatar" :style="style">
     <img :src="img" :alt="alt" class="de-avatar__img" @error="onError" />
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, computed} from 'vue';
+import {defineComponent, ref, computed, CSSProperties} from 'vue';
 import {getSizeOrPx} from '../../utils';
 import {getConfig} from '../../config';
 
@@ -38,7 +38,7 @@ export default defineComponent({
   emits: ['error'],
   setup(props, {emit}) {
     const isError = ref(false);
-    const styleList = computed(() => {
+    const style = computed<CSSProperties>(() => {
       const size = getSizeOrPx(props.size);
       return {
         width: size,
@@ -55,7 +55,7 @@ export default defineComponent({
 
     return {
       img,
-      styleList,
+      style,
       onError() {
         if (!props.src) return;
         isError.value = true;

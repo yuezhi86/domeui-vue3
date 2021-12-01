@@ -4,7 +4,7 @@
       <div
         v-if="modelValue"
         :class="maskClassList"
-        :style="maskStyleList"
+        :style="maskStyle"
         @click.stop="onClickMask"
       ></div>
     </transition>
@@ -12,7 +12,7 @@
       <section
         v-if="modelValue"
         :class="classList"
-        :style="styleList"
+        :style="style"
         v-bind="$attrs"
       >
         <header
@@ -68,6 +68,7 @@ import {
   watch,
   ref,
   onBeforeUnmount,
+  CSSProperties,
 } from 'vue';
 import {DeIcon} from '../icon';
 import {DeButton} from '../button';
@@ -79,7 +80,7 @@ const globalConfig = getConfig();
 const name = 'de-modal';
 const uid = `${name}__${randomStr(10)}`;
 export type ModalHeaderParams = {
-  style?: {[p: string]: Numberish};
+  style?: CSSProperties;
   class?: string;
 };
 export type ModalActionParams = ModalHeaderParams;
@@ -189,20 +190,20 @@ export default defineComponent({
     const zIndex = ref<number | null>(null);
     const hasHidden = ref(false);
     const classList = computed(() => [name]);
-    const styleList = computed(() => [
-      {
+    const style = computed(() => {
+      return {
         zIndex: zIndex.value,
-      },
-    ]);
+      } as CSSProperties;
+    });
     const maskClassList = computed(() => [
       `${name}__mask`,
       props.maskClassName,
     ]);
-    const maskStyleList = computed(() => [
-      {
+    const maskStyle = computed(() => {
+      return {
         zIndex: zIndex.value,
-      },
-    ]);
+      } as CSSProperties;
+    });
     const headerClassList = computed(() => [
       `${name}__header`,
       props.headerParams.class,
@@ -296,9 +297,9 @@ export default defineComponent({
     return {
       uid,
       classList,
-      styleList,
+      style,
       maskClassList,
-      maskStyleList,
+      maskStyle,
       headerClassList,
       footerClassList,
       onConfirm,

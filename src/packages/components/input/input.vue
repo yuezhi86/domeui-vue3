@@ -9,7 +9,7 @@
       :type="nativeType"
       :value="value"
       class="de-input__ipt"
-      :style="inputStyleList"
+      :style="inputStyle"
       :minlength="minlength"
       :maxlength="maxlength"
       :readonly="readonly"
@@ -42,7 +42,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, computed, watchEffect, PropType} from 'vue';
+import {
+  defineComponent,
+  ref,
+  computed,
+  watchEffect,
+  PropType,
+  CSSProperties,
+} from 'vue';
 import {Numberish} from '../../config';
 
 const name = 'de-input';
@@ -166,7 +173,7 @@ export default defineComponent({
         },
       ];
     });
-    const inputStyleList = computed(() => {
+    const inputStyle = computed<CSSProperties>(() => {
       return isInput.value
         ? {}
         : {
@@ -202,7 +209,7 @@ export default defineComponent({
       isInput,
       isFocus,
       wrapClassList,
-      inputStyleList,
+      inputStyle,
       isAlive,
       hasClear: computed(
         () =>

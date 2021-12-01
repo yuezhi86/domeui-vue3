@@ -15,7 +15,8 @@ export function getUncheckedDefaultValue(
   }
 }
 
-export function getSizeOrPx(value: Numberish): string {
+export function getSizeOrPx(value: Numberish | undefined | null): string {
+  if (value === undefined || value === null || value === '') return '';
   return Number.isNaN(Number(value)) ? `${value}` : `${value}px`;
 }
 

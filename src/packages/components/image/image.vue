@@ -1,13 +1,21 @@
 <template>
-  <div :class="classList" :style="styleList">
+  <div :class="classList" :style="style">
+    <img
+      v-if="loading"
+      :src="loadingImg"
+      class="de-image__img-loading"
+      :style="loadingStyle"
+      :alt="alt"
+    />
     <img
       ref="image"
       v-bind="nativeAttrs"
       :src="url"
-      :data-src="src"
       :alt="alt"
-      :style="imgStyleList"
+      :style="imgStyle"
       class="de-image__img"
+      @load="onLoaded"
+      @error="onError"
     />
   </div>
 </template>
@@ -15,6 +23,7 @@
 <script lang="ts">
 import {
   computed,
+  CSSProperties,
   defineComponent,
   ImgHTMLAttributes,
   onBeforeUnmount,
@@ -125,19 +134,16 @@ export default defineComponent({
       props.loadParams
     );
     const image = ref<HTMLImageElement | null>(null);
-    const img = ref('');
     const loading = ref(false);
     const complete = ref(false);
     const error = ref(false);
+    const loadingImg = computed(() => loadParams.loadingImg);
     const url = computed(() => {
-      if (loading.value) {
-        return loadParams?.loadingImg;
-      }
       if (error.value) {
-        return loadParams?.errorImg;
+        return loadParams.errorImg;
       }
 
-      return img.value;
+      return props.src;
     });
     const width = computed(() => props.width && getSizeOrPx(props.width));
     const height = computed(() => props.height && getSizeOrPx(props.height));
@@ -152,45 +158,29 @@ export default defineComponent({
           !height.value && (loading.value || error.value),
       },
     ]);
-    const styleList = computed(() => {
+    const style = computed<CSSProperties>(() => {
       return {
         width: width.value,
         height: height.value,
       };
     });
-    const loadImgWidth = computed(() => {
-      if (loading.value) return loadParams?.loadingImgWidth;
-      if (error.value) return loadParams?.errorImgWidth;
-      return '';
-    });
-    const loadImgHeight = computed(() => {
-      if (loading.value) return loadParams?.loadingImgHeight;
-      if (error.value) return loadParams?.errorImgHeight;
-      return '';
-    });
-    const imgStyleList = computed(() => {
+    const imgStyle = computed(() => {
       return {
-        width: loadImgWidth.value,
-        height: loadImgHeight.value,
+        position: loading.value ? 'absolute' : '',
+        opacity: loading.value ? 0 : 1,
+        width: error.value ? getSizeOrPx(loadParams.errorImgWidth) : '',
+        height: error.value ? getSizeOrPx(loadParams.errorImgHeight) : '',
         imageRendering: props.imageRendering,
         objectPosition: props.objectPosition,
         objectFit: props.objectFit,
+      } as CSSProperties;
+    });
+    const loadingStyle = computed<CSSProperties>(() => {
+      return {
+        width: getSizeOrPx(loadParams.loadingImgWidth),
+        height: getSizeOrPx(loadParams.loadingImgHeight),
       };
     });
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].intersectionRatio > 0 && !complete.value) {
-          if (error.value && !loadParams.errorReload) return;
-          loading.value = true;
-          onLoading();
-        }
-      },
-      {
-        root: loadParams?.root,
-        rootMargin: loadParams?.rootMargin,
-        threshold: loadParams?.threshold,
-      }
-    );
 
     const onLoaded = () => {
       complete.value = true;
@@ -203,16 +193,6 @@ export default defineComponent({
       emit('error', image.value);
     };
     const onLoading = () => {
-      const _img = new Image();
-      _img.onload = () => {
-        img.value = props.src;
-        onLoaded();
-      };
-      _img.onerror = () => {
-        onError();
-      };
-      _img.src = props.src;
-
       emit('loading', props.src);
     };
 
@@ -228,6 +208,21 @@ export default defineComponent({
       }
     );
 
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].intersectionRatio > 0 && !complete.value) {
+          if (error.value && !loadParams.errorReload) return;
+          loading.value = true;
+          onLoading();
+        }
+      },
+      {
+        root: loadParams.root,
+        rootMargin: loadParams.rootMargin,
+        threshold: loadParams.threshold,
+      }
+    );
+
     onMounted(() => {
       io.observe(image.value as HTMLImageElement);
     });
@@ -240,10 +235,12 @@ export default defineComponent({
       complete,
       error,
       image,
+      loadingImg,
+      loadingStyle,
       url,
       classList,
-      styleList,
-      imgStyleList,
+      style,
+      imgStyle,
       onLoaded,
       onError,
     };

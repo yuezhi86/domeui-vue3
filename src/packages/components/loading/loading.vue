@@ -1,6 +1,6 @@
 <template>
-  <section :class="classList" :style="styleList">
-    <div class="de-loading__inner" :style="innerStyleList">
+  <section :class="classList" :style="style">
+    <div class="de-loading__inner" :style="innerStyle">
       <div v-if="showIcon" class="de-loading__icon">
         <div></div>
         <div></div>
@@ -14,7 +14,14 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, ref, onBeforeUnmount} from 'vue';
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+  onBeforeUnmount,
+  CSSProperties,
+} from 'vue';
 import {getConfig} from '../../config';
 import {getIndexZ} from '../../utils';
 
@@ -74,12 +81,12 @@ export default defineComponent({
         [`${name}__transparent`]: props.transparent,
       },
     ]);
-    const styleList = computed(() => {
+    const style = computed<CSSProperties>(() => {
       return {
         zIndex: props.fixed ? getIndexZ() : globalConfig.loading.zIndex,
       };
     });
-    const innerStyleList = computed(() => {
+    const innerStyle = computed<CSSProperties>(() => {
       return {
         transform: props.scale ? `scale(${props.scale})` : '',
       };
@@ -106,8 +113,8 @@ export default defineComponent({
 
     return {
       classList,
-      styleList,
-      innerStyleList,
+      style,
+      innerStyle,
       textClassList,
     };
   },
