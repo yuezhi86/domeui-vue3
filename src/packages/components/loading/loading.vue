@@ -1,11 +1,7 @@
 <template>
   <section :class="classList" :style="style">
     <div class="de-loading__inner" :style="innerStyle">
-      <div v-if="showIcon" class="de-loading__icon">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <component :is="icon" v-if="showIcon" class="de-loading__icon" />
       <div v-if="showText" :class="textClassList">
         <slot>{{ text }}</slot>
       </div>
@@ -21,9 +17,12 @@ import {
   ref,
   onBeforeUnmount,
   CSSProperties,
+  Component,
+  VNode,
 } from 'vue';
 import {getConfig} from '../../config';
 import {getIndexZ} from '../../utils';
+import LoadingIcon from './icon.vue';
 
 const name = 'de-loading';
 const globalConfig = getConfig();
@@ -56,6 +55,10 @@ export default defineComponent({
     scrollable: {
       type: Boolean,
       default: globalConfig.loading.scrollable,
+    },
+    icon: {
+      type: [String, Object] as PropType<string | Component | VNode>,
+      default: LoadingIcon,
     },
     scale: {
       type: [String, Number],

@@ -3,17 +3,6 @@
 @import './variables';
 @import './mixins';
 
-@keyframes loading-animation {
-  50% {
-    opacity: 0.2;
-    transform: scale(0.75);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 @keyframes loading-text-animation {
   50% {
     opacity: 0.4;
@@ -35,9 +24,12 @@
   justify-content: center;
   user-select: none;
   pointer-events: none;
+  box-sizing: border-box;
 
-  * {
-    box-sizing: border-box;
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
   }
 
   &__inner {
@@ -50,26 +42,6 @@
     border-radius: @de-loading-inner-radius;
     transform: scale(1);
     transform-origin: center center;
-  }
-
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    .padding-y(8px);
-
-    > div {
-      width: @de-loading-dot-size;
-      height: @de-loading-dot-size;
-      background-color: @de-loading-dot-color;
-      border-radius: 100%;
-      animation: loading-animation 0.9s 0s infinite linear;
-
-      &:nth-child(2n-1) {
-        animation-delay: -0.35s;
-      }
-    }
   }
 
   &__text {

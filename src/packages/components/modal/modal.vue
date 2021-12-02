@@ -24,10 +24,7 @@
             <h2>{{ title }}</h2>
           </slot>
           <div v-if="closable" class="de-modal__close" @click="onCancel">
-            <DeIcon
-              :name="closeParams.name || 'close-l'"
-              :class="closeParams.class"
-            />
+            <component :is="closeParams.icon" :class="closeParams.class" />
           </div>
         </header>
         <div class="de-modal__body">
@@ -38,7 +35,7 @@
           :class="footerClassList"
           :style="[actionParams.style]"
         >
-          <slot name="action" :methods="{onConfirm, onCancel}">
+          <slot name="action" :on-confirm="onConfirm" :on-cancel="onCancel">
             <DeButton
               theme="default"
               class="de-modal__action-btn"
@@ -69,6 +66,10 @@ import {
   ref,
   onBeforeUnmount,
   CSSProperties,
+  Component,
+  VNode,
+  RenderFunction,
+  h,
 } from 'vue';
 import {DeIcon} from '../icon';
 import {DeButton} from '../button';
@@ -85,8 +86,8 @@ export type ModalHeaderParams = {
 };
 export type ModalActionParams = ModalHeaderParams;
 export type ModalCloseParams = {
-  name?: string;
   class?: string;
+  icon?: Component | VNode | RenderFunction;
 };
 export type ModalTransitionNames = [string, string];
 export type ModalBeforeCloseAction = 'confirm' | 'cancel';
@@ -177,7 +178,9 @@ export default defineComponent({
     },
     closeParams: {
       type: Object as PropType<ModalCloseParams>,
-      default: () => ({}),
+      default: () => ({
+        icon: h(DeIcon, {name: 'close-l'}),
+      }),
     },
     transitionNames: {
       type: Array as PropType<ModalTransitionNames[]>,

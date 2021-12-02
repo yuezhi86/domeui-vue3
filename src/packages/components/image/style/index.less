@@ -6,9 +6,16 @@
   position: relative;
   overflow: hidden;
   display: inline-flex;
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
 
   &__loading,
   &__error {

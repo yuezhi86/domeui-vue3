@@ -27,6 +27,7 @@ import {
   watchEffect,
   inject,
   PropType,
+  Ref,
 } from 'vue';
 import {getUncheckedDefaultValue} from '../../utils/assist';
 import {Numberish} from '../../config';
@@ -77,20 +78,15 @@ export default defineComponent({
   setup(props, {emit}) {
     const inGroups = inject('group', false);
     const pName = inject('name', '');
-    const pNativeType = inject<{value: 'radio' | 'checkbox'} | null>(
+    const pNativeType = inject<Ref<'radio' | 'checkbox'> | null>(
       'nativeType',
       null
     );
-    const pDisabled = inject<{value: boolean} | null>('disabled', null);
-    const pRadioOptional = inject<{value: boolean} | null>(
-      'radioOptional',
-      null
-    );
-    const pModelValue = inject<{value: CheckboxValue | Array<CheckboxValue>}>(
+    const pDisabled = inject<Ref<boolean> | null>('disabled', null);
+    const pRadioOptional = inject<Ref<boolean> | null>('radioOptional', null);
+    const pModelValue = inject<Ref<CheckboxValue | CheckboxValue[]> | null>(
       'modelValue',
-      {
-        value: '',
-      }
+      null
     );
     const pUpdate = inject<Function | null>('update', null);
 
@@ -156,9 +152,10 @@ export default defineComponent({
         return pUpdate(value.value);
       }
 
-      const _pModelValue = Array.isArray(pModelValue.value)
-        ? [...pModelValue.value]
-        : [];
+      const _pModelValue =
+        pModelValue && Array.isArray(pModelValue.value)
+          ? [...pModelValue.value]
+          : [];
       if (isChecked.value) {
         pUpdate([...new Set([..._pModelValue, value.value])]);
         return;
@@ -178,12 +175,12 @@ export default defineComponent({
       }
 
       if (isRadio.value) {
-        isChecked.value = pModelValue.value === props.trueValue;
+        isChecked.value = pModelValue?.value === props.trueValue;
         setValue(isChecked.value);
         return;
       }
 
-      if (Array.isArray(pModelValue.value)) {
+      if (pModelValue && Array.isArray(pModelValue.value)) {
         isChecked.value = pModelValue.value.includes(props.trueValue);
         setValue(isChecked.value);
       }

@@ -10,6 +10,7 @@ const name = 'de-icon';
 export type IconName =
   | 'upload'
   | 'alert'
+  | 'tick'
   | 'close'
   | 'eye'
   | 'eye-closed'
@@ -26,7 +27,6 @@ export type IconName =
   | 'magnifier-l'
   | 'question-l'
   | 'doc-l'
-  | 'tick-l'
   | 'plus-l'
   | 'refresh-l'
   | 'download-l'

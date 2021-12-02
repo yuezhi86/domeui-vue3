@@ -11,6 +11,7 @@
   background-color: @de-modal-bg-color;
   border-radius: @de-modal-radius;
   transform: translate(-50%, -50%);
+  box-sizing: border-box;
 
   &__header {
     position: relative;
@@ -21,6 +22,7 @@
     padding: @de-modal-header-padding;
     border-bottom: 1px solid @de-modal-header-border-color;
     border-radius: @de-modal-radius @de-modal-radius 0 0;
+    box-sizing: border-box;
 
     h2 {
       color: @de-modal-header-text-color;
@@ -47,6 +49,7 @@
   &__body {
     overflow: auto;
     min-height: @de-modal-body-min-height;
+    box-sizing: border-box;
   }
 
   &__action {
@@ -57,11 +60,13 @@
     padding: @de-modal-action-padding;
     border-top: 1px solid @de-modal-action-border-color;
     border-radius: 0 0 @de-modal-radius @de-modal-radius;
+    box-sizing: border-box;
 
     &-btn {
       min-width: @de-modal-action-btn-width;
       height: @de-modal-action-btn-height;
       margin-left: @de-modal-action-btn-gap;
+      box-sizing: border-box;
     }
   }
 
