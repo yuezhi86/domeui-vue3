@@ -1,7 +1,7 @@
 <template>
   <div :class="wrapClassList">
     <template v-if="type === 'input'">
-      <div v-if="prefix" class="de-input__prefix">
+      <div v-if="prefix" class="de-input__prefix" :style="prefixStyle">
         <slot name="prefix">{{ prefix }}</slot>
       </div>
 
@@ -51,7 +51,7 @@
     <template v-if="type === 'input'">
       <slot name="append"></slot>
 
-      <div v-if="suffix" class="de-input__suffix">
+      <div v-if="suffix" class="de-input__suffix" :style="suffixStyle">
         <slot name="suffix">{{ suffix }}</slot>
       </div>
     </template>
@@ -68,6 +68,7 @@ import {
   CSSProperties,
 } from 'vue';
 import {Numberish} from '../../config';
+import {getSizeOrPx} from '../../utils';
 
 const name = 'de-input';
 
@@ -161,6 +162,14 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    prefixWidth: {
+      type: [Number, String],
+      default: undefined,
+    },
+    suffixWidth: {
+      type: [Number, String],
+      default: undefined,
+    },
   },
   emits: [
     'update:modelValue',
@@ -205,6 +214,16 @@ export default defineComponent({
             resize: props.resize,
           };
     });
+    const prefixStyle = computed<CSSProperties>(() => {
+      return {
+        width: getSizeOrPx(props.prefixWidth),
+      };
+    });
+    const suffixStyle = computed<CSSProperties>(() => {
+      return {
+        width: getSizeOrPx(props.suffixWidth),
+      };
+    });
 
     watchEffect(() => {
       const _val = `${props.modelValue}`;
@@ -235,6 +254,8 @@ export default defineComponent({
       isFocus,
       wrapClassList,
       inputStyle,
+      prefixStyle,
+      suffixStyle,
       isAlive,
       hasClear: computed(
         () =>
