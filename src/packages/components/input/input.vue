@@ -1,5 +1,13 @@
 <template>
   <div :class="wrapClassList">
+    <template v-if="type === 'input'">
+      <div v-if="prefix" class="de-input__prefix">
+        <slot name="prefix">{{ prefix }}</slot>
+      </div>
+
+      <slot name="prepend"></slot>
+    </template>
+
     <component
       v-bind="textareaProps"
       :is="tagName"
@@ -32,12 +40,21 @@
       @compositionupdate="onComposition"
       @compositionend="onComposition"
     />
+
     <div v-if="isAlive" class="de-input__kit">
       <i v-if="hasClear" class="de-input__clear" @click.stop="onClear"></i>
       <span v-if="hasCounter" class="de-input__counter">
         <em>{{ currentLength }}</em> /{{ maxlength }}
       </span>
     </div>
+
+    <template v-if="type === 'input'">
+      <slot name="append"></slot>
+
+      <div v-if="suffix" class="de-input__suffix">
+        <slot name="suffix">{{ suffix }}</slot>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -136,6 +153,14 @@ export default defineComponent({
     autofocus: Boolean,
     disabled: Boolean,
     readonly: Boolean,
+    prefix: {
+      type: String,
+      default: '',
+    },
+    suffix: {
+      type: String,
+      default: '',
+    },
   },
   emits: [
     'update:modelValue',

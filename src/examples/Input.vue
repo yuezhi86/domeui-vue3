@@ -13,12 +13,7 @@
         size="small"
         :clearable="false"
       />
-      <DeInput
-        v-model="c"
-        placeholder="请输入..."
-        :clearable="false"
-        :counter="false"
-      />
+      <DeInput v-model="c" placeholder="请输入..." prefix="户型" suffix="室" />
       <DeInput v-model="a" placeholder="请输入..." readonly />
       <DeInput v-model="b" placeholder="请输入..." disabled />
       <DeInput v-model="c" placeholder="请输入..." size="large" />

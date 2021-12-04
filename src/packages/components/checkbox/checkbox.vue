@@ -138,7 +138,7 @@ export default defineComponent({
     };
     const handle = () => {
       if (isRadio.value && isChecked.value && !isRadioOptional.value) return;
-      isChecked.value = !isChecked.value;
+      isChecked.value = props.indeterminate ? false : !isChecked.value;
       emit('before-change', value.value);
       setValue(isChecked.value);
       emit('change', {

@@ -53,35 +53,35 @@
   }
 
   &__xsmall {
-    .input-font-size(@de-input-xsmall-font-size, @de-input-line-height);
+    .input-wrap-size(@de-input-xsmall-size, @de-input-xsmall-font-size, @de-input-line-height);
   }
   &__xsmall &__ipt {
     .input-size(@de-input-xsmall-size, @de-input-border-width, @de-input-xsmall-padding-x, @de-input-line-height);
   }
 
   &__small {
-    .input-font-size(@de-input-small-font-size, @de-input-line-height);
+    .input-wrap-size(@de-input-small-size, @de-input-small-font-size, @de-input-line-height);
   }
   &__small &__ipt {
     .input-size(@de-input-small-size, @de-input-border-width, @de-input-small-padding-x, @de-input-line-height);
   }
 
   &__middle {
-    .input-font-size(@de-input-middle-font-size, @de-input-line-height);
+    .input-wrap-size(@de-input-middle-size, @de-input-middle-font-size, @de-input-line-height);
   }
   &__middle &__ipt {
     .input-size(@de-input-middle-size, @de-input-border-width, @de-input-middle-padding-x, @de-input-line-height);
   }
 
   &__large {
-    .input-font-size(@de-input-large-font-size, @de-input-line-height);
+    .input-wrap-size(@de-input-large-size, @de-input-large-font-size, @de-input-line-height);
   }
   &__large &__ipt {
     .input-size(@de-input-large-size, @de-input-border-width, @de-input-large-padding-x, @de-input-line-height);
   }
 
   &__xlarge {
-    .input-font-size(@de-input-xlarge-font-size, @de-input-line-height);
+    .input-wrap-size(@de-input-xlarge-size, @de-input-xlarge-font-size, @de-input-line-height);
   }
   &__xlarge &__ipt {
     .input-size(@de-input-xlarge-size, @de-input-border-width, @de-input-xlarge-padding-x, @de-input-line-height);
@@ -112,5 +112,24 @@
     height: @de-textarea-counter-height;
     font-size: @de-textarea-counter-font-size;
     line-height: @de-textarea-counter-height;
+  }
+
+  &__suffix,
+  &__prefix {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    .padding-x(@de-input-fix-padding-x);
+    background-color: @de-input-fix-bg-color;
+    user-select: none;
+    color: @de-input-fix-text-color;
+  }
+
+  &__suffix {
+    border-left: 1px solid @de-input-fix-border-color;
+  }
+
+  &__prefix {
+    border-right: 1px solid @de-input-fix-border-color;
   }
 }
