@@ -19,7 +19,7 @@
       class="de-input__ipt"
       :style="inputStyle"
       :minlength="minlength"
-      :maxlength="maxlength"
+      :maxlength="+maxlength ? maxlength : ''"
       :readonly="readonly"
       :disabled="disabled"
       :autofocus="autofocus"
@@ -265,7 +265,11 @@ export default defineComponent({
           !!currentLength.value
       ),
       hasCounter: computed(
-        () => props.counter && !props.disabled && !props.readonly
+        () =>
+          +props.maxlength &&
+          props.counter &&
+          !props.disabled &&
+          !props.readonly
       ),
       onInput,
       onComposition(e: InputEvent) {

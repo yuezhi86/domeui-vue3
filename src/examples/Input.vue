@@ -16,7 +16,7 @@
       <DeInput v-model="c" placeholder="请输入..." prefix="户型" suffix="室" />
       <DeInput v-model="a" placeholder="请输入..." readonly />
       <DeInput v-model="b" placeholder="请输入..." disabled />
-      <DeInput v-model="c" placeholder="请输入..." size="large" />
+      <DeInput v-model="c" placeholder="请输入..." size="large" maxlength="0" />
       <DeInput v-model="c" placeholder="请输入..." size="xlarge" long />
       <DeInput
         v-model="c"
