@@ -15,6 +15,7 @@ export type ButtonTheme =
   | 'second'
   | 'text'
   | 'text-primary'
+  | 'text-light'
   | 'default';
 export type ButtonNativeType = 'button' | 'submit' | 'reset';
 export type ButtonSize = 'xsmall' | 'small' | 'middle' | 'large' | 'xlarge';
@@ -31,6 +32,7 @@ export default defineComponent({
           'second',
           'text',
           'text-primary',
+          'text-light',
           'default',
         ].includes(v) || !!v,
     },
