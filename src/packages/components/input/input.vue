@@ -63,7 +63,7 @@ import {
   defineComponent,
   ref,
   computed,
-  watchEffect,
+  watch,
   PropType,
   CSSProperties,
 } from 'vue';
@@ -76,12 +76,19 @@ export type InputType = 'input' | 'textarea';
 export type InputSize = 'xsmall' | 'small' | 'middle' | 'large' | 'xlarge';
 export type TextareaWrap = 'soft' | 'hard';
 export type TextareaResize = 'none' | 'both' | 'vertical' | 'horizontal';
+export type InputModifiers = {
+  uppercase: boolean;
+};
 export default defineComponent({
   name,
   props: {
     modelValue: {
       type: [String, Number],
       default: '',
+    },
+    modelModifiers: {
+      type: Object as PropType<InputModifiers>,
+      default: () => ({}),
     },
     type: {
       type: String as PropType<InputType>,
@@ -154,6 +161,7 @@ export default defineComponent({
     autofocus: Boolean,
     disabled: Boolean,
     readonly: Boolean,
+    initUppercase: Boolean,
     prefix: {
       type: String,
       default: '',
@@ -175,6 +183,7 @@ export default defineComponent({
     'update:modelValue',
     'input',
     'change',
+    'change:native',
     'focus',
     'blur',
     'select',
@@ -225,16 +234,33 @@ export default defineComponent({
       };
     });
 
-    watchEffect(() => {
-      const _val = `${props.modelValue}`;
-      value.value = _val;
-      currentLength.value = _val.length;
-    });
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        const _val = `${newValue}`;
+        value.value = _val;
+        currentLength.value = _val.length;
+      },
+      {
+        immediate: true,
+      }
+    );
+
+    if (props.initUppercase) {
+      value.value = `${value.value}`.toUpperCase();
+      emit('update:modelValue', value.value);
+    }
 
     const onInput = (e: InputEvent) => {
       if (isOnComposition.value) return;
+      let value = (e.target as HTMLInputElement).value;
+
+      if (props.modelModifiers?.uppercase) {
+        value = value.toUpperCase();
+      }
+
       emit('input', e);
-      emit('update:modelValue', (e.target as HTMLInputElement).value);
+      emit('update:modelValue', value);
     };
 
     return {
@@ -297,7 +323,8 @@ export default defineComponent({
         emit('focus', e);
       },
       onChange(e: InputEvent) {
-        emit('change', e);
+        emit('change:native', e);
+        emit('change', (e.target as HTMLInputElement).value);
       },
       onSelect(e: InputEvent) {
         emit('select', e);
