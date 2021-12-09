@@ -324,10 +324,8 @@ export default defineComponent({
         emit('focus', e);
       },
       onChange(e: InputEvent) {
-        const value = (e.target as HTMLInputElement).value;
-        emit('update:modelValue', value);
         emit('change:native', e);
-        emit('change', value);
+        emit('change', (e.target as HTMLInputElement).value);
       },
       onSelect(e: InputEvent) {
         emit('select', e);
