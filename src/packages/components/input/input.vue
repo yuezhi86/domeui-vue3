@@ -312,6 +312,7 @@ export default defineComponent({
       },
       onClear() {
         emit('update:modelValue', '');
+        emit('change', '');
         emit('clear');
       },
       onBlur(e: InputEvent) {
