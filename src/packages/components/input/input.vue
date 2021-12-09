@@ -43,7 +43,7 @@
 
     <div v-if="isAlive" class="de-input__kit">
       <i v-if="hasClear" class="de-input__clear" @click.stop="onClear"></i>
-      <span v-if="hasCounter" class="de-input__counter">
+      <span v-if="hasCounter" class="de-input__counter" @click.stop="focus">
         <em>{{ currentLength }}</em> /{{ maxlength }}
       </span>
     </div>
@@ -195,6 +195,7 @@ export default defineComponent({
     'composition',
   ],
   setup(props, {emit}) {
+    const input = ref<any>(null);
     const value = ref<Numberish>('');
     const currentLength = ref(0);
     const isOnComposition = ref(false);
@@ -263,8 +264,13 @@ export default defineComponent({
       emit('update:modelValue', value);
     };
 
+    const focus = () => {
+      input.value.focus();
+    };
+
     return {
-      input: ref(null),
+      input,
+      focus,
       tagName: computed(() => (isInput.value ? 'input' : 'textarea')),
       textareaProps: computed(() => {
         return isInput.value
