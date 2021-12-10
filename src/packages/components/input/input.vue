@@ -78,6 +78,8 @@ export type TextareaWrap = 'soft' | 'hard';
 export type TextareaResize = 'none' | 'both' | 'vertical' | 'horizontal';
 export type InputModifiers = {
   uppercase: boolean;
+  trim: boolean;
+  lazy: boolean;
 };
 export default defineComponent({
   name,
@@ -183,7 +185,6 @@ export default defineComponent({
     'update:modelValue',
     'input',
     'change',
-    'change:native',
     'focus',
     'blur',
     'select',
@@ -202,6 +203,28 @@ export default defineComponent({
     const isFocus = ref(false);
     const isInput = computed(() => props.type === 'input');
     const isAlive = computed(() => !props.disabled && !props.readonly);
+    const tagName = computed(() => (isInput.value ? 'input' : 'textarea'));
+    const textareaProps = computed(() => {
+      return isInput.value
+        ? {}
+        : {
+            rows: props.cols,
+            wrap: props.wrap,
+          };
+    });
+    const hasClear = computed(() => {
+      return (
+        props.clearable &&
+        !props.disabled &&
+        !props.readonly &&
+        !!currentLength.value
+      );
+    });
+    const hasCounter = computed(() => {
+      return (
+        +props.maxlength && props.counter && !props.disabled && !props.readonly
+      );
+    });
 
     const wrapClassList = computed(() => {
       return [
@@ -252,34 +275,30 @@ export default defineComponent({
       emit('update:modelValue', value.value);
     }
 
-    const onInput = (e: InputEvent) => {
+    const focus = () => {
+      input.value.focus();
+    };
+
+    const updateHandle = (e: InputEvent) => {
       if (isOnComposition.value) return;
       let value = (e.target as HTMLInputElement).value;
+
+      if (props.modelModifiers?.trim) {
+        value = String(value ?? '').trim();
+      }
 
       if (props.modelModifiers?.uppercase) {
         value = value.toUpperCase();
       }
 
-      emit('input', e);
       emit('update:modelValue', value);
-    };
-
-    const focus = () => {
-      input.value.focus();
     };
 
     return {
       input,
       focus,
-      tagName: computed(() => (isInput.value ? 'input' : 'textarea')),
-      textareaProps: computed(() => {
-        return isInput.value
-          ? {}
-          : {
-              rows: props.cols,
-              wrap: props.wrap,
-            };
-      }),
+      tagName,
+      textareaProps,
       value,
       currentLength,
       isInput,
@@ -289,21 +308,24 @@ export default defineComponent({
       prefixStyle,
       suffixStyle,
       isAlive,
-      hasClear: computed(
-        () =>
-          props.clearable &&
-          !props.disabled &&
-          !props.readonly &&
-          !!currentLength.value
-      ),
-      hasCounter: computed(
-        () =>
-          +props.maxlength &&
-          props.counter &&
-          !props.disabled &&
-          !props.readonly
-      ),
-      onInput,
+      hasClear,
+      hasCounter,
+      onInput(e: InputEvent) {
+        emit('input', e);
+        if (props.modelModifiers?.lazy) return;
+        updateHandle(e);
+      },
+      onChange(e: InputEvent) {
+        emit('change', e);
+        if (props.modelModifiers?.lazy) {
+          updateHandle(e);
+        }
+      },
+      onClear() {
+        emit('update:modelValue', '');
+        emit('change', '');
+        emit('clear');
+      },
       onComposition(e: InputEvent) {
         emit('composition', e);
 
@@ -313,13 +335,8 @@ export default defineComponent({
 
         if (e.type === 'compositionend') {
           isOnComposition.value = false;
-          onInput(e);
+          updateHandle(e);
         }
-      },
-      onClear() {
-        emit('update:modelValue', '');
-        emit('change', '');
-        emit('clear');
       },
       onBlur(e: InputEvent) {
         isFocus.value = false;
@@ -328,10 +345,6 @@ export default defineComponent({
       onFocus(e: InputEvent) {
         isFocus.value = true;
         emit('focus', e);
-      },
-      onChange(e: InputEvent) {
-        emit('change:native', e);
-        emit('change', (e.target as HTMLInputElement).value);
       },
       onSelect(e: InputEvent) {
         emit('select', e);
