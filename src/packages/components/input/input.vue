@@ -163,7 +163,6 @@ export default defineComponent({
     autofocus: Boolean,
     disabled: Boolean,
     readonly: Boolean,
-    initUppercase: Boolean,
     prefix: {
       type: String,
       default: '',
@@ -258,36 +257,53 @@ export default defineComponent({
       };
     });
 
+    const updateCounter = (value: string) => {
+      currentLength.value = value.length;
+    };
+
     watch(
       () => props.modelValue,
       (newValue) => {
-        const _val = `${newValue}`;
-        value.value = _val;
-        currentLength.value = _val.length;
+        value.value = `${newValue}`;
+        updateCounter(value.value);
       },
       {
         immediate: true,
       }
     );
 
-    if (props.initUppercase) {
-      value.value = `${value.value}`.toUpperCase();
-      emit('update:modelValue', value.value);
-    }
+    const initHandle = () => {
+      let update = false;
+      let value = `${props.modelValue}`;
+
+      if (props.modelModifiers.trim && value !== value.trim()) {
+        value = value.trim();
+        update = true;
+      }
+
+      if (props.modelModifiers.uppercase && value !== value.toUpperCase()) {
+        value = value.toUpperCase();
+        update = true;
+      }
+
+      if (update) {
+        emit('update:modelValue', value);
+      }
+    };
+    initHandle();
 
     const focus = () => {
       input.value.focus();
     };
 
     const updateHandle = (e: InputEvent) => {
-      if (isOnComposition.value) return;
       let value = (e.target as HTMLInputElement).value;
 
-      if (props.modelModifiers?.trim) {
+      if (props.modelModifiers.trim) {
         value = String(value ?? '').trim();
       }
 
-      if (props.modelModifiers?.uppercase) {
+      if (props.modelModifiers.uppercase) {
         value = value.toUpperCase();
       }
 
@@ -312,12 +328,12 @@ export default defineComponent({
       hasCounter,
       onInput(e: InputEvent) {
         emit('input', e);
-        if (props.modelModifiers?.lazy) return;
+        if (props.modelModifiers.lazy || isOnComposition.value) return;
         updateHandle(e);
       },
       onChange(e: InputEvent) {
         emit('change', e);
-        if (props.modelModifiers?.lazy) {
+        if (props.modelModifiers.lazy) {
           updateHandle(e);
         }
       },
@@ -335,6 +351,7 @@ export default defineComponent({
 
         if (e.type === 'compositionend') {
           isOnComposition.value = false;
+          if (props.modelModifiers.lazy) return;
           updateHandle(e);
         }
       },

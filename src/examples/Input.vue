@@ -8,28 +8,20 @@
         :counter="false"
       />
       <DeInput
-        v-model.trim="c"
+        v-model="c"
         placeholder="请输入..."
         size="small"
         :clearable="false"
       />
       <DeInput
-        v-model.lazy="c"
+        v-model.uppercase="d"
         placeholder="请输入..."
         prefix="户型"
         suffix="室"
       />
       <DeInput v-model="a" placeholder="请输入..." readonly />
       <DeInput v-model="b" placeholder="请输入..." disabled />
-      <DeInput
-        v-model.uppercase="c"
-        placeholder="请输入..."
-        init-uppercase
-        size="large"
-        maxlength="0"
-        @change="onChange"
-        @change:native="onChangeNative"
-      />
+      <DeInput v-model="c" placeholder="请输入..." size="large" maxlength="0" />
       <DeInput v-model="c" placeholder="请输入..." size="xlarge" long />
       <DeInput
         v-model="c"
@@ -54,15 +46,14 @@ export default {
     const a = ref(12345);
     const b = ref('zhanghaibin');
     const c = ref('abc');
+    const d = ref('abc');
     return {
       a,
       b,
       c,
+      d,
       onChange(value: string) {
         console.log(value);
-      },
-      onChangeNative(e: any) {
-        console.log(e);
       },
     };
   },
