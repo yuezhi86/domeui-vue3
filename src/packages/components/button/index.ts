@@ -1,3 +1,2 @@
-import Button from './button.vue';
+export {default as DeButton} from './button.vue';
 export * from './button.vue';
-export const DeButton = Button;

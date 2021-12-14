@@ -1,3 +1,1 @@
-import Switch from './switch.vue';
-export const DeSwitch = Switch;
-export default DeSwitch;
+export {default as DeSwitch} from './switch.vue';

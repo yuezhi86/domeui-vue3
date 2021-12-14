@@ -1,3 +1,2 @@
-import Input from './input.vue';
+export {default as DeInput} from './input.vue';
 export * from './input.vue';
-export const DeInput = Input;

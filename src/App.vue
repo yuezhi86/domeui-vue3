@@ -6,8 +6,6 @@
     <AvatarDemo />
     <h2>LoadingDemo</h2>
     <LoadingDemo />
-    <h2>LoadingDemo</h2>
-    <LoadingDemo />
     <h2>BadgeDemo</h2>
     <BadgeDemo />
     <h2>IconDemo</h2>
