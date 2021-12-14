@@ -33,7 +33,9 @@ export type IconName =
   | 'bell-l'
   | 'close-l'
   | 'location-l'
-  | 'img-error-l';
+  | 'img-error-l'
+  | 'star'
+  | 'star-l';
 export default defineComponent({
   name,
   props: {
