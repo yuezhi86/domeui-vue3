@@ -11,7 +11,7 @@ const defaultConfig: Required<GlobalConfig> = {
     zIndex: 1100, // 基础z-index
     transfer: true,
   },
-  notice: {
+  message: {
     margin: 25, // 25px
     duration: 1.5, // 1.5s
   },
@@ -58,7 +58,7 @@ export type CommonConfig = {
   zIndex?: number;
   transfer?: boolean;
 };
-export type NoticeConfig = {
+export type MessageConfig = {
   margin?: number;
   duration?: number;
 };
@@ -94,7 +94,7 @@ export type ModalConfig = {
 
 export type GlobalConfig = {
   common?: CommonConfig;
-  notice?: NoticeConfig;
+  message?: MessageConfig;
   loading?: LoadingConfig;
   avatar?: AvatarConfig;
   image?: ImageConfig;

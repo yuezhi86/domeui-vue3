@@ -1,6 +1,6 @@
 <template>
   <teleport to="body" :disabled="!transfer">
-    <transition :name="transitionNames[1] || 'fade'">
+    <transition :name="transitionNames[1] || 'fade'" appear>
       <div
         v-if="modelValue"
         :class="maskClassList"
@@ -8,7 +8,7 @@
         @click.stop="onClickMask"
       ></div>
     </transition>
-    <transition :name="transitionNames[0] || 'fade'">
+    <transition :name="transitionNames[0] || 'fade'" appear>
       <section
         v-if="modelValue"
         :class="classList"

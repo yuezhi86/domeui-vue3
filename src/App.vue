@@ -11,7 +11,7 @@
     <h2>IconDemo</h2>
     <IconDemo />
     <h2>MessageDemo</h2>
-    <NoticeDemo />
+    <MessageDemo />
     <h2>SwitchDemo</h2>
     <SwitchDemo />
     <h2>CheckboxDemo</h2>
@@ -30,7 +30,7 @@ import ButtonDemo from './examples/Button.vue';
 import InputDemo from './examples/Input.vue';
 import CheckboxDemo from './examples/Checkbox.vue';
 import SwitchDemo from './examples/Switch.vue';
-import NoticeDemo from './examples/Notice.vue';
+import MessageDemo from './examples/Message.vue';
 import IconDemo from './examples/Icon.vue';
 import BadgeDemo from './examples/Badge.vue';
 import LoadingDemo from './examples/Loading.vue';
@@ -45,7 +45,7 @@ export default {
     InputDemo,
     CheckboxDemo,
     SwitchDemo,
-    NoticeDemo,
+    MessageDemo,
     IconDemo,
     BadgeDemo,
     LoadingDemo,

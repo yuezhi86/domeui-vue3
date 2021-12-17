@@ -6,19 +6,20 @@
 
 <script lang="ts">
 import {defineComponent, h} from 'vue';
-import {DeNotice} from '@/packages';
+import {DeMessage} from '@/packages';
 
 export default defineComponent({
+  components: {},
   setup() {
-    DeNotice({
+    DeMessage({
       content: 'ok',
       classNames: 'custom-message',
       render: () => h('div', '12345'),
     });
-    DeNotice.info('Hello');
-    DeNotice.success('Hello');
-    DeNotice.error('Hello');
-    DeNotice.warning('Hello');
+    DeMessage.info('Hello');
+    DeMessage.success('Hello');
+    DeMessage.error('Hello');
+    DeMessage.warning('Hello');
   },
 });
 </script>
