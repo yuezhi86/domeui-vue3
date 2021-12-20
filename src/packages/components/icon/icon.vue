@@ -34,6 +34,9 @@ export type IconName =
   | 'close-l'
   | 'location-l'
   | 'img-error-l'
+  | 'stop'
+  | 'danger'
+  | 'settings'
   | 'star'
   | 'star-l';
 export default defineComponent({
