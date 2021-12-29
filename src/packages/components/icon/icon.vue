@@ -37,6 +37,10 @@ export type IconName =
   | 'stop'
   | 'danger'
   | 'settings'
+  | 'calendar'
+  | 'export'
+  | 'shrink'
+  | 'enlarge'
   | 'star'
   | 'star-l';
 export default defineComponent({
