@@ -29,3 +29,6 @@
 - AutoComplete
 - Slider
 - Table
+
+## Bugs
+- Modal 按Esc应该只能关闭最后一个弹窗

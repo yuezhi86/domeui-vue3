@@ -267,6 +267,7 @@ export default defineComponent({
       onCancel();
     };
     const onEscClose = (e: KeyboardEvent) => {
+      e.stopPropagation();
       if (e.code === 'Escape' && props.escClosable && props.modelValue) {
         onCancel();
       }
