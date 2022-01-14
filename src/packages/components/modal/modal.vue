@@ -236,6 +236,15 @@ export default defineComponent({
         handle();
       }
     };
+    const modalHide = () => {
+      if (!props.scrollable && !hasHidden.value) {
+        document.body.style.removeProperty('overflow');
+      }
+
+      modalQueue.delete(instanceId);
+      emit('update:modelValue', false);
+      emit('hide');
+    };
     const modalShow = () => {
       if (!props.scrollable) {
         if (document.body.style.overflow === 'hidden') {
@@ -246,15 +255,8 @@ export default defineComponent({
       }
 
       zIndex.value = getIndexZ();
+      modalQueue.set(instanceId, modalHide);
       emit('show');
-    };
-    const modalHide = () => {
-      if (!props.scrollable && !hasHidden.value) {
-        document.body.style.removeProperty('overflow');
-      }
-
-      emit('update:modelValue', false);
-      emit('hide');
     };
     const onConfirm = () => {
       beforeCloseHandle('confirm');
@@ -267,8 +269,9 @@ export default defineComponent({
       onCancel();
     };
     const onEscClose = (e: KeyboardEvent) => {
-      e.stopPropagation();
       if (e.code === 'Escape' && props.escClosable && props.modelValue) {
+        const keys = [...modalQueue.keys()];
+        if (keys[keys.length - 1] !== instanceId) return;
         onCancel();
       }
     };
@@ -278,7 +281,6 @@ export default defineComponent({
     onBeforeUnmount(() => {
       modalHide();
       window.removeEventListener('keydown', onEscClose, false);
-      modalQueue.delete(instanceId);
     });
 
     watch(
@@ -295,8 +297,6 @@ export default defineComponent({
     if (props.modelValue) {
       modalShow();
     }
-
-    modalQueue.set(instanceId, modalHide);
 
     return {
       uid,
