@@ -24,14 +24,25 @@
     >
       <div>
         <template v-if="showContent">
-          <IIcon type="ios-cloud-upload" size="40" style="color: #3399ff"></IIcon>
+          <IIcon
+            type="ios-cloud-upload"
+            size="40"
+            style="color: #3399ff"
+          ></IIcon>
           <p style="margin-bottom: 10px">点击或拖拽上传{{ tips }}</p>
           <p style="color: #666; font-size: 12px">
-            <slot name="size">文件大小不超过{{ maxSize }}M，格式为{{ ext.join('、') }}。</slot>
+            <slot name="size"
+              >文件大小不超过{{ maxSize }}M，格式为{{ ext.join('、') }}。</slot
+            >
           </p>
         </template>
         <div class="main-slot"><slot></slot></div>
-        <Progress v-if="uploading" :percent="file && file.percentage" class="progress" hide-info></Progress>
+        <Progress
+          v-if="uploading"
+          :percent="file && file.percentage"
+          class="progress"
+          hide-info
+        ></Progress>
       </div>
     </div>
   </Upload>
@@ -39,7 +50,11 @@
 
 <script>
 import {Upload, Progress} from 'iview';
-import {qiniuUploadDomain, privateBucketDomain, publicBucketDomain} from 'config/server';
+import {
+  qiniuUploadDomain,
+  privateBucketDomain,
+  publicBucketDomain,
+} from 'config/server';
 import {getKey, fetchToken} from '@/methods/qiniu';
 
 export default {
@@ -120,7 +135,9 @@ export default {
       if (this.action) {
         return this.payload;
       } else {
-        const bucket = this.privateSpace ? privateBucketDomain : publicBucketDomain;
+        const bucket = this.privateSpace
+          ? privateBucketDomain
+          : publicBucketDomain;
         return {
           token: '',
           key: '',

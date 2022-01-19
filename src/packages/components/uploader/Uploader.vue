@@ -31,7 +31,14 @@
       <slot slot="prepend" name="prepend"></slot>
       <slot slot="append" name="append"></slot>
       <template #item="{item, index, image, video, file}">
-        <slot name="item" :item="item" :index="index" :image="image" :video="video" :file="file"></slot>
+        <slot
+          name="item"
+          :item="item"
+          :index="index"
+          :image="image"
+          :video="video"
+          :file="file"
+        ></slot>
       </template>
       <template #itemAppend="{index, item}">
         <slot name="itemAppend" :index="index" :item="item"></slot>
@@ -46,11 +53,19 @@
       :data-transfer="true"
       @click.stop="onHide"
     >
-      <div class="x-uploader-preview--close" @click.stop="onHide"><Icon name="close" /></div>
+      <div class="x-uploader-preview--close" @click.stop="onHide">
+        <Icon name="close" />
+      </div>
       <template v-if="isImage">
-        <div class="x-uploader-preview--prev" @click.stop="onSwitch(-1)"><Icon name="arrow-left" /></div>
-        <div class="x-uploader-preview--next" @click.stop="onSwitch(1)"><Icon name="arrow-right" /></div>
-        <div class="x-uploader-preview--indicator">{{ previewInfo.index + 1 }}/{{ previewInfo.list.length }}</div>
+        <div class="x-uploader-preview--prev" @click.stop="onSwitch(-1)">
+          <Icon name="arrow-left" />
+        </div>
+        <div class="x-uploader-preview--next" @click.stop="onSwitch(1)">
+          <Icon name="arrow-right" />
+        </div>
+        <div class="x-uploader-preview--indicator">
+          {{ previewInfo.index + 1 }}/{{ previewInfo.list.length }}
+        </div>
       </template>
 
       <div
@@ -78,7 +93,10 @@
           x5-playsinline="true"
           playsinline
         >
-          <source :src="previewInfo.list[previewInfo.index].viewer" :type="mediaType" />
+          <source
+            :src="previewInfo.list[previewInfo.index].viewer"
+            :type="mediaType"
+          />
         </video>
       </div>
     </div>
@@ -218,7 +236,8 @@ export default {
       return type === 'video';
     },
     imgRule({isImage, isVideo, itemWidth, itemHeight}) {
-      if (isImage) `?imageMogr2/auto-orient/thumbnail/!${itemWidth}x${itemHeight}/gravity/Center`;
+      if (isImage)
+        `?imageMogr2/auto-orient/thumbnail/!${itemWidth}x${itemHeight}/gravity/Center`;
       if (isVideo) return `?vframe/jpg/offset/1/w/${itemWidth}/h/${itemHeight}`;
       return '';
     },
@@ -249,7 +268,9 @@ export default {
   },
   methods: {
     onChange(value) {
-      let res = value.map((item) => this.getPostData(item, ['value', 'filename']));
+      let res = value.map((item) =>
+        this.getPostData(item, ['value', 'filename'])
+      );
 
       if (res.length) {
         if (this.multiple) {
@@ -288,10 +309,14 @@ export default {
     },
     onExceed({invalidExtFiles, invalidSizeFiles}) {
       if (invalidExtFiles.length) {
-        this.$Message.warning(this.multiple ? '已忽略格式不匹配的个文件' : '文件格式不匹配');
+        this.$Message.warning(
+          this.multiple ? '已忽略格式不匹配的个文件' : '文件格式不匹配'
+        );
       }
       if (invalidSizeFiles.length) {
-        this.$Message.warning(this.multiple ? '已忽略大小不匹配的个文件' : '文件大小不匹配');
+        this.$Message.warning(
+          this.multiple ? '已忽略大小不匹配的个文件' : '文件大小不匹配'
+        );
       }
       this.$emit('onExceed', {invalidExtFiles, invalidSizeFiles});
     },

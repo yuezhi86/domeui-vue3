@@ -22,24 +22,39 @@
             @dragover.stop="onDragOver"
             @dragend.stop="onDragEnd"
           >
-            <div v-if="sortable" class="atom-upload-item--move-after" data-after></div>
+            <div
+              v-if="sortable"
+              class="atom-upload-item--move-after"
+              data-after
+            ></div>
             <div
               v-if="item.done === false || item.fail"
               class="atom-upload-progress"
               :class="{'atom-upload-progress--fail': item.fail}"
             >
               <div class="atom-upload-progress--inner">
-                <div class="atom-upload-progress--text">{{ item.fail ? '上传失败' : '上传中...' }}</div>
+                <div class="atom-upload-progress--text">
+                  {{ item.fail ? '上传失败' : '上传中...' }}
+                </div>
                 <div
                   class="atom-upload-progress--bar"
-                  :class="{'atom-upload-progress--bar--blink': item.done === false}"
+                  :class="{
+                    'atom-upload-progress--bar--blink': item.done === false,
+                  }"
                 >
-                  <div class="atom-upload-progress--bar-line" :style="{width: item.percent + '%'}"></div>
+                  <div
+                    class="atom-upload-progress--bar-line"
+                    :style="{width: item.percent + '%'}"
+                  ></div>
                 </div>
               </div>
             </div>
 
-            <div v-if="item.done" class="atom-upload-status" :class="{'atom-upload-status--fail': item.fail}"></div>
+            <div
+              v-if="item.done"
+              class="atom-upload-status"
+              :class="{'atom-upload-status--fail': item.fail}"
+            ></div>
 
             <slot
               v-if="item.done && !item.fail"
@@ -59,22 +74,44 @@
                 :data-viewer="item.viewer"
                 @error="onImgLoadError(item)"
               />
-              <div v-if="isFile || (isVideo && !videoOption.poster)" class="atom-upload-file">
+              <div
+                v-if="isFile || (isVideo && !videoOption.poster)"
+                class="atom-upload-file"
+              >
                 <div class="atom-upload-file--inner">
-                  <div class="atom-upload-file--filename">{{ item.filename }}</div>
-                  <img v-if="isVideo" class="atom-upload-file--icon" src="./images/icon_video_white.png" />
-                  <img v-if="isFile" class="atom-upload-file--icon" src="./images/icon_file_white.png" />
+                  <div class="atom-upload-file--filename">
+                    {{ item.filename }}
+                  </div>
+                  <img
+                    v-if="isVideo"
+                    class="atom-upload-file--icon"
+                    src="./images/icon_video_white.png"
+                  />
+                  <img
+                    v-if="isFile"
+                    class="atom-upload-file--icon"
+                    src="./images/icon_file_white.png"
+                  />
                 </div>
               </div>
             </slot>
-            <div v-if="remove || (showPreview && item.done)" class="atom-upload-action">
+            <div
+              v-if="remove || (showPreview && item.done)"
+              class="atom-upload-action"
+            >
               <div
                 v-if="showPreview && item.done"
                 class="atom-upload-action--preview"
-                :class="{'atom-upload-action--disabled': item.error || item.fail}"
+                :class="{
+                  'atom-upload-action--disabled': item.error || item.fail,
+                }"
                 @click.stop="onPreview(item)"
               ></div>
-              <div v-if="remove" class="atom-upload-action--remove" @click.stop="onRemove(index, item)"></div>
+              <div
+                v-if="remove"
+                class="atom-upload-action--remove"
+                @click.stop="onRemove(index, item)"
+              ></div>
             </div>
           </div>
           <slot name="itemAppend" :index="index" :item="item"></slot>
@@ -94,7 +131,14 @@
         @click.stop="onClickInput"
       >
         <img :src="btnIcon" alt="按钮" class="atom-upload-btn--icon" />
-        <input ref="input" type="file" :name="name" :multiple="multiple" class="atom-upload-input" @change="onChoose" />
+        <input
+          ref="input"
+          type="file"
+          :name="name"
+          :multiple="multiple"
+          class="atom-upload-input"
+          @change="onChoose"
+        />
       </div>
     </div>
     <slot name="append"></slot>
@@ -718,7 +762,13 @@ export default {
     right: 0;
     width: 30px;
     height: 30px;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 52%, @green 52%, @green 100%);
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 52%,
+      @green 52%,
+      @green 100%
+    );
     border-radius: @radius;
 
     &::after {
@@ -727,7 +777,8 @@ export default {
       right: 0;
       width: 30px;
       height: 30px;
-      background: url('./images/icon_tick.png') no-repeat right 3px top 4px ~'/' 10px 10px;
+      background: url('./images/icon_tick.png') no-repeat right 3px top 4px ~'/'
+        10px 10px;
       content: '';
     }
 

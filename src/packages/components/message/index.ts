@@ -1,6 +1,41 @@
 import {Component, VNode} from 'vue';
 import {Numberish} from '../../config';
 
+const Message: MessageFunction = function (options: MessageOptions): void {
+  console.log(options);
+};
+
+Message.info = (content: string, config?: MessageMethodOptions): void => {
+  _call('info', content, config);
+};
+Message.success = (content: string, config?: MessageMethodOptions): void => {
+  _call('success', content, config);
+};
+Message.error = (content: string, config?: MessageMethodOptions): void => {
+  _call('error', content, config);
+};
+Message.warning = (content: string, config?: MessageMethodOptions): void => {
+  _call('warning', content, config);
+};
+Message.destroy = () => {
+  console.log('destroy');
+};
+
+function _call(
+  type: MessageType,
+  content: string,
+  config?: MessageMethodOptions
+) {
+  Message(
+    Object.assign({}, config, {
+      type,
+      content,
+    })
+  );
+}
+
+export const DeMessage = Message;
+
 export type MessageType = 'info' | 'success' | 'error' | 'warning';
 export type MessageTheme = 'default' | 'bright';
 export type MessagePlacement =
@@ -41,38 +76,3 @@ export interface MessageFunction {
   warning: MessageMethod;
   destroy: () => void;
 }
-
-const Message: MessageFunction = function (options: MessageOptions): void {
-  console.log(options);
-};
-
-Message.info = (content: string, config?: MessageMethodOptions): void => {
-  _call('info', content, config);
-};
-Message.success = (content: string, config?: MessageMethodOptions): void => {
-  _call('success', content, config);
-};
-Message.error = (content: string, config?: MessageMethodOptions): void => {
-  _call('error', content, config);
-};
-Message.warning = (content: string, config?: MessageMethodOptions): void => {
-  _call('warning', content, config);
-};
-Message.destroy = () => {
-  console.log('destroy');
-};
-
-function _call(
-  type: MessageType,
-  content: string,
-  config?: MessageMethodOptions
-) {
-  Message(
-    Object.assign({}, config, {
-      type,
-      content,
-    })
-  );
-}
-
-export const DeMessage = Message;

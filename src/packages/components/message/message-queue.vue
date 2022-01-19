@@ -10,7 +10,7 @@
 import './style/index.less';
 import {defineComponent, ref, computed, CSSProperties, PropType} from 'vue';
 import MessageItem from './message-item.vue';
-import {MessagePlacement} from '@/packages';
+import {MessagePlacement} from './index';
 
 const name = 'de-message-queue';
 export default defineComponent({
