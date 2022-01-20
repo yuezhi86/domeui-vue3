@@ -155,13 +155,13 @@ import {
   CSSProperties,
 } from 'vue';
 import {cloneDeep} from 'lodash-es';
+import {getSizeOrPx} from '../../utils';
 import errorImg from './images/icon_img_error.png';
 import iconCamera from './images/icon_camera.png';
 import iconVideo from './images/icon_video.png';
 import iconVideoWhite from './images/icon_video_white.png';
 import iconFile from './images/icon_file.png';
 import iconFileWhite from './images/icon_file_white.png';
-import {getSizeOrPx} from '@/packages';
 
 const defaultImageParams = {
   errorImg,
