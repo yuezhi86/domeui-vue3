@@ -12,6 +12,7 @@ export * from './components/loading';
 export * from './components/avatar';
 export * from './components/image';
 export * from './components/modal';
+export * from './components/upload';
 
 export function config(options?: GlobalConfig) {
   setConfig(options);

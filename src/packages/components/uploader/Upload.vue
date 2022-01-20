@@ -524,6 +524,7 @@ export default {
       const index = list.findIndex(({uid}) => uid === item.uid);
       this.$emit('onPreview', {list, index});
     },
+
     onDragStart(item, e) {
       e.dataTransfer.effectAllowed = 'move';
       this.dragData = item;
@@ -584,6 +585,7 @@ export default {
         this.fileList.splice(this.dragIndex, 0, this.dragData);
       }
     },
+
     onImgLoadError(item) {
       const {
         isImage,
@@ -601,6 +603,7 @@ export default {
     getTargetIndex(targetUid) {
       return this.fileList.findIndex(({uid}) => uid === targetUid);
     },
+
     hasProgress() {
       return this.fileList.some(({done}) => done === false);
     },

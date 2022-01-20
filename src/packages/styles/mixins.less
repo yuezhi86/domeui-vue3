@@ -30,3 +30,21 @@
     box-shadow: 0 0 3px @shadow-color;
   }
 }
+
+// 在父级调用 clearfix 混合，即可清除浮动
+.clearfix() {
+  &::after {
+    content: ' ';
+    display: table;
+    clear: both;
+  }
+}
+
+// 单行文本溢出添加省略号
+.text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal !important;
+  word-break: normal !important;
+}

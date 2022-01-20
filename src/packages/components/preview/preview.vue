@@ -13,8 +13,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="less">
-@import '~@/styles/mixins';
-@import '~@/styles/variables';
-</style>

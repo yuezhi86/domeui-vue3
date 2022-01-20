@@ -1,5 +1,7 @@
 <template>
   <div id="app" class="demo-wrapper">
+    <h2>UploadDemo</h2>
+    <UploadDemo />
     <h2>ModalDemo</h2>
     <ModalDemo />
     <h2>AvatarDemo</h2>
@@ -37,9 +39,11 @@ import LoadingDemo from './examples/Loading.vue';
 import AvatarDemo from './examples/Avatar.vue';
 import ImageDemo from './examples/Image.vue';
 import ModalDemo from './examples/Modal.vue';
+import UploadDemo from './examples/Upload.vue';
 
 export default {
   components: {
+    UploadDemo,
     AvatarDemo,
     ButtonDemo,
     InputDemo,
