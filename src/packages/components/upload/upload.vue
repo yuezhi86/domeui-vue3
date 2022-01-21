@@ -188,7 +188,7 @@ export default defineComponent({
   name,
   props: {
     defaultFileList: {
-      type: Array as PropType<DefaultFileItem[]>,
+      type: Array as PropType<UploadDefaultFileItem[]>,
       default: () => [],
     },
     name: {
@@ -644,7 +644,7 @@ export default defineComponent({
   },
 });
 
-export type DefaultFileItem = {
+export type UploadDefaultFileItem = {
   value: string;
   filename?: string;
   url?: string;
