@@ -51,7 +51,7 @@
             </div>
 
             <div
-              v-if="item.done"
+              v-if="item.done && !item.default"
               class="de-upload-status"
               :class="{'de-upload-status__fail': item.fail}"
             ></div>
@@ -608,6 +608,7 @@ export default defineComponent({
             url,
             viewer,
             done: true,
+            default: true,
             percent: 100,
           };
         });
