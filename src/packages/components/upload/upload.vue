@@ -325,9 +325,11 @@ export default defineComponent({
       return [];
     });
     const showBtn = computed(() => {
-      return props.multiple
-        ? fileList.value.length < props.maxCount
-        : !fileList.value.length;
+      if (props.multiple) {
+        return !props.maxCount || fileList.value.length < props.maxCount;
+      } else {
+        return !fileList.value.length;
+      }
     });
     const showPreview = computed(() => {
       if (isFile.value) return false;
