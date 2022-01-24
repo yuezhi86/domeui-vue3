@@ -130,7 +130,9 @@
         :style="itemStyle"
         @click.stop="onClickInput"
       >
-        <img :src="btnIcon" alt="按钮" class="de-upload-btn__icon" />
+        <slot name="btn">
+          <img :src="btnIcon" alt="按钮" class="de-upload-btn__icon" />
+        </slot>
         <input
           ref="input"
           type="file"
@@ -646,6 +648,7 @@ export default defineComponent({
 
 export type UploadDefaultFileItem = {
   value: string;
+  default: boolean;
   filename?: string;
   url?: string;
   viewer?: string;
@@ -656,6 +659,7 @@ export type UploadDefaultFileItem = {
  * @property {number} percent - 上传进度
  * @property {boolean} done - 上传结束为 true，无论成功与否
  * @property {string} [value] - 用于提交的 value，可能是云存储的key，如果不传则使用 url 的值
+ * @property {boolean} [default] - 默认文件标识
  * @property {string} [filename] - 文件名
  * @property {string} [url] - 缩略图 url
  * @property {string} [viewer] - 用于预览大图链接，如果不传则使用 url 的值
@@ -669,6 +673,7 @@ export type UploadFileItem = {
   percent: number;
   done: boolean;
   value?: string;
+  default?: boolean;
   filename?: string;
   url?: string;
   viewer?: string;
