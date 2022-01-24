@@ -649,7 +649,7 @@ export default defineComponent({
 
 export type UploadDefaultFileItem = {
   value: string;
-  default: boolean;
+  default?: boolean;
   filename?: string;
   url?: string;
   viewer?: string;
