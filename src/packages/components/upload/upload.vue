@@ -269,18 +269,17 @@ export default defineComponent({
       default: undefined,
     },
   },
-  emits: {
-    exceed: (payload: UploadInvalidPayload) => payload,
-    change: (payload: UploadFileItem[]) => payload,
-    remove: (payload: {index: number; item: UploadFileItem}) => payload,
-    preview: (payload: {index: number; list: UploadFileItem[]}) => payload,
-    sort: (index: number) => index,
-    success: (payload: UploadFileItem[]) => payload,
-    fail: (payload: UploadFileItem[]) => payload,
-    upload: (payload: {success: UploadFileItem[]; fail: UploadFileItem[]}) =>
-      payload,
-    'change-default': (payload: UploadFileItem[]) => payload,
-  },
+  emits: [
+    'exceed',
+    'change',
+    'remove',
+    'preview',
+    'sort',
+    'success',
+    'fail',
+    'upload',
+    'change-default',
+  ],
   setup(props, {emit}) {
     let uid = 0;
     const input = ref<HTMLInputElement | null>(null);
