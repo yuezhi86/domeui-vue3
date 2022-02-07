@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, computed, CSSProperties} from 'vue';
+import {defineComponent, ref, computed, CSSProperties, watch} from 'vue';
 import {getSizeOrPx} from '../../utils';
 import {getConfig} from '../../config';
 
@@ -52,6 +52,13 @@ export default defineComponent({
         ? globalConfig.avatar.defImg
         : props.src || globalConfig.avatar.defImg;
     });
+
+    watch(
+      () => props.src,
+      () => {
+        isError.value = false;
+      }
+    );
 
     return {
       img,

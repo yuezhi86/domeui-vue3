@@ -5,9 +5,15 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 
+const name = 'de-preview';
 export default defineComponent({
-  name: 'Preview',
-  components: {},
+  name,
+  props: {
+    propName: {
+      type: Number,
+      default: 0,
+    },
+  },
   setup() {
     return {};
   },
