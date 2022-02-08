@@ -59,8 +59,10 @@
         name="d"
         native-type="checkbox"
         :disabled="disabled"
+        :min="1"
+        :max="2"
         vertical
-        radio-optional
+        @check="onCheck"
       >
         <DeCheckbox true-value="apple">苹果</DeCheckbox>
         <DeCheckbox true-value="banana">香蕉</DeCheckbox>
@@ -98,6 +100,9 @@ export default {
       },
       onTrigger() {
         disabled.value = !disabled.value;
+      },
+      onCheck(value: any) {
+        console.log(value);
       },
     };
   },

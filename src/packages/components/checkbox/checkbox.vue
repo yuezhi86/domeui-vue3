@@ -76,7 +76,10 @@ export default defineComponent({
     'before-change',
   ],
   setup(props, {emit}) {
-    const inGroups = inject('group', false);
+    const isGroup = inject<boolean>('group', false);
+    const min = inject<number>('min', 0);
+    const max = inject<number>('max', Infinity);
+    const emitLimit = inject<Function | null>('emitLimit', null);
     const pName = inject('name', '');
     const pNativeType = inject<Ref<'radio' | 'checkbox'> | null>(
       'nativeType',
@@ -136,6 +139,24 @@ export default defineComponent({
         ? props.trueValue
         : getUncheckedDefaultValue(props.trueValue, props.falseValue);
     };
+    const checkLimit = () => {
+      if (!isGroup || isRadio.value) return true;
+
+      const _pModelValue =
+        pModelValue && Array.isArray(pModelValue.value)
+          ? pModelValue.value
+          : [];
+
+      if (isChecked.value) {
+        const val = _pModelValue.length > min;
+        if (!val) emitLimit && emitLimit(true, false);
+        return val;
+      } else {
+        const val = _pModelValue.length < max;
+        if (!val) emitLimit && emitLimit(false, true);
+        return val;
+      }
+    };
     const handle = () => {
       if (isRadio.value && isChecked.value && !isRadioOptional.value) return;
       isChecked.value = props.indeterminate ? false : !isChecked.value;
@@ -168,7 +189,7 @@ export default defineComponent({
     };
 
     watchEffect(() => {
-      if (!inGroups) {
+      if (!isGroup) {
         isChecked.value = props.modelValue === props.trueValue;
         setValue(isChecked.value);
         return;
@@ -194,7 +215,7 @@ export default defineComponent({
       wrapClassList,
       iconClassList,
       onClick() {
-        if (isDisabled.value) return;
+        if (isDisabled.value || !checkLimit()) return;
         handle();
         updateParent();
         emit('update:indeterminate', false);

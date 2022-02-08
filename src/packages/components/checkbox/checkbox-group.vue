@@ -20,6 +20,18 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    // 仅 nativeType 为 checkbox 时有用
+    min: {
+      type: Number,
+      default: 0,
+      validator: (v: number) => v >= 0,
+    },
+    // 仅 nativeType 为 checkbox 时有用
+    max: {
+      type: Number,
+      default: Infinity,
+      validator: (v: number) => v >= 0,
+    },
     nativeType: {
       type: String as PropType<CheckboxNativeType>,
       default: 'checkbox',
@@ -29,7 +41,7 @@ export default defineComponent({
     disabled: Boolean,
     vertical: Boolean,
   },
-  emits: ['update:modelValue', 'change'],
+  emits: ['update:modelValue', 'change', 'check'],
   setup(props, {emit}) {
     const _name = computed(() => props.name);
     const _nativeType = computed(() => props.nativeType);
@@ -47,9 +59,18 @@ export default defineComponent({
       emit('update:modelValue', value);
       emit('change', value);
     };
+    const emitLimit = (min: boolean, max: boolean) => {
+      emit('check', {
+        min,
+        max,
+      });
+    };
 
     provide('group', true);
     provide('name', _name);
+    provide('min', props.min);
+    provide('max', props.max);
+    provide('emitLimit', emitLimit);
     provide('nativeType', _nativeType);
     provide('disabled', _disabled);
     provide('radioOptional', _radioOptional);
