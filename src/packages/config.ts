@@ -12,7 +12,6 @@ const defaultConfig: Required<GlobalConfig> = {
     transfer: true,
   },
   message: {
-    margin: 25, // 25px
     duration: 1.5, // 1.5s
   },
   loading: {
@@ -59,7 +58,6 @@ export type CommonConfig = {
   transfer?: boolean;
 };
 export type MessageConfig = {
-  margin?: number;
   duration?: number;
 };
 export type LoadingConfig = {

@@ -1,23 +1,22 @@
 <template>
   <transition :name="transitionName" appear @enter="onEnter" @leave="onLeave">
     <section :class="classList">
-      <a v-if="closable" class="de-message__close">
+      <a v-if="closable" class="de-message__close" @click="onClose">
         <component :is="closeIcon" :class="closeClassList"></component>
       </a>
-      <!-- eslint-disable -->
-      <header v-if="title" class="de-message__title" v-html="title"></header>
-      <div v-if="content" class="de-message__content" v-html="content"></div>
-      <!-- eslint-enable -->
-      <div v-if="render" class="de-message__content">
-        <render-cell :render="render" />
+      <header v-if="title" class="de-message__title">
+        <template v-if="typeof title === 'string'">{{ title }}</template>
+        <component :is="title" v-else></component>
+      </header>
+      <div v-if="content" class="de-message__content">
+        <template v-if="typeof content === 'string'">{{ content }}</template>
+        <component :is="content" v-else></component>
       </div>
     </section>
   </transition>
 </template>
 
 <script lang="ts">
-import '../../styles/animation.less';
-import './style/index.less';
 import {
   defineComponent,
   computed,
@@ -29,33 +28,27 @@ import {
   Component,
 } from 'vue';
 import {MessagePlacement, MessageTheme, MessageType} from './index';
-import RenderCell from '../../utils/render';
 import {DeIcon} from '../icon';
+import {getConfig} from '../../config';
 
+const globalConfig = getConfig();
 const name = 'de-message';
 
 export type MessageTransition = 'move-out' | 'move-in-out';
 export default defineComponent({
   name,
-  components: {
-    RenderCell,
-  },
   props: {
     uuid: {
       type: String,
       required: true,
     },
     title: {
-      type: String,
+      type: [String, Object] as PropType<string | VNode>,
       default: '',
     },
     content: {
-      type: String,
+      type: [String, Object] as PropType<string | VNode>,
       default: '',
-    },
-    render: {
-      type: Function as PropType<() => VNode>,
-      default: undefined,
     },
     type: {
       type: String as PropType<MessageType>,
@@ -78,27 +71,27 @@ export default defineComponent({
     },
     placement: {
       type: String as PropType<MessagePlacement>,
-      default: 'right-start',
+      default: 'top',
     },
     duration: {
       type: Number,
-      default: 1.5,
+      default: globalConfig.message.duration,
     },
     transitionName: {
       type: String as PropType<MessageTransition>,
       default: 'move-in-out',
     },
     closable: Boolean,
-    closeClassNames: {
-      type: [String, Array] as PropType<string | string[]>,
+    closeClassName: {
+      type: String,
       default: '',
     },
     closeIcon: {
-      type: [Object] as PropType<Component | VNode>,
+      type: Object as PropType<Component | VNode>,
       default: h(DeIcon, {name: 'close-l'}),
     },
   },
-  emits: ['onAutoClose', 'onClose', 'onLeave'],
+  emits: ['close'],
   setup(props, {emit}) {
     const classList = computed(() => [
       name,
@@ -107,28 +100,30 @@ export default defineComponent({
       `${name}__${props.theme}`,
     ]);
     const closeClassList = computed(() => {
-      let _class = [`${name}__close-icon`];
-
-      if (props.closeClassNames) {
-        _class = _class.concat(
-          typeof props.closeClassNames === 'string'
-            ? props.closeClassNames
-            : props.closeClassNames
-        );
-      }
-
-      return _class;
+      return [`${name}__close-icon`, props.closeClassName];
     });
 
     let closeTimer: number;
     const clearCloseTimer = () => {
       clearTimeout(closeTimer);
     };
+    const onEnter = (el: HTMLElement) => {
+      if (['top', 'bottom-end'].includes(props.placement)) {
+        el.style.height = el.scrollHeight + 'px';
+      }
+    };
+    const onLeave = (el: HTMLElement) => {
+      el.style.height = '0';
+    };
+    const onClose = () => {
+      clearCloseTimer();
+      emit('close', props.uuid);
+    };
 
     onMounted(() => {
       if (props.duration > 0) {
         closeTimer = setTimeout(() => {
-          emit('onAutoClose', props.uuid);
+          emit('close', props.uuid);
         }, props.duration * 1000);
       }
     });
@@ -139,19 +134,9 @@ export default defineComponent({
     return {
       classList,
       closeClassList,
-      onEnter(el: HTMLElement) {
-        if (['top', 'bottom-end'].includes(props.placement)) {
-          el.style.height = el.scrollHeight + 'px';
-        }
-      },
-      onClose() {
-        clearCloseTimer();
-        emit('onClose');
-      },
-      onLeave(el: HTMLElement) {
-        el.style.height = '0';
-        emit('onLeave');
-      },
+      onEnter,
+      onLeave,
+      onClose,
     };
   },
 });

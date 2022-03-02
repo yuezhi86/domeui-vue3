@@ -1,7 +1,7 @@
-import {Component, VNode} from 'vue';
+import {VNode} from 'vue';
 import {Numberish} from '../../config';
 
-const Message: MessageFunction = function (options: MessageOptions): void {
+const Message: MessageFunction = function (options: MessageOption): void {
   console.log(options);
 };
 
@@ -44,32 +44,25 @@ export type MessagePlacement =
   | 'bottom-start'
   | 'bottom-end';
 
-export type MessageOptions = {
-  title?: string;
-  content?: string;
+export type MessageOption = {
+  title?: string | VNode;
+  content?: string | VNode;
   type?: MessageType;
   theme?: MessageTheme;
   duration?: number;
   closable?: boolean;
-  placement?: MessagePlacement;
-  closeIcon?: string | Component | VNode;
-  classNames?: string | string[]; // 添加到每条消息本身
-  containerClassName?: string; // 添加到消息队列容器上
-  closeClassNames?: string | string[];
   maxWidth?: Numberish; // 如：300，300px，20%
-  onClose?: () => void;
-  onLeave?: () => void;
-  render?: () => VNode;
+  className?: string; // 添加到每条消息本身
 };
 
-export type MessageMethodOptions = Omit<MessageOptions, 'type' | 'content'>;
+export type MessageMethodOptions = Omit<MessageOption, 'type' | 'content'>;
 export type MessageMethod = (
   content: string,
   config?: MessageMethodOptions
 ) => void;
 
 export interface MessageFunction {
-  (options: MessageOptions): void;
+  (options: MessageOption): void;
   info: MessageMethod;
   success: MessageMethod;
   error: MessageMethod;

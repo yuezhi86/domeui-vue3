@@ -1,5 +1,7 @@
 <template>
   <div id="app" class="demo-wrapper">
+    <h2>MessageDemo</h2>
+    <MessageDemo />
     <h2>UploadDemo</h2>
     <UploadDemo />
     <h2>ModalDemo</h2>
@@ -12,8 +14,6 @@
     <BadgeDemo />
     <h2>IconDemo</h2>
     <IconDemo />
-    <h2>MessageDemo</h2>
-    <MessageDemo />
     <h2>SwitchDemo</h2>
     <SwitchDemo />
     <h2>CheckboxDemo</h2>
