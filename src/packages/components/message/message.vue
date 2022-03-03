@@ -1,142 +1,108 @@
 <template>
-  <transition :name="transitionName" appear @enter="onEnter" @leave="onLeave">
-    <section :class="classList">
-      <a v-if="closable" class="de-message__close" @click="onClose">
-        <component :is="closeIcon" :class="closeClassList"></component>
-      </a>
-      <header v-if="title" class="de-message__title">
-        <template v-if="typeof title === 'string'">{{ title }}</template>
-        <component :is="title" v-else></component>
-      </header>
-      <div v-if="content" class="de-message__content">
-        <template v-if="typeof content === 'string'">{{ content }}</template>
-        <component :is="content" v-else></component>
-      </div>
-    </section>
-  </transition>
+  <section :class="classList" :style="style">
+    <template v-for="item in queue" :key="item.uuid">
+      <message-item
+        :uuid="item.uuid"
+        :title="item.title"
+        :content="item.content"
+        :type="item.type"
+        :theme="item.theme"
+        :duration="item.duration"
+        :closable="item.closable"
+        :class-name="item.className"
+        :max-width="item.maxWidth"
+        :placement="placement"
+        :close-icon="item.closeIcon"
+        :transition-name="transitionName"
+        :close-class-name="item.closeClassName"
+        @close="pop"
+      />
+    </template>
+  </section>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  onMounted,
-  onBeforeUnmount,
-  h,
-  PropType,
-  VNode,
-  Component,
-} from 'vue';
-import {MessagePlacement, MessageTheme, MessageType} from './index';
-import {DeIcon} from '../icon';
+import {defineComponent, ref, computed, PropType} from 'vue';
+import MessageItem from './message-item.vue';
+import {MessageOption, MessagePlacement, MessageTransition} from './types';
+import {getIndexZ} from '../../utils';
 import {getConfig} from '../../config';
 
 const globalConfig = getConfig();
 const name = 'de-message';
-
-export type MessageTransition = 'move-out' | 'move-in-out';
 export default defineComponent({
   name,
+  components: {
+    MessageItem,
+  },
   props: {
-    uuid: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: [String, Object] as PropType<string | VNode>,
-      default: '',
-    },
-    content: {
-      type: [String, Object] as PropType<string | VNode>,
-      default: '',
-    },
-    type: {
-      type: String as PropType<MessageType>,
-      default: 'info',
-      validator: (v: string) =>
-        ['info', 'success', 'error', 'warning'].includes(v) || !!v,
-    },
-    theme: {
-      type: String as PropType<MessageTheme>,
-      default: 'default',
-      validator: (v: string) => ['default', 'bright'].includes(v) || !!v,
-    },
     className: {
       type: String,
       default: '',
     },
-    maxWidth: {
-      type: [String, Number],
-      default: '100%',
-    },
     placement: {
       type: String as PropType<MessagePlacement>,
       default: 'top',
-    },
-    duration: {
-      type: Number,
-      default: globalConfig.message.duration,
+      validator: (v: string) =>
+        ['top', 'right-start', 'bottom-start', 'bottom-end'].includes(v),
     },
     transitionName: {
       type: String as PropType<MessageTransition>,
-      default: 'move-in-out',
+      default: 'move-up',
     },
-    closable: Boolean,
-    closeClassName: {
-      type: String,
-      default: '',
-    },
-    closeIcon: {
-      type: Object as PropType<Component | VNode>,
-      default: h(DeIcon, {name: 'close-l'}),
+    getMethods: {
+      type: Function,
+      required: true,
     },
   },
-  emits: ['close'],
-  setup(props, {emit}) {
-    const classList = computed(() => [
-      name,
-      props.className,
-      `${name}__${props.type}`,
-      `${name}__${props.theme}`,
-    ]);
-    const closeClassList = computed(() => {
-      return [`${name}__close-icon`, props.closeClassName];
+  setup(props) {
+    const zIndex = ref<number>();
+    const queue = ref<Array<MessageOption & {uuid: string}>>([]);
+    const classList = computed(() => [name, props.className]);
+    const style = computed(() => {
+      return {
+        zIndex: zIndex.value,
+      };
     });
 
-    let closeTimer: number;
-    const clearCloseTimer = () => {
-      clearTimeout(closeTimer);
+    const push = (option: MessageOption & {uuid: string}) => {
+      zIndex.value = getIndexZ();
+      queue.value.push(
+        Object.assign(
+          {
+            type: 'info',
+            theme: 'default',
+            duration: globalConfig.message.duration,
+            maxWidth: '100%',
+            closable: false,
+          },
+          option
+        )
+      );
     };
-    const onEnter = (el: HTMLElement) => {
-      if (['top', 'bottom-end'].includes(props.placement)) {
-        el.style.height = el.scrollHeight + 'px';
+    const clear = () => (queue.value = []);
+    const pop = (uuid: string) => {
+      for (let i = 0; i < queue.value.length; i++) {
+        if (queue.value[i].uuid === uuid) {
+          queue.value.splice(i, 1);
+          break;
+        }
       }
-    };
-    const onLeave = (el: HTMLElement) => {
-      el.style.height = '0';
-    };
-    const onClose = () => {
-      clearCloseTimer();
-      emit('close', props.uuid);
     };
 
-    onMounted(() => {
-      if (props.duration > 0) {
-        closeTimer = setTimeout(() => {
-          emit('close', props.uuid);
-        }, props.duration * 1000);
-      }
-    });
-    onBeforeUnmount(() => {
-      clearCloseTimer();
+    props.getMethods({
+      push,
+      pop,
+      clear,
     });
 
     return {
+      queue,
       classList,
-      closeClassList,
-      onEnter,
-      onLeave,
-      onClose,
+      style,
+      push,
+      pop,
+      clear,
     };
   },
 });

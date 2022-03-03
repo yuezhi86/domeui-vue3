@@ -1,0 +1,152 @@
+<template>
+  <transition :name="transitionName" appear @enter="onEnter" @leave="onLeave">
+    <div :class="classList">
+      <div class="de-message-item__inner">
+        <span v-if="closable" class="de-message-item__close" @click="onClose">
+          <component :is="closeIcon" :class="closeClassList"></component>
+        </span>
+        <header v-if="title" class="de-message-item__title">
+          <template v-if="typeof title === 'string'">{{ title }}</template>
+          <component :is="title" v-else></component>
+        </header>
+        <div v-if="content" class="de-message-item__content">
+          <template v-if="typeof content === 'string'">{{ content }}</template>
+          <component :is="content" v-else></component>
+        </div>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script lang="ts">
+import {
+  defineComponent,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+  h,
+  PropType,
+  VNode,
+  Component,
+} from 'vue';
+import {
+  MessagePlacement,
+  MessageTheme,
+  MessageType,
+  MessageTransition,
+} from './types';
+import {DeIcon} from '../icon';
+import {getConfig} from '../../config';
+
+const globalConfig = getConfig();
+const name = 'de-message-item';
+
+export default defineComponent({
+  name,
+  props: {
+    uuid: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: [String, Object] as PropType<string | VNode>,
+      default: '',
+    },
+    content: {
+      type: [String, Object] as PropType<string | VNode>,
+      default: '',
+    },
+    type: {
+      type: String as PropType<MessageType>,
+      default: 'info',
+      validator: (v: string) =>
+        ['info', 'success', 'error', 'warning'].includes(v) || !!v,
+    },
+    theme: {
+      type: String as PropType<MessageTheme>,
+      default: 'default',
+      validator: (v: string) => ['default', 'bright'].includes(v) || !!v,
+    },
+    className: {
+      type: String,
+      default: '',
+    },
+    maxWidth: {
+      type: [String, Number],
+      default: '100%',
+    },
+    placement: {
+      type: String as PropType<MessagePlacement>,
+      default: 'top',
+    },
+    duration: {
+      type: Number,
+      default: globalConfig.message.duration,
+    },
+    transitionName: {
+      type: String as PropType<MessageTransition>,
+      default: 'move-up',
+    },
+    closable: Boolean,
+    closeClassName: {
+      type: String,
+      default: '',
+    },
+    closeIcon: {
+      type: Object as PropType<Component | VNode>,
+      default: h(DeIcon, {name: 'close-l', size: 10}),
+    },
+  },
+  emits: ['close'],
+  setup(props, {emit}) {
+    const classList = computed(() => [
+      name,
+      props.className,
+      `${name}__${props.type}-${props.theme}`,
+      `${name}__${props.placement}`,
+      {
+        [`${name}__closable`]: props.closable,
+      },
+    ]);
+    const closeClassList = computed(() => {
+      return [`${name}__close-icon`, props.closeClassName];
+    });
+
+    let closeTimer: number;
+    const clearCloseTimer = () => {
+      clearTimeout(closeTimer);
+    };
+    const onEnter = (el: HTMLElement) => {
+      if (['top', 'bottom-end'].includes(props.placement)) {
+        el.style.height = el.scrollHeight + 'px';
+      }
+    };
+    const onLeave = (el: HTMLElement) => {
+      el.style.height = '0';
+    };
+    const onClose = () => {
+      clearCloseTimer();
+      emit('close', props.uuid);
+    };
+
+    onMounted(() => {
+      if (props.duration > 0) {
+        closeTimer = setTimeout(() => {
+          emit('close', props.uuid);
+        }, props.duration * 1000);
+      }
+    });
+    onBeforeUnmount(() => {
+      clearCloseTimer();
+    });
+
+    return {
+      classList,
+      closeClassList,
+      onEnter,
+      onLeave,
+      onClose,
+    };
+  },
+});
+</script>

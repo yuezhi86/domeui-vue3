@@ -1,6 +1,111 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
+@import './variables';
 
 .de-message {
-  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: @de-message-text-color;
+  font-size: @de-message-font-size;
+  pointer-events: none;
+
+  &,
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  &-item {
+    padding: @de-message-item-padding;
+    text-align: center;
+    transition: height @de-transition-time ease-in-out,
+      padding @de-transition-time ease-in-out;
+
+    &__inner {
+      position: relative;
+      display: inline-block;
+      padding: @de-message-item-inner-padding;
+      background-color: #fff;
+      border-radius: @de-message-item-inner-radius;
+      box-shadow: @de-message-item-inner-shadow;
+      pointer-events: all;
+    }
+
+    &__close {
+      position: absolute;
+      right: 7px;
+      top: 7px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+
+      &-icon {
+        color: @de-message-item-close-color;
+        transition: opacity @de-transition-time;
+      }
+
+      &:hover &-icon {
+        opacity: 0.6;
+      }
+    }
+
+    &__closable &__title {
+      padding-right: 20px;
+    }
+
+    &__info-bright &__inner {
+      color: @de-message-info-title-text-color;
+      background-color: lighten(@de-message-info-title-text-color, 40%);
+      border: 1px solid lighten(@de-message-info-title-text-color, 20%);
+      box-shadow: none;
+    }
+
+    &__success-bright &__inner {
+      color: @de-message-success-title-text-color;
+      background-color: lighten(@de-message-success-title-text-color, 55%);
+      border: 1px solid @de-message-success-title-text-color;
+      box-shadow: none;
+    }
+
+    &__error-bright &__inner {
+      color: @de-message-error-title-text-color;
+      background-color: lighten(@de-message-error-title-text-color, 38%);
+      border: 1px solid lighten(@de-message-error-title-text-color, 20%);
+      box-shadow: none;
+    }
+
+    &__warning-bright &__inner {
+      color: @de-message-warning-title-text-color;
+      background-color: lighten(@de-message-warning-title-text-color, 46%);
+      border: 1px solid lighten(@de-message-warning-title-text-color, 20%);
+      box-shadow: none;
+    }
+  }
+
+  &__icon-info {
+    margin-right: @de-message-icon-margin-right;
+    color: @de-message-info-title-text-color;
+    font-size: @de-message-icon-font-size;
+  }
+
+  &__icon-success {
+    margin-right: @de-message-icon-margin-right;
+    color: @de-message-success-title-text-color;
+    font-size: @de-message-icon-font-size;
+  }
+
+  &__icon-error {
+    margin-right: @de-message-icon-margin-right;
+    color: @de-message-error-title-text-color;
+    font-size: @de-message-icon-font-size;
+  }
+
+  &__icon-warning {
+    margin-right: @de-message-icon-margin-right;
+    color: @de-message-warning-title-text-color;
+    font-size: @de-message-icon-font-size;
+  }
 }
