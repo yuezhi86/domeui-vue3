@@ -51,8 +51,7 @@ export default defineComponent({
     placement: {
       type: String as PropType<MessagePlacement>,
       default: 'top',
-      validator: (v: string) =>
-        ['top', 'right-start', 'bottom-start', 'bottom-end'].includes(v),
+      validator: (v: string) => ['top', 'right-start'].includes(v),
     },
     transitionName: {
       type: String as PropType<MessageTransition>,
