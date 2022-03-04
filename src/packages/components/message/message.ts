@@ -76,12 +76,12 @@ const getTitle = (type: MessageType, title: string) => {
       break;
   }
 
-  return h('div', [
+  return h('div', {class: `${MessageComponent.name}__title-inner`}, [
     h(DeIcon, {
       name,
       class: `${MessageComponent.name}__icon-${type}`,
     }),
-    title,
+    h('span', [title]),
   ]);
 };
 

@@ -1,7 +1,7 @@
 <template>
-  <transition :name="transitionName" appear @enter="onEnter" @leave="onLeave">
+  <transition>
     <div :class="classList">
-      <div class="de-message-item__inner">
+      <div class="de-message-item__inner" :style="innerStyle">
         <span v-if="closable" class="de-message-item__close" @click="close">
           <component :is="closeIcon" :class="closeClassList"></component>
         </span>
@@ -29,14 +29,10 @@ import {
   VNode,
   Component,
 } from 'vue';
-import {
-  MessagePlacement,
-  MessageTheme,
-  MessageType,
-  MessageTransition,
-} from './types';
+import {MessagePlacement, MessageTheme, MessageType} from './types';
 import {DeIcon} from '../icon';
 import {getConfig} from '../../config';
+import {getSizeOrPx} from '../../utils';
 
 const globalConfig = getConfig();
 const name = 'de-message-item';
@@ -83,10 +79,6 @@ export default defineComponent({
       type: Number,
       default: globalConfig.message.duration,
     },
-    transitionName: {
-      type: String as PropType<MessageTransition>,
-      default: 'move-up',
-    },
     closable: Boolean,
     closeClassName: {
       type: String,
@@ -115,6 +107,11 @@ export default defineComponent({
     const closeClassList = computed(() => {
       return [`${name}__close-icon`, props.closeClassName];
     });
+    const innerStyle = computed(() => {
+      return {
+        maxWidth: getSizeOrPx(props.maxWidth),
+      };
+    });
 
     let closeTimer: number | null;
     const clearCloseTimer = () => {
@@ -129,20 +126,7 @@ export default defineComponent({
       emit('close', props.uuid);
     };
 
-    const onEnter = (el: HTMLElement) => {
-      console.log(2);
-      if (['top', 'bottom-end'].includes(props.placement)) {
-        el.style.height = el.scrollHeight + 'px';
-      }
-    };
-    const onLeave = (el: HTMLElement) => {
-      el.style.height = '0';
-      el.style.paddingTop = '0';
-      el.style.paddingBottom = '0';
-    };
-
     onMounted(() => {
-      console.log(1);
       clearCloseTimer();
 
       if (props.duration > 0) {
@@ -158,8 +142,7 @@ export default defineComponent({
     return {
       classList,
       closeClassList,
-      onEnter,
-      onLeave,
+      innerStyle,
       close,
     };
   },

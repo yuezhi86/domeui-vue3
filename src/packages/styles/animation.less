@@ -7,7 +7,7 @@
 
 .make-motion(@className, @keyframeName, @time: @de-animation-time) {
   .@{className}-enter-active,
-  .@{className}-enter-to {
+  .@{className}-appear {
     .motion-common(@time);
     animation-play-state: paused;
   }
@@ -16,7 +16,7 @@
     animation-play-state: paused;
   }
   .@{className}-enter-active,
-  .@{className}-enter-to {
+  .@{className}-appear {
     animation-name: ~'@{keyframeName}In';
     animation-play-state: running;
   }

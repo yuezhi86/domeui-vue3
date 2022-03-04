@@ -1,27 +1,32 @@
 <template>
-  <section :class="classList" :style="style">
-    <transition-group :name="transitionName">
-      <template v-for="item in queue" :key="item.uuid">
-        <message-item
-          :uuid="item.uuid"
-          :title="item.title"
-          :content="item.content"
-          :type="item.type"
-          :theme="item.theme"
-          :duration="item.duration"
-          :closable="item.closable"
-          :class-name="item.className"
-          :max-width="item.maxWidth"
-          :placement="placement"
-          :close-icon="item.closeIcon"
-          :transition-name="transitionName"
-          :close-class-name="item.closeClassName"
-          :on-close="item.onClose"
-          @close="pop"
-        />
-      </template>
-    </transition-group>
-  </section>
+  <transition-group
+    tag="section"
+    appear
+    :name="transitionName"
+    :class="classList"
+    :style="style"
+    @enter="onEnter"
+    @leave="onLeave"
+  >
+    <message-item
+      v-for="item in queue"
+      :key="item.uuid"
+      :uuid="item.uuid"
+      :title="item.title"
+      :content="item.content"
+      :type="item.type"
+      :theme="item.theme"
+      :duration="item.duration"
+      :closable="item.closable"
+      :class-name="item.className"
+      :max-width="item.maxWidth"
+      :placement="placement"
+      :close-icon="item.closeIcon"
+      :close-class-name="item.closeClassName"
+      :on-close="item.onClose"
+      @close="pop"
+    />
+  </transition-group>
 </template>
 
 <script lang="ts">
@@ -99,6 +104,17 @@ export default defineComponent({
       clear,
     });
 
+    const onEnter = (el: HTMLElement) => {
+      if (['top', 'bottom-end'].includes(props.placement)) {
+        el.style.height = el.scrollHeight + 'px';
+      }
+    };
+    const onLeave = (el: HTMLElement) => {
+      el.style.height = '0';
+      el.style.paddingTop = '0';
+      el.style.paddingBottom = '0';
+    };
+
     return {
       queue,
       classList,
@@ -106,6 +122,8 @@ export default defineComponent({
       push,
       pop,
       clear,
+      onEnter,
+      onLeave,
     };
   },
 });

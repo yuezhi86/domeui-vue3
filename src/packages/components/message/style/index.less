@@ -19,6 +19,7 @@
   }
 
   &-item {
+    overflow: hidden;
     padding: @de-message-item-padding;
     text-align: center;
     transition: height @de-transition-time ease-in-out,
@@ -32,6 +33,7 @@
       border-radius: @de-message-item-inner-radius;
       box-shadow: @de-message-item-inner-shadow;
       pointer-events: all;
+      text-align: left;
     }
 
     &__close {
@@ -58,31 +60,36 @@
 
     &__info-bright &__inner {
       color: @de-message-info-title-text-color;
-      background-color: lighten(@de-message-info-title-text-color, 40%);
+      background-color: lighten(@de-message-info-title-text-color, 42%);
       border: 1px solid lighten(@de-message-info-title-text-color, 20%);
       box-shadow: none;
     }
 
     &__success-bright &__inner {
       color: @de-message-success-title-text-color;
-      background-color: lighten(@de-message-success-title-text-color, 55%);
+      background-color: lighten(@de-message-success-title-text-color, 58%);
       border: 1px solid @de-message-success-title-text-color;
       box-shadow: none;
     }
 
     &__error-bright &__inner {
       color: @de-message-error-title-text-color;
-      background-color: lighten(@de-message-error-title-text-color, 38%);
+      background-color: lighten(@de-message-error-title-text-color, 40%);
       border: 1px solid lighten(@de-message-error-title-text-color, 20%);
       box-shadow: none;
     }
 
     &__warning-bright &__inner {
       color: @de-message-warning-title-text-color;
-      background-color: lighten(@de-message-warning-title-text-color, 46%);
+      background-color: lighten(@de-message-warning-title-text-color, 48%);
       border: 1px solid lighten(@de-message-warning-title-text-color, 20%);
       box-shadow: none;
     }
+  }
+
+  &__title-inner {
+    display: flex;
+    align-items: center;
   }
 
   &__icon-info {
