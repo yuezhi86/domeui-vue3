@@ -16,6 +16,7 @@ export type MessageOption = {
   className?: string; // 添加到每条消息本身
   closeClassName?: string;
   closeIcon?: Component | VNode;
+  onClose?: () => void;
 };
 export type MessagePop = () => void;
 

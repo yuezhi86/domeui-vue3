@@ -7,7 +7,7 @@
 
 .make-motion(@className, @keyframeName, @time: @de-animation-time) {
   .@{className}-enter-active,
-  .@{className}-appear {
+  .@{className}-enter-to {
     .motion-common(@time);
     animation-play-state: paused;
   }
@@ -16,7 +16,7 @@
     animation-play-state: paused;
   }
   .@{className}-enter-active,
-  .@{className}-appear {
+  .@{className}-enter-to {
     animation-name: ~'@{keyframeName}In';
     animation-play-state: running;
   }
@@ -26,14 +26,4 @@
   }
 }
 
-.move-motion(@className, @keyframeName) {
-  .make-motion(@className, @keyframeName);
-  .@{className}-enter-active,
-  .@{className}-appear {
-    opacity: 0;
-    animation-timing-function: ease-in-out;
-  }
-  .@{className}-leave-active {
-    animation-timing-function: ease-in-out;
-  }
-}
+@import './animation/move';

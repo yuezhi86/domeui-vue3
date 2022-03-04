@@ -2,7 +2,7 @@
   <transition :name="transitionName" appear @enter="onEnter" @leave="onLeave">
     <div :class="classList">
       <div class="de-message-item__inner">
-        <span v-if="closable" class="de-message-item__close" @click="onClose">
+        <span v-if="closable" class="de-message-item__close" @click="close">
           <component :is="closeIcon" :class="closeClassList"></component>
         </span>
         <header v-if="title" class="de-message-item__title">
@@ -96,6 +96,10 @@ export default defineComponent({
       type: Object as PropType<Component | VNode>,
       default: h(DeIcon, {name: 'close-l', size: 10}),
     },
+    onClose: {
+      type: Function,
+      default: undefined,
+    },
   },
   emits: ['close'],
   setup(props, {emit}) {
@@ -112,27 +116,38 @@ export default defineComponent({
       return [`${name}__close-icon`, props.closeClassName];
     });
 
-    let closeTimer: number;
+    let closeTimer: number | null;
     const clearCloseTimer = () => {
-      clearTimeout(closeTimer);
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
     };
+    const close = () => {
+      clearCloseTimer();
+      props.onClose && props.onClose();
+      emit('close', props.uuid);
+    };
+
     const onEnter = (el: HTMLElement) => {
+      console.log(2);
       if (['top', 'bottom-end'].includes(props.placement)) {
         el.style.height = el.scrollHeight + 'px';
       }
     };
     const onLeave = (el: HTMLElement) => {
       el.style.height = '0';
-    };
-    const onClose = () => {
-      clearCloseTimer();
-      emit('close', props.uuid);
+      el.style.paddingTop = '0';
+      el.style.paddingBottom = '0';
     };
 
     onMounted(() => {
+      console.log(1);
+      clearCloseTimer();
+
       if (props.duration > 0) {
         closeTimer = setTimeout(() => {
-          emit('close', props.uuid);
+          close();
         }, props.duration * 1000);
       }
     });
@@ -145,7 +160,7 @@ export default defineComponent({
       closeClassList,
       onEnter,
       onLeave,
-      onClose,
+      close,
     };
   },
 });

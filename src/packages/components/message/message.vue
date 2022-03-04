@@ -1,23 +1,26 @@
 <template>
   <section :class="classList" :style="style">
-    <template v-for="item in queue" :key="item.uuid">
-      <message-item
-        :uuid="item.uuid"
-        :title="item.title"
-        :content="item.content"
-        :type="item.type"
-        :theme="item.theme"
-        :duration="item.duration"
-        :closable="item.closable"
-        :class-name="item.className"
-        :max-width="item.maxWidth"
-        :placement="placement"
-        :close-icon="item.closeIcon"
-        :transition-name="transitionName"
-        :close-class-name="item.closeClassName"
-        @close="pop"
-      />
-    </template>
+    <transition-group :name="transitionName">
+      <template v-for="item in queue" :key="item.uuid">
+        <message-item
+          :uuid="item.uuid"
+          :title="item.title"
+          :content="item.content"
+          :type="item.type"
+          :theme="item.theme"
+          :duration="item.duration"
+          :closable="item.closable"
+          :class-name="item.className"
+          :max-width="item.maxWidth"
+          :placement="placement"
+          :close-icon="item.closeIcon"
+          :transition-name="transitionName"
+          :close-class-name="item.closeClassName"
+          :on-close="item.onClose"
+          @close="pop"
+        />
+      </template>
+    </transition-group>
   </section>
 </template>
 
