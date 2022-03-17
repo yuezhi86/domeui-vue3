@@ -116,7 +116,7 @@ export default defineComponent({
     let closeTimer: number | null;
     const clearCloseTimer = () => {
       if (closeTimer) {
-        clearTimeout(closeTimer);
+        window.clearTimeout(closeTimer);
         closeTimer = null;
       }
     };
@@ -130,7 +130,7 @@ export default defineComponent({
       clearCloseTimer();
 
       if (props.duration > 0) {
-        closeTimer = setTimeout(() => {
+        closeTimer = window.setTimeout(() => {
           close();
         }, props.duration * 1000);
       }

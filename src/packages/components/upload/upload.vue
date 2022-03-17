@@ -531,7 +531,7 @@ export default defineComponent({
       const dataTransfer = e.dataTransfer as DataTransfer;
       dataTransfer.effectAllowed = 'move';
       dragData = item;
-      timer = setTimeout(() => {
+      timer = window.setTimeout(() => {
         if (!dragData) return;
         dragIndex = getTargetIndex(dragData.uid);
         fileList.value.splice(dragIndex, 1);
@@ -545,7 +545,7 @@ export default defineComponent({
 
       if (dragData && item.uid === dragData.uid) {
         if (dragIndex === -1) {
-          clearTimeout(timer);
+          window.clearTimeout(timer);
           dragIndex = getTargetIndex(dragData.uid);
           fileList.value.splice(dragIndex, 1);
           const index = dragIndex + Number(isAfter);
@@ -563,7 +563,7 @@ export default defineComponent({
       }
 
       if (dragIndex === -1) {
-        clearTimeout(timer);
+        window.clearTimeout(timer);
         if (!dragData) return;
         dragIndex = getTargetIndex(dragData.uid);
         fileList.value.splice(dragIndex, 1);
