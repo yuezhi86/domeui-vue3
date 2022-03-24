@@ -34,6 +34,7 @@
       @keydown="onKeydown"
       @keyup="onKeyup"
       @keyup.enter="onEnter"
+      @keydown.esc.stop.prevent="() => {}"
       @keypress="onKeypress"
       @select="onSelect"
       @compositionstart="onComposition"

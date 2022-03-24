@@ -75,7 +75,7 @@ import {DeIcon} from '../icon';
 import {DeButton} from '../button';
 import {getConfig, Numberish} from '../../config';
 import {getIndexZ, randomStr} from '../../utils';
-import modalQueue from './index';
+import modalMap from './index';
 
 const globalConfig = getConfig();
 const name = 'de-modal';
@@ -189,7 +189,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'confirm', 'cancel', 'show', 'hide'],
   setup(props, {emit}) {
-    const instanceId = randomStr(10);
+    const instanceId = randomStr(12);
     const zIndex = ref<number | null>(null);
     const hasHidden = ref(false);
     const classList = computed(() => [name]);
@@ -241,7 +241,7 @@ export default defineComponent({
         document.body.style.removeProperty('overflow');
       }
 
-      modalQueue.delete(instanceId);
+      modalMap.delete(instanceId);
       emit('update:modelValue', false);
       emit('hide');
     };
@@ -255,7 +255,7 @@ export default defineComponent({
       }
 
       zIndex.value = getIndexZ();
-      modalQueue.set(instanceId, modalHide);
+      modalMap.set(instanceId, modalHide);
       emit('show');
     };
     const onConfirm = () => {
@@ -270,7 +270,8 @@ export default defineComponent({
     };
     const onEscClose = (e: KeyboardEvent) => {
       if (e.code === 'Escape' && props.escClosable && props.modelValue) {
-        const keys = [...modalQueue.keys()];
+        e.stopPropagation();
+        const keys = [...modalMap.keys()];
         if (keys[keys.length - 1] !== instanceId) return;
         onCancel();
       }

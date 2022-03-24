@@ -1,11 +1,11 @@
 import Model from './modal.vue';
 
 type HideModal = () => void;
-const modalQueue: Map<string, HideModal> = new Map();
+const modalMap: Map<string, HideModal> = new Map();
 
-export default modalQueue;
+export default modalMap;
 export function hideModal() {
-  modalQueue.forEach((hideModal) => {
+  modalMap.forEach((hideModal) => {
     hideModal();
   });
 }

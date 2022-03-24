@@ -1,7 +1,7 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
-      <DeButton @click="onShowModal">打开</DeButton>
+      <DeButton @click="showModal = true">打开</DeButton>
     </div>
   </section>
   <DeModal
@@ -10,23 +10,34 @@
     class="abc de"
     :before-close="beforeClose"
   >
-    内容
+    <DeButton @click="showModal2 = true">打开</DeButton>
+  </DeModal>
+  <DeModal
+    v-model="showModal2"
+    title="编辑设施-房间"
+    class="abc de"
+    :before-close="beforeClose"
+  >
+    <DeInput />
   </DeModal>
 </template>
 
 <script lang="ts">
 import {ref} from 'vue';
-import {DeButton, DeModal, ModalBeforeCloseAction} from '@/packages';
+import {DeInput, DeButton, DeModal, ModalBeforeCloseAction} from '@/packages';
 
 export default {
   components: {
+    DeInput,
     DeButton,
     DeModal,
   },
   setup() {
     const showModal = ref(false);
+    const showModal2 = ref(false);
     return {
       showModal,
+      showModal2,
       beforeClose(action: ModalBeforeCloseAction) {
         if (action === 'confirm') {
           return new Promise<void>((resolve) => {
@@ -35,9 +46,6 @@ export default {
             }, 3000);
           });
         }
-      },
-      onShowModal() {
-        showModal.value = true;
       },
     };
   },
