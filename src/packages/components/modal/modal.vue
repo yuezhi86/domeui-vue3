@@ -93,7 +93,7 @@ export type ModalTransitionNames = [string, string];
 export type ModalBeforeCloseAction = 'confirm' | 'cancel';
 export type ModalBeforeClose = (
   action?: ModalBeforeCloseAction
-) => Promise<void>;
+) => Promise<any>;
 export default defineComponent({
   name,
   components: {
@@ -219,8 +219,8 @@ export default defineComponent({
     const beforeCloseHandle = (action?: ModalBeforeCloseAction) => {
       const isConfirm = action === 'confirm';
       const isCancel = action === 'cancel';
-      const handle = () => {
-        isConfirm && emit('confirm');
+      const handle = (payload?: any) => {
+        isConfirm && emit('confirm', payload);
         isCancel && emit('cancel');
         modalHide();
       };
@@ -229,8 +229,8 @@ export default defineComponent({
 
       const before = props.beforeClose(action);
       if (before && before.then) {
-        before.then(() => {
-          handle();
+        before.then((payload?: any) => {
+          handle(payload);
         });
       } else {
         handle();
