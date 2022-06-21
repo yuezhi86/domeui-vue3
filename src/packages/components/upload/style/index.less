@@ -30,11 +30,12 @@
   }
 
   &-item {
+    overflow: hidden;
     position: relative;
     background-color: #fff;
     border: 1px solid @de-upload-border-color;
 
-    &__move {
+    &__sortable {
       cursor: move;
 
       &-after {
@@ -137,8 +138,8 @@
   &-status {
     overflow: hidden;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -1px;
+    right: -1px;
     width: 30px;
     height: 30px;
     background: linear-gradient(

@@ -14,7 +14,7 @@
           <div
             v-else
             class="de-upload-item"
-            :class="[itemClass, {'de-upload-item__move': sortable}]"
+            :class="[itemClass, {'de-upload-item__sortable': sortable}]"
             :style="itemStyle"
             :draggable="multiple && sortable"
             @dragstart.stop="onDragStart(item, $event)"
@@ -24,7 +24,7 @@
           >
             <div
               v-if="sortable"
-              class="de-upload-item__move-after"
+              class="de-upload-item__sortable-after"
               data-after
             ></div>
             <div
@@ -96,7 +96,7 @@
               </div>
             </slot>
             <div
-              v-if="remove || (showPreview && item.done)"
+              v-if="(remove || (showPreview && item.done)) && !dragData"
               class="de-upload-action"
             >
               <div
@@ -517,7 +517,7 @@ export default defineComponent({
     // 拖拽
     let timer: number;
     let dragIndex = -1;
-    let dragData: UploadFileItem | undefined;
+    let dragData = ref<UploadFileItem>();
     const getPlaceholderIndex = () => {
       return fileList.value.findIndex((item) => {
         const {holder} = item as UploadHolderItem;
@@ -533,10 +533,10 @@ export default defineComponent({
     const onDragStart = (item: UploadFileItem, e: DragEvent) => {
       const dataTransfer = e.dataTransfer as DataTransfer;
       dataTransfer.effectAllowed = 'move';
-      dragData = item;
+      dragData.value = item;
       timer = window.setTimeout(() => {
-        if (!dragData) return;
-        dragIndex = getTargetIndex(dragData.uid);
+        if (!dragData.value) return;
+        dragIndex = getTargetIndex(dragData.value.uid);
         fileList.value.splice(dragIndex, 1);
       }, 300);
     };
@@ -546,10 +546,10 @@ export default defineComponent({
       dataTransfer.dropEffect = 'move';
       const isAfter = 'after' in target.dataset;
 
-      if (dragData && item.uid === dragData.uid) {
+      if (dragData.value && item.uid === dragData.value.uid) {
         if (dragIndex === -1) {
           window.clearTimeout(timer);
-          dragIndex = getTargetIndex(dragData.uid);
+          dragIndex = getTargetIndex(dragData.value.uid);
           fileList.value.splice(dragIndex, 1);
           const index = dragIndex + Number(isAfter);
           fileList.value.splice(index, 0, {
@@ -567,8 +567,8 @@ export default defineComponent({
 
       if (dragIndex === -1) {
         window.clearTimeout(timer);
-        if (!dragData) return;
-        dragIndex = getTargetIndex(dragData.uid);
+        if (!dragData.value) return;
+        dragIndex = getTargetIndex(dragData.value.uid);
         fileList.value.splice(dragIndex, 1);
       }
 
@@ -583,16 +583,16 @@ export default defineComponent({
     };
     const onDragEnd = () => {
       const holderIndex = getPlaceholderIndex();
-      if (dragData && holderIndex > -1) {
-        fileList.value.splice(holderIndex, 1, dragData);
+      if (dragData.value && holderIndex > -1) {
+        fileList.value.splice(holderIndex, 1, dragData.value);
         dragIndex = -1;
-        dragData = undefined;
+        dragData.value = undefined;
         emit('sort', holderIndex);
         changeHandle();
       }
 
-      if (dragData && dragIndex > -1) {
-        fileList.value.splice(dragIndex, 0, dragData);
+      if (dragData.value && dragIndex > -1) {
+        fileList.value.splice(dragIndex, 0, dragData.value);
       }
     };
 
@@ -637,6 +637,7 @@ export default defineComponent({
       fileOption,
       showBtn,
       showPreview,
+      dragData,
       onClickInput,
       onChoose,
       onRemove,
