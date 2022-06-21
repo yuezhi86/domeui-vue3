@@ -421,7 +421,10 @@ export default defineComponent({
         const matchRes = name.match(extRegx);
         const ext = (matchRes ? matchRes[1] : '').toLocaleLowerCase();
 
-        if (!acceptExt.value.some((item) => item.toLocaleLowerCase() === ext)) {
+        if (
+          acceptExt.value.length &&
+          !acceptExt.value.some((item) => item.toLocaleLowerCase() === ext)
+        ) {
           invalidExtFiles.push(file);
           continue;
         }
