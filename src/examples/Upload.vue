@@ -1,9 +1,25 @@
 <template>
   <section class="demo-group">
     <div class="item-group">
-      <DeUpload :upload-handle="uploadHandle" multiple />
+      <DeUpload :upload-handle="uploadHandle" />
       <DeUpload
         :upload-handle="uploadHandle"
+        multiple
+        sortable
+        :max-count="10"
+        :default-file-list="imgList"
+      />
+      <DeUpload
+        :upload-handle="uploadHandle"
+        type="video"
+        multiple
+        sortable
+        :max-count="10"
+        :default-file-list="imgList"
+      />
+      <DeUpload
+        :upload-handle="uploadHandle"
+        type="file"
         multiple
         sortable
         :max-count="10"

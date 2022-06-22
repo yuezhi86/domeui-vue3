@@ -96,11 +96,11 @@
               </div>
             </slot>
             <div
-              v-if="(remove || (showPreview && item.done)) && !dragData"
+              v-if="(remove || (preview && item.done)) && !dragData"
               class="de-upload-action"
             >
               <div
-                v-if="showPreview && item.done"
+                v-if="preview && item.done"
                 class="de-upload-action__preview"
                 :class="{
                   'de-upload-action__disabled': item.error || item.fail,
@@ -330,10 +330,6 @@ export default defineComponent({
       } else {
         return !fileList.value.length;
       }
-    });
-    const showPreview = computed(() => {
-      if (isFile.value) return false;
-      return props.preview;
     });
 
     const unref = (files: UploadFileItem[]) => cloneDeep(files);
@@ -636,7 +632,6 @@ export default defineComponent({
       imageOption,
       fileOption,
       showBtn,
-      showPreview,
       dragData,
       onClickInput,
       onChoose,
