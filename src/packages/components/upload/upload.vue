@@ -508,7 +508,7 @@ export default defineComponent({
       emit('preview', {index, list});
     };
     const onImgLoadError = (item: UploadFileItem) => {
-      if (isImage.value && !item.error) {
+      if ((isImage.value || isVideo.value) && !item.error) {
         item.error = true;
         item.url = imageOption.value.errorImg;
       }
