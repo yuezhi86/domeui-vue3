@@ -9,6 +9,22 @@
         :max-count="10"
         :default-file-list="imgList"
       />
+      <DeUpload
+        :upload-handle="uploadHandle"
+        type="video"
+        multiple
+        sortable
+        :max-count="10"
+        :default-file-list="imgList"
+      />
+      <DeUpload
+        :upload-handle="uploadHandle2"
+        type="file"
+        multiple
+        sortable
+        :max-count="10"
+        :default-file-list="imgList"
+      />
     </div>
   </section>
 </template>
@@ -44,6 +60,10 @@ export default {
       imgList,
       uploadHandle(files: UploadFileItem[], done: UploadDoneFn) {
         console.log(files, done);
+      },
+      uploadHandle2(files: UploadFileItem[], done: UploadDoneFn) {
+        files[0].fail = true;
+        done(files);
       },
     };
   },

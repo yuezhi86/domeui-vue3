@@ -62,7 +62,7 @@ const _instance = (
   );
 };
 const getTitle = (type: MessageType, title: string) => {
-  let name: 'info' | 'tick' | 'close' | 'alert' = 'info';
+  let name: 'prompt' | 'tick' | 'close' | 'alert' = 'prompt';
 
   switch (type) {
     case 'success':
@@ -73,6 +73,9 @@ const getTitle = (type: MessageType, title: string) => {
       break;
     case 'warning':
       name = 'alert';
+      break;
+    case 'info':
+      name = 'prompt';
       break;
   }
 

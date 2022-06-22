@@ -30,13 +30,16 @@
             <div
               v-if="item.done === false || item.fail"
               class="de-upload-progress"
-              :class="{'de-upload-progress__fail': item.fail}"
+              :class="{
+                'de-upload-progress__fail': item.fail,
+              }"
             >
               <div class="de-upload-progress__inner">
                 <div class="de-upload-progress__text">
                   {{ item.fail ? '上传失败' : '上传中...' }}
                 </div>
                 <div
+                  v-if="!item.fail"
                   class="de-upload-progress__bar"
                   :class="{
                     'de-upload-progress__bar-blink': item.done === false,
@@ -51,10 +54,11 @@
             </div>
 
             <div
-              v-if="item.done"
-              class="de-upload-status"
-              :class="{'de-upload-status__fail': item.fail}"
-            ></div>
+              v-if="item.done && item.fail"
+              class="de-upload-status de-upload-status__fail"
+            >
+              <de-icon name="alert-l" class="de-upload-status__icon" />
+            </div>
 
             <slot
               v-if="item.done && !item.fail"
@@ -65,53 +69,68 @@
               :video="isVideo"
               :file="isFile"
             >
-              <img
-                v-if="isImage || (isVideo && videoOption.poster)"
-                :src="item.url"
-                :alt="item.filename"
-                class="de-upload-image"
-                :class="{'de-upload-image__error': item.error}"
-                :data-viewer="item.viewer"
-                @error="onImgLoadError(item)"
-              />
+              <template v-if="isImage || (isVideo && videoOption.poster)">
+                <render-cell
+                  v-if="item.error"
+                  :render="
+                    () =>
+                      isImage ? imageOption.errorImg : videoOption.errorImg
+                  "
+                  class="de-upload-image__error"
+                  :class="{
+                    'de-upload-video__image-error': isVideo,
+                  }"
+                />
+                <img
+                  v-if="!item.error"
+                  :src="item.url"
+                  :alt="item.filename"
+                  class="de-upload-image"
+                  :data-viewer="item.viewer"
+                  @error="onImgLoadError(item)"
+                />
+              </template>
               <div
                 v-if="isFile || (isVideo && !videoOption.poster)"
                 class="de-upload-file"
               >
                 <div class="de-upload-file__inner">
+                  <render-cell
+                    v-if="!isImage"
+                    :render="
+                      () =>
+                        isVideo ? videoOption.itemIcon : fileOption.itemIcon
+                    "
+                    class="de-upload-file__icon"
+                  />
                   <div class="de-upload-file__filename">
                     {{ item.filename }}
                   </div>
-                  <img
-                    v-if="isVideo"
-                    class="de-upload-file__icon"
-                    :src="videoOption.itemIcon"
-                  />
-                  <img
-                    v-if="isFile"
-                    class="de-upload-file__icon"
-                    :src="fileOption.itemIcon"
-                  />
                 </div>
               </div>
             </slot>
             <div
-              v-if="(remove || (showPreview && item.done)) && !dragData"
+              v-if="(remove || (preview && item.done)) && !dragData"
               class="de-upload-action"
             >
               <div
-                v-if="showPreview && item.done"
+                v-if="preview && item.done"
                 class="de-upload-action__preview"
                 :class="{
-                  'de-upload-action__disabled': item.error || item.fail,
+                  'de-upload-action__disabled':
+                    (isImage && item.error) || item.fail,
                 }"
                 @click.stop="onPreview(item)"
-              ></div>
+              >
+                <de-icon name="eye-l" />
+              </div>
               <div
                 v-if="remove"
                 class="de-upload-action__remove"
                 @click.stop="onRemove(index, item)"
-              ></div>
+              >
+                <de-icon name="delete-l" />
+              </div>
             </div>
           </div>
           <slot name="itemAppend" :index="index" :item="item"></slot>
@@ -131,7 +150,7 @@
         @click.stop="onClickInput"
       >
         <slot name="btn">
-          <img :src="btnIcon" alt="按钮" class="de-upload-btn__icon" />
+          <render-cell :render="() => btnIcon" class="de-upload-btn__icon" />
         </slot>
         <input
           ref="input"
@@ -155,29 +174,27 @@ import {
   computed,
   watch,
   CSSProperties,
+  Component,
+  h,
 } from 'vue';
 import {cloneDeep} from 'lodash-es';
-import {getSizeOrPx} from '../../utils';
-import errorImg from './images/icon_img_error.png';
-import iconCamera from './images/icon_camera.png';
-import iconVideo from './images/icon_video.png';
-import iconVideoWhite from './images/icon_video_white.png';
-import iconFile from './images/icon_file.png';
-import iconFileWhite from './images/icon_file_white.png';
+import {getSizeOrPx, render as RenderCell} from '../../utils';
+import {DeIcon} from '../icon';
 
 const defaultImageParams = {
-  errorImg,
-  btnIcon: iconCamera,
+  errorImg: h(DeIcon, {name: 'img-error'}),
+  btnIcon: h(DeIcon, {name: 'camera'}),
 };
 const defaultVideoParams = {
   poster: true,
-  btnIcon: iconVideo,
-  itemIcon: iconVideoWhite,
+  errorImg: h(DeIcon, {name: 'video'}),
+  btnIcon: h(DeIcon, {name: 'video'}),
+  itemIcon: h(DeIcon, {name: 'video'}),
   mediaType: 'video/mp4',
 };
 const defaultFileParams = {
-  btnIcon: iconFile,
-  itemIcon: iconFileWhite,
+  btnIcon: h(DeIcon, {name: 'file'}),
+  itemIcon: h(DeIcon, {name: 'file'}),
 };
 
 /**
@@ -188,6 +205,10 @@ const defaultFileParams = {
 const name = 'de-upload';
 export default defineComponent({
   name,
+  components: {
+    RenderCell,
+    DeIcon,
+  },
   props: {
     defaultFileList: {
       type: Array as PropType<UploadDefaultFileItem[]>,
@@ -246,15 +267,15 @@ export default defineComponent({
     },
     imageParams: {
       type: Object as PropType<UploadImageParams>,
-      default: () => defaultImageParams,
+      default: () => undefined,
     },
     videoParams: {
       type: Object as PropType<UploadVideoParams>,
-      default: () => defaultVideoParams,
+      default: () => undefined,
     },
     fileParams: {
       type: Object as PropType<UploadFileParams>,
-      default: () => defaultFileParams,
+      default: () => undefined,
     },
     // 函数接受两个参数：files 和 done 函数，当上传成功后调用done(result)
     uploadHandle: {
@@ -278,7 +299,7 @@ export default defineComponent({
     'success',
     'fail',
     'upload',
-    'change-default',
+    'change:default',
   ],
   setup(props, {emit}) {
     let uid = 0;
@@ -331,10 +352,6 @@ export default defineComponent({
         return !fileList.value.length;
       }
     });
-    const showPreview = computed(() => {
-      if (isFile.value) return false;
-      return props.preview;
-    });
 
     const unref = (files: UploadFileItem[]) => cloneDeep(files);
     const changeEmit = (name: any) => {
@@ -345,7 +362,7 @@ export default defineComponent({
       emit(name, unref(files as UploadFileItem[]));
     };
 
-    const changeDefaultHandle = () => changeEmit('change-default');
+    const changeDefaultHandle = () => changeEmit('change:default');
     const changeHandle = () => changeEmit('change');
     const exceedHandle = (payload: UploadInvalidPayload) =>
       emit('exceed', payload);
@@ -403,7 +420,7 @@ export default defineComponent({
         input.value.click();
       }
     };
-    const onChoose = async (e: InputEvent) => {
+    const onChoose = async (e: Event) => {
       const target = e.target as HTMLInputElement;
       const files = target.files as FileList;
 
@@ -498,7 +515,7 @@ export default defineComponent({
     };
     const onPreview = (item: UploadFileItem) => {
       const {error, fail} = item;
-      if (error || fail) return;
+      if ((isImage.value && error) || fail) return;
       const _fileList = fileList.value.filter((item) => {
         const {done} = item as UploadFileItem;
         return done;
@@ -508,9 +525,8 @@ export default defineComponent({
       emit('preview', {index, list});
     };
     const onImgLoadError = (item: UploadFileItem) => {
-      if (isImage.value && !item.error) {
+      if ((isImage.value || isVideo.value) && !item.error) {
         item.error = true;
-        item.url = imageOption.value.errorImg;
       }
     };
 
@@ -636,7 +652,6 @@ export default defineComponent({
       imageOption,
       fileOption,
       showBtn,
-      showPreview,
       dragData,
       onClickInput,
       onChoose,
@@ -688,18 +703,19 @@ export type UploadHolderItem = {
   holder: boolean;
 };
 export type UploadImageParams = {
-  errorImg?: string;
-  btnIcon?: string;
+  errorImg?: Component;
+  btnIcon?: Component;
 };
 export type UploadVideoParams = {
   poster?: boolean;
-  btnIcon?: string;
-  itemIcon?: string;
+  errorImg?: Component;
+  btnIcon?: Component;
+  itemIcon?: Component;
   mediaType?: string;
 };
 export type UploadFileParams = {
-  btnIcon?: string;
-  itemIcon?: string;
+  btnIcon?: Component;
+  itemIcon?: Component;
 };
 export type UploadInvalidPayload = {
   invalidExtFiles: File[];
