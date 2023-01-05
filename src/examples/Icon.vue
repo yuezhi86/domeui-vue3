@@ -4,6 +4,8 @@
       <DeIcon name="arrow-down" />
       <DeIcon name="star" />
       <DeIcon name="star-l" />
+      <DeIcon name="download-l" />
+      <DeIcon name="upload-l" />
       <DeIcon name="close-l" size="8" />
       <DeIcon name="arrow-down" size="1.2em" />
       <DeIcon name="arrow-down" size="40" color="red" />

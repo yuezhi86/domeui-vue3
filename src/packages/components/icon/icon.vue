@@ -15,7 +15,7 @@ export type IconName =
   | 'file'
   | 'enlarge'
   | 'shrink'
-  | 'export'
+  | 'upload-l'
   | 'calendar'
   | 'settings'
   | 'minus-o'
