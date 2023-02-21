@@ -138,6 +138,7 @@
           type="file"
           :name="name"
           :multiple="multiple"
+          :accept="nativeAccept"
           class="de-upload-input"
           @change="onChoose"
         />
@@ -318,6 +319,9 @@ export default defineComponent({
 
       return val;
     });
+    const nativeAccept = computed(() =>
+      (props.accept ?? []).map((item) => '.' + item)
+    );
     const acceptExt = computed<string[]>(() => {
       if (props.accept.length) return props.accept;
       if (isVideo.value) return ['mp4'];
@@ -448,10 +452,13 @@ export default defineComponent({
       }
 
       const _fileList = validFiles.map((file) => {
+        const matchRes = file.name.match(extRegx);
+        const ext = (matchRes ? matchRes[1] : '').toLocaleLowerCase();
         return {
           uid: uid++,
           file,
           filename: file.name,
+          ext,
           percent: 0, // 上传进度
           done: false, // 上传结束或上传出错时为 true
           fail: false, // 上传失败时为 true
@@ -627,6 +634,7 @@ export default defineComponent({
       isFile,
       itemStyle,
       acceptExt,
+      nativeAccept,
       btnIcon,
       videoOption,
       imageOption,
@@ -659,6 +667,7 @@ export type UploadDefaultFileItem = {
  * @property {boolean} done - 上传结束为 true，无论成功与否
  * @property {string} [value] - 用于提交的 value，可能是云存储的key，如果不传则使用 url 的值
  * @property {string} [filename] - 文件名
+ * @property {string} [ext] - 扩展名
  * @property {string} [url] - 缩略图 url
  * @property {string} [viewer] - 用于预览大图链接，如果不传则使用 url 的值
  * @property {string} [poster] - 视频图
@@ -672,6 +681,7 @@ export type UploadFileItem = {
   done: boolean;
   value?: string;
   filename?: string;
+  ext?: string;
   url?: string;
   viewer?: string;
   poster?: string;
