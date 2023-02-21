@@ -367,7 +367,7 @@ export default defineComponent({
       const _fail: UploadFileItem[] = [];
 
       payload.forEach((item) => {
-        const {uid, url, viewer, value, filename, percent, fail} = item;
+        const {uid, url, viewer, value, filename, percent, fail, ext} = item;
         const index = fileList.value.findIndex((item) => {
           const {uid: _uid} = item as UploadFileItem;
           return _uid === uid;
@@ -377,6 +377,7 @@ export default defineComponent({
           const fileItem = {
             uid,
             value,
+            ext,
             filename,
             url: url || value,
             viewer: viewer || url || value,
@@ -607,6 +608,7 @@ export default defineComponent({
           const filename = item.filename || value;
           const url = item.url || value;
           const viewer = item.viewer || url || value;
+          const ext = item.ext;
 
           return {
             uid: uid++,
@@ -614,6 +616,7 @@ export default defineComponent({
             filename,
             url,
             viewer,
+            ext,
             done: true,
             percent: 100,
           };
@@ -659,6 +662,7 @@ export type UploadDefaultFileItem = {
   filename?: string;
   url?: string;
   viewer?: string;
+  ext?: string;
 };
 
 /**
